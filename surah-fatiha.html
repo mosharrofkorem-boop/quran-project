@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>কোরআন স্মার্ট রিসার্চ আর্কাইভ</title>
     <style>
-        :root { --primary: #1a5e3a; --bg: #f0f4f2; }
+        :root { --primary: #1a5e3a; --hadith: #01579b; --bg: #f0f4f2; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); line-height: 1.6; }
         
         .top-search-container { max-width: 550px; margin: 20px auto; padding: 0 15px; }
@@ -22,19 +22,14 @@
         .btn { padding: 10px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 11px; color: white; }
         .btn-alem { background: #2e7d32; } .btn-sufi { background: #f57f17; }
         .btn-faith { background: #bf360c; } .btn-math { background: #7b1fa2; }
+        .btn-hadith { background: var(--hadith); grid-column: span 2; font-size: 13px; border: 1px solid #81d4fa; } /* হাদিস বাটন */
         .btn-qepa { background: #004d40; grid-column: span 2; border: 1px solid #ffeb3b; }
         .btn-opinion { background: #00897b; grid-column: span 2; font-size: 13px; }
 
         .analysis-box { background: #f9fbf9; border-top: 4px solid var(--primary); padding: 15px; border-radius: 15px; text-align: center; }
-        
-        /* লাল উচ্চারণ টাচ স্টাইল */
         .proun-text { font-size: 20px; color: #d32f2f; font-weight: bold; margin-bottom: 8px; border-bottom: 1px dashed #ccc; padding-bottom: 8px; cursor: pointer; }
-        .proun-text span:hover { background: #ffebee; border-radius: 5px; }
-
-        /* বাংলা টাচ ডিকশনারি স্টাইল */
         .translation-text { font-size: 20px; font-weight: 800; color: #1a1a1a; }
-        .translation-text span { cursor: pointer; border-bottom: 2px solid #b2dfdb; padding: 0 2px; transition: 0.3s; }
-        .translation-text span:hover { background: #e0f2f1; color: var(--primary); }
+        .translation-text span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.3s; }
 
         #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid var(--primary); padding: 20px; display: none; z-index: 2000; border-radius: 25px 25px 0 0; max-height: 75vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
@@ -63,6 +58,9 @@
         <button class="btn btn-sufi" onclick="showSufi()">সুফি ও আধ্যাত্মিক</button>
         <button class="btn btn-faith" onclick="showFaith()">অন্যান্য ধর্মগ্রন্থ</button>
         <button class="btn btn-math" onclick="showMath()">গাণিতিক সূত্র</button>
+        
+        <button class="btn btn-hadith" onclick="showHadith()">হাদিস গ্রন্থসমূহ (সিহাহ সিত্তাহ)</button>
+        
         <button class="btn btn-qepa" onclick="openQEPA()">QEPA ইভেন্ট-প্যাটার্ন টুলস</button>
         <button class="btn btn-opinion" onclick="showOpinion()">পাবলিক আয়াত বিষয় কমান্ড/মতামত</button>
     </div>
@@ -76,10 +74,10 @@
         </div>
         
         <div class="translation-text">
-            <span onclick="showBn('সকল প্রশংসা', 'হামদ', 'যাবতীয় স্তুতি ও গুণগান যা শুধুমাত্র আল্লাহর প্রাপ্য।')">সকল প্রশংসা</span> 
-            <span onclick="showBn('আল্লাহর জন্য', 'লিল্লাহ', 'আল্লাহর মালিকানাধীন বা আল্লাহর উদ্দেশ্যে উৎসর্গকৃত।')">আল্লাহর জন্য</span>, 
-            <span onclick="showBn('যিনি প্রতিপালক', 'রব্ব', 'যিনি সৃষ্টি করেন এবং লালন-পালন করে পূর্ণতা দান করেন।')">যিনি প্রতিপালক</span> 
-            <span onclick="showBn('বিশ্বজগতের', 'আলামীন', 'মানুষ, জ্বিন, ফেরেশতা এবং দৃশ্য-অদৃশ্য সকল সৃষ্টিজগত।')">বিশ্বজগতের</span>।
+            <span onclick="showBn('সকল প্রশংসা', 'হামদ', 'যাবতীয় স্তুতি ও গুণগান।')">সকল প্রশংসা</span> 
+            <span onclick="showBn('আল্লাহর জন্য', 'লিল্লাহ', 'আল্লাহর প্রাপ্য।')">আল্লাহর জন্য</span>, 
+            <span onclick="showBn('যিনি প্রতিপালক', 'রব্ব', 'যিনি লালন-পালন করেন।')">যিনি প্রতিপালক</span> 
+            <span onclick="showBn('বিশ্বজগতের', 'আলামীন', 'দৃশ্য-অদৃশ্য সকল সৃষ্টি।')">বিশ্বজগতের</span>।
         </div>
     </div>
 </div>
@@ -99,40 +97,16 @@
         document.getElementById('popSearchInput').style.display = 'block';
     }
 
-    // বাংলা ডিকশনারি ফাংশন
-    function showBn(word, root, detail) {
-        document.getElementById('popSearchInput').style.display = 'none';
+    // হাদিস ফাংশন
+    function showHadith() {
         let content = `
-            <div class="list-card">
-                <b style="color:var(--primary); font-size:18px;">শব্দ: ${word}</b><br>
-                <b>মূল ধাতু (Root):</b> ${root}<br><br>
-                <b>বিস্তারিত অর্থ:</b> ${detail}
-            </div>
+            <div class="list-card"><b>সহীহ বুখারী:</b> কিতাবুত তাওহীদ অংশ দেখুন।</div>
+            <div class="list-card"><b>সহীহ মুসলিম:</b> ঈমান অধ্যায়।</div>
+            <div class="list-card"><b>সুনানে আবু দাউদ:</b> দোয়া ও জিকর অধ্যায়।</div>
+            <div class="list-card"><b>জামে আত-তিরমিজি:</b> প্রশংসা ও গুণকীর্তন অধ্যায়।</div>
+            <div class="list-card"><b>সুনানে ইবনে মাজাহ:</b> আদব অধ্যায়।</div>
         `;
-        showPopup("বাংলা টাচ ডিকশনারি", content);
-    }
-
-    // আরবি উচ্চারণ ও শব্দ বিশ্লেষণ
-    function showAr(word, proun, count, mean) {
-        document.getElementById('popSearchInput').style.display = 'none';
-        let content = `
-            <div class="list-card">
-                <b style="color:#d32f2f; font-size:18px;">উচ্চারণ: ${proun}</b><br>
-                <b>আরবি শব্দ:</b> ${word}<br>
-                <b>শব্দ সংখ্যা:</b> এই অংশে ${count} শব্দ রয়েছে।<br>
-                <b>শাব্দিক অর্থ:</b> ${mean}
-            </div>
-        `;
-        showPopup("আরবি উচ্চারণ ও শব্দ বিশ্লেষণ", content);
-    }
-
-    function showMath() {
-        let content = `
-            <div class="list-card"><b>১. বিসমিল্লাহ:</b> ৪টি শব্দ (বিস্ম, আল্লাহ, রহমান, রহীম)।</div>
-            <div class="list-card"><b>২. আলহামদুলিল্লাহ:</b> ২ (আলহামদু + লিল্লাহি) শব্দ।</div>
-            <div class="list-card"><b>৩. রব্বিল আলামীন:</b> ২ (রব্বি + আল-আলামীন) শব্দ।</div>
-        `;
-        showPopup("গাণিতিক শব্দ গণনা", content);
+        showPopup("হাদিস গ্রন্থসমূহ", content);
     }
 
     function filterList() {
@@ -144,14 +118,25 @@
         }
     }
 
-    function showAlem() { showPopup("আলেমদের তাফসীর", `<div class="list-card">ড. আব্দুল্লাহ জাহাঙ্গীর ও আলেমদের ব্যাখ্যা।</div>`); }
-    function showSufi() { showPopup("সুফি ও আধ্যাত্মিক", `<div class="list-card">সুরেশ্বরী ও চিশতী ধারার আধ্যাত্মিক গবেষণা।</div>`); }
-    function showFaith() { showPopup("অন্যান্য ধর্মগ্রন্থ", `<div class="list-card">তুলনামূলক ধর্মতত্ত্ব বিশ্লেষণ।</div>`); }
-    function openQEPA() { showPopup("QEPA টুলস", `<div class="list-card">ইভেন্ট-প্যাটার্ন ও সংখ্যাতত্ত্ব।</div>`); }
+    function showBn(word, root, detail) {
+        document.getElementById('popSearchInput').style.display = 'none';
+        showPopup("বাংলা টাচ ডিকশনারি", `<div class="list-card"><b>শব্দ:</b> ${word}<br><b>ধাতু:</b> ${root}<br><b>বিস্তারিত:</b> ${detail}</div>`);
+    }
+
+    function showAr(word, proun, count, mean) {
+        document.getElementById('popSearchInput').style.display = 'none';
+        showPopup("আরবি ও উচ্চারণ বিশ্লেষণ", `<div class="list-card"><b>উচ্চারণ:</b> ${proun}<br><b>গণনা:</b> ${count} শব্দ<br><b>অর্থ:</b> ${mean}</div>`);
+    }
+
+    function showMath() { showPopup("গাণিতিক গণনা", `<div class="list-card">শব্দ ও বর্ণ সংখ্যা বিশ্লেষণ লোড হচ্ছে...</div>`); }
+    function showAlem() { showPopup("আলেমদের তাফসীর", `<div class="list-card">গবেষণা ও তথ্য লোড হচ্ছে...</div>`); }
+    function showSufi() { showPopup("সুফি ও আধ্যাত্মিক", `<div class="list-card">আধ্যাত্মিক রহস্য লোড হচ্ছে...</div>`); }
+    function showFaith() { showPopup("অন্যান্য ধর্মগ্রন্থ", `<div class="list-card">ধর্মতত্ত্ব বিশ্লেষণ।</div>`); }
+    function openQEPA() { showPopup("QEPA টুলস", `<div class="list-card">ইভেন্ট-প্যাটার্ন সার্চ।</div>`); }
     function showOpinion() { showPopup("মতামত", `<div class="list-card"><textarea class="pop-search" rows="4" placeholder="আপনার কমান্ড লিখুন..."></textarea></div>`); }
     function closeBox() { document.getElementById('info-box').style.display = 'none'; }
     function openNav() { showPopup("আয়াত নেভিগেটর", "সার্চিং..."); }
 </script>
 
 </body>
-                </html>
+    </html>
