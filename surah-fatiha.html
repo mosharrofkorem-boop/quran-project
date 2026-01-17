@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন স্মার্ট ডিরেক্টরি</title>
+    <title>আল-কোরআন ডিজিটাল ডিরেক্টরি ও গবেষণা</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
         .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        .card { background: white; border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 650px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
+        .card { background: white; border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 650px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; position: relative; }
         .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 20px; }
         
+        /* আরবি ডিকশনারি স্টাইল */
         .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; display: inline-block; padding: 0 6px; border-radius: 8px; transition: 0.3s; }
-        .arabic span:active { background: #ffeb3b; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 0 6px; border-radius: 8px; transition: 0.3s; color: #1a5e3a; }
+        .arabic span:hover { background: #e8f5e9; }
 
         .pronunciation { 
             font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 20px 0; 
@@ -23,23 +24,29 @@
         }
         .topic-link { font-size: 13px; color: #1a5e3a; display: block; margin-top: 5px; font-weight: normal; opacity: 0.8; }
 
-        /* বাংলা অনুবাদ শিল্পশৈলী */
+        /* চিন্তাভাবনা বাটন */
+        .reflection-btn {
+            background: #fff3e0; color: #e65100; padding: 8px 15px; border-radius: 20px;
+            font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #ffe0b2;
+            display: inline-block; margin-bottom: 15px; transition: 0.3s;
+        }
+        .reflection-btn:hover { background: #ffe0b2; }
+
         .translation-box { 
             background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; 
-            border-radius: 0 12px 12px 0; margin-top: 15px;
+            border-radius: 0 12px 12px 0; margin-top: 5px;
         }
         .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
         .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
 
-        /* ডিকশনারি পপ-আপ ডিজাইন */
+        /* ইনফো বক্স */
         #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
         
-        /* ডিকশনারি টেক্সট স্টাইল */
-        .dict-entry { margin-top: 15px; }
-        .dict-type { color: #e67e22; font-style: italic; font-weight: bold; font-size: 16px; }
-        .dict-meaning { font-size: 19px; color: #2c3e50; margin-top: 8px; display: block; }
-        .dict-origin { color: #7f8c8d; font-size: 14px; margin-top: 5px; display: block; }
+        /* ডিকশনারি ও চিন্তা কার্ড */
+        .dict-card { background: #fdfdfd; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
+        .dict-label { color: #1a5e3a; font-weight: bold; font-size: 14px; text-transform: uppercase; }
+        .reflection-text { font-size: 18px; color: #2c3e50; line-height: 1.7; font-style: italic; }
     </style>
 </head>
 <body>
@@ -50,10 +57,14 @@
     <div class="verse-no">২</div>
     
     <div class="arabic">
-        <span onclick="showWordResearch('ٱلْحَمْدُ', '৩৮', ['১:২', '৬:১', '১৮:১'])">ٱلْحَمْدُ</span> 
-        <span onclick="showWordResearch('لِلَّهِ', '২৬৯৯', ['১:২', '২:১৬৩'])">لِلَّهِ</span> 
-        <span onclick="showWordResearch('رَبِّ', '৯৭০', ['১:২', '১১৪:১'])">رَبِّ</span> 
-        <span onclick="showWordResearch('ٱلْعَٰলَمِينَ', '৭৩', ['১:২', '২৬:২৩'])">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showArabicDict('ٱلْحَمْدُ', 'হ-ম-দ (حمد)', 'বিশেষ্য (Noun)', 'যাবতীয় প্রশংসা ও কৃতজ্ঞতা যা কেবল উপযুক্ত সত্তার জন্য নির্দিষ্ট।')">ٱلْحَمْدُ</span> 
+        <span onclick="showArabicDict('لِلَّهِ', 'আল্লাহ (الله)', 'প্রপার নাউন', 'সৃষ্টিকর্তার মহিমান্বিত নাম, যা সমস্ত গুণের আধার।')">لِلَّهِ</span> 
+        <span onclick="showArabicDict('رَبِّ', 'র-ব-ব (ربب)', 'বিশেষ্য/কর্তা', 'যিনি সৃষ্টি করেন, লালন-পালন করেন এবং পূর্ণতার দিকে নিয়ে যান।')">رَبِّ</span> 
+        <span onclick="showArabicDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম (علم)', 'বহুবচন বিশেষ্য', 'মানুষ, জিন, ফেরেশতা ও সমস্ত সৃষ্টিজগত।')">ٱلْعَٰলَمِينَ</span>
+    </div>
+
+    <div class="reflection-btn" onclick="showReflection('চিন্তাভাবনা: আয়াত ২', 'আমরা যখন বিপদে পড়ি তখন অভিযোগ করি, কিন্তু এই আয়াত আমাদের শেখায় যে কোনো অবস্থাতেই আল্লাহর প্রশংসা করা উচিত। কারণ তিনি শুধু আমাদের রব নন, তিনি সারা জাহানের পরিচালক। যা হচ্ছে সব তাঁর হিকমতেই হচ্ছে।')">
+        আয়াতের চিন্তাভাবনা 💭
     </div>
 
     <div class="pronunciation" onclick="showTopicResearch('বিষয়ভিত্তিক আয়াতসমূহ', 'এই আয়াতে আল্লাহর প্রশংসা বর্ণিত হয়েছে।', ['আল্লাহর প্রশংসা (১:২)', 'বিশ্বজগতের সৃষ্টি (২:২৯)'])">
@@ -63,11 +74,11 @@
 
     <div class="translation-box">
         <div class="translation">
-            <span onclick="showDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, গুণকীর্তন, মহিমা বর্ণনা, শোকর।', 'সংস্কৃত/বাংলা')">সকল প্রশংসা</span> 
-            <span onclick="showDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তা, মাবুদ, ইলাহ-এর প্রতি নিবেদিত।', 'আরবি (আল্লাহ)')">আল্লাহর জন্য</span>, 
-            <span onclick="showDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা, নির্দিষ্ট করে কাউকে বোঝাতে।', 'বাংলা')">যিনি</span> 
-            <span onclick="showDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান, মাখলুকাত, সমস্ত সৃষ্টি।', 'সংস্কৃত-জাত')">বিশ্বজগতের</span> 
-            <span onclick="showDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা, রক্ষাকর্তা, প্রভু, পালনকারী।', 'বাংলা একাডেমি ডিকশনারি')">প্রতিপালক</span>।
+            <span onclick="showDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, গুণকীর্তন, মহিমা বর্ণনা।', 'বাংলা একাডেমি')">সকল প্রশংসা</span> 
+            <span onclick="showDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তা, মাবুদ।', 'আরবি-মূল')">আল্লাহর জন্য</span>, 
+            <span onclick="showDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা।', 'বাংলা')">যিনি</span> 
+            <span onclick="showDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান, সমস্ত সৃষ্টি।', 'সংস্কৃত-জাত')">বিশ্বজগতের</span> 
+            <span onclick="showDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা, প্রভু।', 'বাংলা একাডেমি')">প্রতিপালক</span>।
         </div>
     </div>
 </div>
@@ -79,51 +90,53 @@
 </div>
 
 <script>
-    // ডিকশনারি ফাংশন
-    function showDict(word, type, meaning, origin) {
+    // আরবি ডিকশনারি ফাংশন
+    function showArabicDict(word, root, grammar, analysis) {
         document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-title').innerText = word;
+        document.getElementById('box-title').innerText = "আরবি বিশ্লেষণ: " + word;
         document.getElementById('box-content').innerHTML = `
-            <div class="dict-entry">
-                <div class="dict-type">[${type}]</div>
-                <div class="dict-meaning"><b>অর্থ:</b> ${meaning}</div>
-                <div class="dict-origin"><i>উৎস: ${origin}</i></div>
+            <div class="dict-card">
+                <p><span class="dict-label">মূল ধাতু (Root):</span> <br><b style="font-size:20px;">${root}</b></p>
+                <p><span class="dict-label">ব্যাকরণ (Grammar):</span> <br><b>${grammar}</b></p>
+                <p><span class="dict-label">বিস্তারিত অর্থ:</span> <br><span style="font-size:18px;">${analysis}</span></p>
             </div>
         `;
     }
 
-    // আগের ফাংশনগুলো
-    function showWordResearch(word, count, verseList) {
+    // চিন্তাভাবনা ফাংশন
+    function showReflection(title, text) {
         document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-title').innerText = "শব্দ: " + word;
-        let listHtml = verseList.map(v => `<a href="#" class="list-item">📍 আয়াত: ${v}</a>`).join('');
+        document.getElementById('box-title').innerText = title;
         document.getElementById('box-content').innerHTML = `
-            <p style="font-size:18px;">কোরআনে এসেছে: <b>${count} বার</b></p>
-            <div class="action-btn" onclick="toggleList()">এই ${count} বারের ফুল লিস্ট ↓</div>
-            <div id="data-list" class="list-container">${listHtml}</div>
+            <div class="dict-card" style="border-left: 5px solid #e65100;">
+                <p class="reflection-text">"${text}"</p>
+            </div>
         `;
     }
 
+    // বাংলা ডিকশনারি ফাংশন
+    function showDict(word, type, meaning, origin) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = word;
+        document.getElementById('box-content').innerHTML = `
+            <div class="dict-card">
+                <p><span class="dict-label">ধরণ:</span> ${type}</p>
+                <p><span class="dict-label">অর্থ:</span> <b style="font-size:18px;">${meaning}</b></p>
+                <p><span class="dict-label">উৎস:</span> ${origin}</p>
+            </div>
+        `;
+    }
+
+    // টপিক রিসার্চ ফাংশন
     function showTopicResearch(title, desc, topicList) {
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('box-title').innerText = title;
-        let listHtml = topicList.map(t => `<a href="#" class="list-item">📖 বিষয়: ${t}</a>`).join('');
-        document.getElementById('box-content').innerHTML = `
-            <p style="font-size:17px;">${desc}</p>
-            <div class="action-btn" onclick="toggleList()">সংশ্লিষ্ট বিষয়ের আয়াত লিস্ট ↓</div>
-            <div id="data-list" class="list-container">${listHtml}</div>
-        `;
+        let listHtml = topicList.map(t => `<div style="padding:10px; border-bottom:1px solid #eee; color:#1a5e3a; font-weight:bold;">📖 ${t}</div>`).join('');
+        document.getElementById('box-content').innerHTML = `<p>${desc}</p>${listHtml}`;
     }
 
-    function toggleList() {
-        let list = document.getElementById('data-list');
-        list.style.display = (list.style.display === "block") ? "none" : "block";
-    }
-
-    function closeBox() {
-        document.getElementById('info-box').style.display = 'none';
-    }
+    function closeBox() { document.getElementById('info-box').style.display = 'none'; }
 </script>
 
 </body>
-                </html>
+    </html>
