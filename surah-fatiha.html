@@ -3,77 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সূরা আল-ফাতিহা - আয়াত নম্বরসহ</title>
+    <title>আল-কোরআন স্মার্ট গবেষণা</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .nav a { color: white; text-decoration: none; margin-right: 15px; font-weight: bold; }
-        .card { background: white; border-radius: 12px; padding: 20px; margin: 20px auto; max-width: 600px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; }
-        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; margin-bottom: 10px; font-weight: bold; }
-        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; padding: 0 4px; border-radius: 4px; transition: 0.3s; }
-        .arabic span:hover { background: #ffeb3b; color: black; }
-        .pronunciation { font-size: 16px; color: #d35400; font-style: italic; margin-bottom: 5px; border-left: 3px solid #d35400; padding-left: 10px; }
-        .translation { font-size: 18px; color: #2d3436; border-top: 1px solid #eee; padding-top: 10px; }
+        body { font-family: 'Arial', sans-serif; margin: 0; background: #f4f7f6; color: #333; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; }
+        .nav a { color: white; text-decoration: none; font-weight: bold; margin-right: 15px; }
+        .card { background: white; border-radius: 15px; padding: 25px; margin: 20px auto; max-width: 700px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .verse-no { background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-block; text-align: center; line-height: 30px; font-weight: bold; margin-bottom: 15px; }
+        
+        /* আরবি শব্দে ক্লিকের স্টাইল */
+        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.5; margin-bottom: 20px; }
+        .arabic span { cursor: pointer; padding: 2px 5px; border-radius: 5px; transition: 0.3s; color: #2c3e50; }
+        .arabic span:hover { background: #e8f6ef; color: #1a5e3a; text-decoration: underline; }
+
+        /* বাংলা শব্দে ক্লিকের স্টাইল */
+        .translation { font-size: 19px; line-height: 1.8; border-top: 1px solid #eee; padding-top: 15px; }
+        .translation span { cursor: pointer; border-bottom: 1px dotted #1a5e3a; transition: 0.2s; }
+        .translation span:hover { background: #fff9c4; color: #000; }
+
+        /* তথ্য দেখানোর পপ-আপ বক্স */
+        #research-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 5px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 50vh; overflow-y: auto; }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
+        .ref-link { display: block; background: #f0f2f5; padding: 10px; margin: 10px 0; border-radius: 8px; text-decoration: none; color: #1a5e3a; font-weight: bold; }
+        .ref-link:hover { background: #e8f6ef; }
     </style>
 </head>
 <body>
 
-<div class="nav"><a href="index.html">⬅ হোম</a> সূরা আল-ফাতিহা (গবেষণা)</div>
-
-<div class="card">
-    <div class="verse-no">১</div>
-    <div class="arabic">بِسْمِ اللَّهِ الرَّহْمَٰنِ الرَّحِيمِ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> বিসমিল্লাহির রাহমানির রাহিম।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি।</div>
-</div>
+<div class="nav"><a href="index.html">⬅ হোম</a> সূরা আল-ফাতিহা গবেষণা</div>
 
 <div class="card">
     <div class="verse-no">২</div>
     <div class="arabic">
-        <span onclick="alert('অর্থ: সকল প্রশংসা\nরুট: হ-ম-দ')">ٱلْحَمْدُ </span>
-        <span onclick="alert('অর্থ: আল্লাহর জন্য\nরুট: আল্লাহ')">لِلَّهِ </span>
-        <span onclick="alert('অর্থ: পালনকর্তা\nরুট: র-ব-ব')">رَبِّ </span>
-        <span onclick="alert('অর্থ: বিশ্বজগতের\nরুট: আ-ল-ম')">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showArabicRef('ٱلْحَمْدُ', 'এই শব্দটি কোরআনে ৩৮ বার এসেছে।', ['সূরা আল-আনআম (১)', 'সূরা সাবা (১)', 'সূরা ফাতির (১)'])">ٱلْحَمْدُ </span>
+        <span onclick="showArabicRef('لِلَّهِ', 'এই শব্দটি কোরআনে ২৬৯৯ বার এসেছে।', ['সূরা আল-বাকারাহ (১৬৩)', 'সূরা আলে-ইমরান (১৮)'])">لِلَّهِ </span>
+        <span onclick="showArabicRef('رَبِّ', 'এই শব্দটি কোরআনে ৯৭০ বার এসেছে।', ['সূরা আন-নাস (১)'])">رَبِّ </span>
+        <span onclick="showArabicRef('ٱلْعَٰلَمِينَ', 'এই শব্দটি কোরআনে ৭৩ বার এসেছে।', ['সূরা আশ-শুয়ারা (২৩)'])">ٱلْعَٰلَمِينَ</span>
     </div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।</div>
+
+    <div class="translation">
+        <strong>অনুবাদ:</strong> 
+        <span onclick="showSynonyms('সকল প্রশংসা', 'স্তুতি, গুণগান, মহিমা কীর্তন')">সকল প্রশংসা</span> 
+        <span onclick="showSynonyms('আল্লাহর জন্য', 'মাবুদ, ইলাহ, সৃষ্টিকর্তা')">আল্লাহর জন্য</span>, যিনি 
+        <span onclick="showSynonyms('বিশ্বজগতের', 'সারা জাহান, সৃষ্টিজগত, কুল মাখলুকাত')">বিশ্বজগতের</span> প্রতিপালক।
+    </div>
 </div>
 
-<div class="card">
-    <div class="verse-no">৩</div>
-    <div class="arabic">الرَّহْمَٰنِ الرَّحِيمِ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> আর-রাহমানির রাহিম।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> যিনি পরম করুণাময় ও অসীম দয়ালু।</div>
+<div id="research-box">
+    <button class="close-btn" onclick="closeBox()">বন্ধ করুন</button>
+    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0;"></h3>
+    <p id="box-desc"></p>
+    <div id="box-links"></div>
 </div>
 
-<div class="card">
-    <div class="verse-no">৪</div>
-    <div class="arabic">مَالِكِ يَوْمِ الدِّينِ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> মালিকি ইয়াউমিদ্দিন।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> যিনি বিচার দিবসের মালিক।</div>
-</div>
+<script>
+    function showArabicRef(word, info, refs) {
+        document.getElementById('research-box').style.display = 'block';
+        document.getElementById('box-title').innerText = "আরবি শব্দ: " + word;
+        document.getElementById('box-desc').innerText = info + " নিচে রেফারেন্স দেওয়া হলো (ক্লিক করলে সেই আয়াতে যাবে):";
+        
+        let linkHTML = "";
+        refs.forEach(ref => {
+            linkHTML += `<a href="#" class="ref-link" onclick="alert('ভবিষ্যতে এটি আপনাকে সরাসরি সেই আয়াতে নিয়ে যাবে!')">📍 ${ref}</a>`;
+        });
+        document.getElementById('box-links').innerHTML = linkHTML;
+    }
 
-<div class="card">
-    <div class="verse-no">৫</div>
-    <div class="arabic">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> ইয়্যাকা না'বুদু ওয়া ইয়্যাকা নাস্তাঈন।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> আমরা একমাত্র আপনারই ইবাদত করি এবং একমাত্র আপনারই সাহায্য চাই।</div>
-</div>
+    function showSynonyms(word, synonyms) {
+        document.getElementById('research-box').style.display = 'block';
+        document.getElementById('box-title').innerText = "বাংলা প্রতিশব্দ: " + word;
+        document.getElementById('box-desc').innerText = "এই শব্দের অন্যান্য অর্থ বা প্রতিশব্দ হতে পারে: " + synonyms;
+        document.getElementById('box-links').innerHTML = "";
+    }
 
-<div class="card">
-    <div class="verse-no">৬</div>
-    <div class="arabic">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> ইহদিনাস সিরাতাল মুস্তাকিম।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> আমাদের সরল সঠিক পথ প্রদর্শন করুন।</div>
-</div>
-
-<div class="card">
-    <div class="verse-no">৭</div>
-    <div class="arabic">صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> সিরাতাল্লাজিনা আন'আমতা আলাইহিম গাইরিল মাগদুবি আলাইহিম ওয়ালাদ্দল্লিন।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> তাদের পথ, যাদের আপনি নেয়ামত দান করেছেন; তাদের পথ নয় যারা আপনার ক্রোধের শিকার এবং যারা পথভ্রষ্ট।</div>
-</div>
+    function closeBox() {
+        document.getElementById('research-box').style.display = 'none';
+    }
+</script>
 
 </body>
-        </html>
+    </html>
