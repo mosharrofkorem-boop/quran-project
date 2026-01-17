@@ -3,120 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>স্মার্ট কোরআন গবেষণা আর্কাইভ</title>
+    <title>আল-কোরআন স্মার্ট রিসার্চ লাইব্রেরি</title>
     <style>
-        :root { --primary: #1a5e3a; --sufi: #f57f17; --dhormo: #bf360c; --bg: #f0f4f2; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: var(--bg); color: #333; padding-bottom: 100px; }
-        .header { background: var(--primary); color: white; padding: 20px; text-align: center; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        :root { --primary: #1a5e3a; --sufi: #f57f17; --dhormo: #bf360c; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); line-height: 1.6; padding-bottom: 50px; }
         
-        .verse-card { background: white; max-width: 650px; margin: 20px auto; padding: 25px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        .arabic { font-size: 34px; text-align: right; direction: rtl; line-height: 2; font-weight: bold; color: #2c3e50; margin-bottom: 20px; }
-        .arabic span { cursor: pointer; transition: 0.3s; padding: 0 5px; }
-        .arabic span:hover { color: var(--primary); background: #e8f5e9; border-radius: 8px; }
+        .nav { background: var(--primary); color: white; padding: 12px; text-align: center; font-weight: bold; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        
+        .card { background: white; border-radius: 20px; padding: 20px; margin: 15px auto; max-width: 500px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
+        .verse-no { display: inline-block; background: var(--primary); color: white; border-radius: 50%; width: 28px; height: 28px; text-align: center; font-size: 14px; line-height: 28px; font-weight: bold; margin-bottom: 10px; }
+        
+        /* আরবি ছোট ও মার্জিত */
+        .arabic { font-size: 26px; text-align: right; direction: rtl; line-height: 1.8; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
+        .arabic span { cursor: pointer; padding: 0 4px; border-radius: 5px; transition: 0.3s; color: var(--primary); }
+        .arabic span:hover { background: #e8f5e9; }
 
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .btn { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.3s; color: white; }
+        /* স্মার্ট বাটন গ্রিড */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; }
+        .btn { padding: 10px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 11px; color: white; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn-alem { background: #2e7d32; }
         .btn-sufi { background: #f57f17; }
-        .btn-tulona { background: #bf360c; }
+        .btn-faith { background: #bf360c; }
         .btn-math { background: #7b1fa2; }
+        .btn:active { transform: scale(0.95); }
 
-        .translation-box { border-left: 5px solid var(--primary); padding: 15px; background: #f9fbf9; border-radius: 0 15px 15px 0; margin-top: 15px; }
-        .bn-text { font-size: 20px; font-weight: 800; line-height: 1.8; }
-        .bn-text span { cursor: pointer; border-bottom: 2px solid #ddd; }
+        /* উচ্চারণ বক্স */
+        .pronunciation-box { 
+            font-size: 16px; color: #1a5e3a; font-weight: bold; margin: 10px 0; 
+            border: 1px solid #c8e6c9; padding: 10px; background: #f1f8f1; 
+            border-radius: 10px; text-align: center; cursor: pointer;
+        }
 
-        /* পপ-আপ ডিজাইন */
-        #popup { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 5px solid var(--primary); border-radius: 25px 25px 0 0; padding: 25px; display: none; z-index: 1000; max-height: 80vh; overflow-y: auto; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); }
-        .close-btn { background: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 10px; float: right; font-weight: bold; cursor: pointer; }
-        .list-item { background: #f8f9fa; padding: 15px; margin-bottom: 10px; border-radius: 12px; border: 1px solid #eee; }
-        .author-name { color: var(--primary); font-weight: bold; border-bottom: 1px solid #ddd; margin-bottom: 8px; display: block; }
+        /* বাংলা অনুবাদ */
+        .translation-box { background: #f9fbf9; border-left: 4px solid var(--primary); padding: 12px 15px; border-radius: 0 10px 10px 0; }
+        .translation { font-size: 18px; color: #1a1a1a; font-weight: 800; line-height: 1.6; }
+        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; }
+
+        /* পপ-আপ তথ্য বক্স */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 5px solid var(--primary); padding: 20px; display: none; box-shadow: 0 -10px 25px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 70vh; overflow-y: auto; }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        
+        .list-card { background: #fdfdfd; padding: 12px; border-radius: 8px; border: 1px solid #eee; margin-top: 10px; font-size: 14px; }
+        .author { color: var(--primary); font-weight: bold; border-bottom: 1px solid #eee; margin-bottom: 4px; display: block; }
     </style>
 </head>
 <body>
 
-<div class="header">স্মার্ট কোরআন গবেষণা লাইব্রেরি</div>
+<div class="nav">আল-কোরআন স্মার্ট লাইব্রেরি</div>
 
-<div class="verse-card">
+<div class="card">
+    <div class="verse-no">২</div>
+    
     <div class="arabic">
-        <span onclick="showAr('ٱلْحَمْدُ', 'হ-ম-দ', 'যাবতীয় প্রশংসা ও কৃতজ্ঞতা।')">ٱلْحَمْدُ</span> 
-        <span onclick="showAr('لِلَّهِ', 'আল্লাহ', 'সৃষ্টিকর্তার নাম।')">لِلَّهِ</span> 
-        <span onclick="showAr('رَبِّ', 'র-ব-ব', 'লালনকর্তা ও মালিক।')">رَبِّ</span> 
-        <span onclick="showAr('ٱلْعَٰلَمِينَ', 'আ-ল-ম', 'সৃষ্টিজগতসমূহ।')">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'বিশেষ্য', 'যাবতীয় প্রশংসা।', '৩৮ বার')">ٱلْحَمْدُ</span> 
+        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'নাম', 'আল্লাহর জন্য।', '২৬৯৯ বার')">لِلَّهِ</span> 
+        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'কর্তা', 'লালনকর্তা।', '৯৭০ বার')">رَبِّ</span> 
+        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'বহুবচন', 'সৃষ্টিজগত।', '৭৩ বার')">ٱلْعَٰলَمِينَ</span>
     </div>
 
     <div class="btn-grid">
-        <button class="btn btn-alem" onclick="alemTafsir()">আলেমদের তাফসীর</button>
-        <button class="btn btn-sufi" onclick="sufiTafsir()">সুফিদের গবেষণা</button>
-        <button class="btn btn-tulona" onclick="otherFaiths()">ধর্মগ্রন্থ সমার্থক</button>
-        <button class="btn btn-math" onclick="mathMiracle()">গাণিতিক সূত্র</button>
+        <button class="btn btn-alem" onclick="showAlem()">আলেমদের তাফসীর</button>
+        <button class="btn btn-sufi" onclick="showSufi()">সুফি ও আধ্যাত্মিক</button>
+        <button class="btn btn-faith" onclick="showFaith()">ধর্মগ্রন্থ তুলনা</button>
+        <button class="btn btn-math" onclick="showMath()">গাণিতিক সূত্র</button>
+    </div>
+
+    <div class="pronunciation-box">
+        আলহামদু লিল্লাহি রব্বিল আলামিন।
     </div>
 
     <div class="translation-box">
-        <div class="bn-text">
-            <span onclick="showBn('সকল প্রশংসা', 'নাম পদ', 'স্তুতি ও গুণগান।')">সকল প্রশংসা</span> 
-            <span onclick="showBn('আল্লাহর জন্য', 'নাম পদ', 'মাবুদের জন্য।')">আল্লাহর জন্য</span>, 
-            <span onclick="showBn('যিনি', 'সর্বনাম', 'যে পরম সত্তা।')">যিনি</span> 
-            <span onclick="showBn('বিশ্বজগতের', 'নাম পদ', 'সারা জাহান।')">বিশ্বজগতের</span> 
-            <span onclick="showBn('প্রতিপালক', 'নাম পদ', 'পালনকর্তা।')">প্রতিপালক</span>।
+        <div class="translation">
+            <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, মহিমা।')">সকল প্রশংসা</span> 
+            <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'মাবুদের জন্য।')">আল্লাহর জন্য</span>, 
+            <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা।')">যিনি</span> 
+            <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।')">বিশ্বজগতের</span> 
+            <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা।')">প্রতিপালক</span>।
         </div>
     </div>
 </div>
 
-<div id="popup">
-    <button class="close-btn" onclick="closePopup()">বন্ধ</button>
-    <h3 id="pop-title">গবেষণা</h3>
-    <div id="pop-content"></div>
+<div id="info-box">
+    <button class="close-btn" onclick="closeBox()">বন্ধ</button>
+    <h3 id="box-title" style="color: var(--primary); margin-top: 0; font-size: 18px;"></h3>
+    <div id="box-content"></div>
 </div>
 
 <script>
-    function openPopup(title, content) {
-        document.getElementById('popup').style.display = 'block';
-        document.getElementById('pop-title').innerText = title;
-        document.getElementById('pop-content').innerHTML = content;
+    function showPopup(title, content) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = title;
+        document.getElementById('box-content').innerHTML = content;
     }
 
-    // আলেমদের তাফসীর তালিকা
-    function alemTafsir() {
+    function showAlem() {
         let list = `
-            <div class="list-item"><span class="author-name">ড. খন্দকার আব্দুল্লাহ জাহাঙ্গীর</span><p>প্রশংসা কেবল মহান আল্লাহর গুণবাচক নামের সাথে সম্পৃক্ত। এটি ঈমানের মূল স্তম্ভ।</p></div>
-            <div class="list-item"><span class="author-name">তাফসীরে ইবনে কাসীর</span><p>আল্লাহই একমাত্র রব্বুল আলামীন, সমস্ত সৃষ্টিজগত তাঁর হুকুমে চলে।</p></div>
-            <div class="list-item"><span class="author-name">তাফসীরে জালালাইন</span><p>সংক্ষিপ্ত ব্যাখ্যা: আল্লাহই সমস্ত প্রশংসার মালিক।</p></div>
-            <div class="list-item"><span class="author-name">তাফসীরে মাআরিফুল কোরআন</span><p>আল্লাহর পালনকর্তার গুণ নিয়ে বিস্তারিত আলোচনা।</p></div>
+            <div class="list-card"><span class="author">ডক্টর আব্দুল্লাহ জাহাঙ্গীর:</span><p>এটি আল্লাহর শুকরিয়া আদায়ের অন্যতম প্রধান মাধ্যম।</p></div>
+            <div class="list-card"><span class="author">তাফসীরে ইবনে কাসীর:</span><p>আল্লাহই একমাত্র রবের হাকীকত ও প্রশংসার দাবিদার।</p></div>
         `;
-        openPopup("আলেম ও গবেষকদের কণ্ঠ", list);
+        showPopup("আলেম ও গবেষকদের কণ্ঠ", list);
     }
 
-    // সুফিদের তাফসীর তালিকা
-    function sufiTafsir() {
+    function showSufi() {
         let list = `
-            <div class="list-item"><span class="author-name">আল সুরেশ্বরী রচিত কোরআনুল মাজীদ</span><p>সৃষ্টির প্রতিটি অণু-পরমাণুতে রবের কুদরত ও মহিমা প্রকাশিত। (সংগ্রহ চলছে)</p></div>
-            <div class="list-item"><span class="author-name">সদর উদ্দিন চিশতী রচিত 'কোরআন দর্শন'</span><p>কোরআনের আধ্যাত্মিক ও দার্শনিক ব্যাখ্যা। (সংগ্রহ চলছে)</p></div>
-            <div class="list-item"><span class="author-name">ইবনুল আরাবী (ফুতুহাত/ফুসুস)</span><p>প্রশংসা মানে স্রষ্টা ও সৃষ্টির অদ্বৈত রহস্য উপলব্ধি করা।</p></div>
-            <div class="list-item"><span class="author-name">দেওয়ানবাগী রচিত গ্রন্থ</span><p>আধ্যাত্মিক ও মারেফতি নূরের আলোতে কোরআনের ব্যাখ্যা। (সংগ্রহ চলছে)</p></div>
-            <div class="list-item"><span class="author-name">তাফসীরে রুহুল বায়ান</span><p>সুফিদের প্রিয় আধ্যাত্মিক ব্যাখ্যা।</p></div>
+            <div class="list-card"><span class="author">আল সুরেশ্বরী (কোরআনুল মাজীদ):</span><p>(সংগ্রহ চলছে...)</p></div>
+            <div class="list-card"><span class="author">সদর উদ্দিন চিশতী (কোরআন দর্শন):</span><p>আধ্যাত্মিক নূরে কোরআন দর্শন।</p></div>
+            <div class="list-card"><span class="author">ইবনুল আরাবী (ফুতুহাত):</span><p>সৃষ্টির প্রতিটি দর্পণে স্রষ্টার প্রশংসা।</p></div>
+            <div class="list-card"><span class="author">দেওয়ানবাগী রচিত গ্রন্থ:</span><p>মারেফতের আলোকে ব্যাখ্যা।</p></div>
         `;
-        openPopup("সুফি ও আধ্যাত্মিক কণ্ঠ", list);
+        showPopup("সুফি ও আধ্যাত্মিক কণ্ঠ", list);
     }
 
-    // অন্যান্য ধর্মগ্রন্থ সমার্থক
-    function otherFaiths() {
+    function showFaith() {
         let list = `
-            <div class="list-item"><span class="author-name">শ্রীমদ্ভগবদ্গীতা</span><p>সর্বলোক মহেশ্বরং... (তিনিই সকল জগতের পরম ঈশ্বর)।</p></div>
-            <div class="list-item"><span class="author-name">ত্রিপিটক</span><p>জগতের পালন ও কল্যাণের মূল তত্ত্ব। (সংগ্রহ চলছে)</p></div>
-            <div class="list-item"><span class="author-name">গুরু গ্রন্থ সাহেব</span><p>এক ওঙ্কার (স্রষ্টা এক ও অদ্বিতীয়)।</p></div>
-            <div class="list-item"><span class="author-name">রামায়ণ ও মহাভারত</span><p>পরমেশ্বরের গুণগান ও বিশ্বস্রষ্টার বর্ণনা।</p></div>
+            <div class="list-card"><span class="author">গীতা / ত্রিপিটক / গুরুগ্রন্থ:</span><p>বিশ্বস্রষ্টার প্রশংসা ও পালনের সমার্থক বাণী।</p></div>
+            <div class="list-card"><span class="author">রামায়ণ ও মহাভারত:</span><p>ঈশ্বরীয় স্তুতির বিভিন্ন রূপ।</p></div>
         `;
-        openPopup("অন্যান্য ধর্মগ্রন্থের সমার্থক রূপ", list);
+        showPopup("ধর্মগ্রন্থ সমার্থক রূপ", list);
     }
 
-    function mathMiracle() {
-        openPopup("গাণিতিক মিরাকল", `<div class="list-item"><b>শব্দ সংখ্যা:</b> ৪টি<br><b>বর্ণ সংখ্যা:</b> ১৮টি<br>বিন্যাস: গাণিতিক ছন্দে আল্লাহর প্রশংসার নিখুঁত চিত্র।</div>`);
+    function showMath() {
+        showPopup("গাণিতিক মিরাকল", `<div class="list-card">শব্দ ৪টি, অক্ষর ১৮টি। গাণিতিক ভারসাম্যপূর্ণ বিন্যাস।</div>`);
     }
 
-    function showAr(word, root, mean) { openPopup("আরবি বিশ্লেষণ: "+word, `<div class="list-item"><b>মূল ধাতু:</b> ${root}<br><b>অর্থ:</b> ${mean}</div>`); }
-    function showBn(word, type, mean) { openPopup(word, `<div class="list-item"><b>ধরণ:</b> ${type}<br><b>ডিকশনারি অর্থ:</b> ${mean}</div>`); }
-    function closePopup() { document.getElementById('popup').style.display = 'none'; }
+    function showArDict(word, root, grammar, mean, count) {
+        let content = `<div class="list-card"><b>মূল ধাতু:</b> ${root}<br><b>ব্যাকরণ:</b> ${grammar}<br><b>অর্থ:</b> ${mean}<br><b>বারংবারতা:</b> ${count}</div>`;
+        showPopup("আরবি বিশ্লেষণ: " + word, content);
+    }
+
+    function showBnDict(word, type, mean) {
+        let content = `<div class="list-card"><b>ধরণ:</b> ${type}<br><b>অর্থ:</b> ${mean}</div>`;
+        showPopup(word, content);
+    }
+
+    function closeBox() { document.getElementById('info-box').style.display = 'none'; }
 </script>
 
 </body>
-    </html>
+</html>
