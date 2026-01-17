@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল কোরআন গবেষণা প্রজেক্ট</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; text-align: center; padding: 50px; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); display: inline-block; }
+        h1 { color: #2c3e50; }
+        p { color: #7f8c8d; font-size: 18px; }
+        .btn { background: #27ae60; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>আল কোরআন: বিষয়ভিত্তিক ও শব্দভিত্তিক গবেষণা</h1>
+        <p>বিসমিল্লাহির রহমানির রাহিম। এই প্রজেক্টের কাজ বর্তমানে চলমান রয়েছে।</p>
+        <p>আমাদের লক্ষ্য: কোরআনের জ্ঞানকে শব্দে শব্দে মানুষের কাছে পৌঁছে দেওয়া।</p>
+        <a href="#" class="btn">শীঘ্রই আরও তথ্য আসছে...</a>
+    </div>
+</body>
+</html>
