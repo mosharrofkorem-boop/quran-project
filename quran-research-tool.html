@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল-কোরআন অটোমেটেড রিসার্চ সিস্টেম</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 150px; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 20px; }
+        
+        #quran-container { max-width: 650px; margin: auto; padding: 10px; }
+
+        .card { background: white; border-radius: 20px; padding: 30px; margin: 20px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 20px; }
+        
+        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 0 6px; border-radius: 8px; transition: 0.3s; }
+        .arabic span:active { background: #ffeb3b; }
+
+        .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 20px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; cursor: pointer; border-radius: 12px; text-align: center; }
+
+        .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; }
+        .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
+        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; }
+
+        /* পপ-আপ ডিজাইন */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .action-btn { display: block; background: #f0f2f5; color: #1a5e3a; padding: 15px; margin-top: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; border-left: 5px solid #1a5e3a; cursor: pointer; }
+        .list-container { display: none; margin-top: 10px; background: #fafafa; border-radius: 8px; padding: 5px; }
+        .list-item { display: block; padding: 12px; color: #1a5e3a; text-decoration: none; border-bottom: 1px solid #eee; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="nav" id="surah-title">আল-কোরআন স্মার্ট ডিরেক্টরি</div>
+
+<div id="quran-container">
+    </div>
+
+<div id="info-box">
+    <button class="close-btn" onclick="closeBox()">× বন্ধ করুন</button>
+    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0; font-size: 24px;"></h3>
+    <div id="box-content"></div>
+</div>
+
+<script>
+    // ১. এখানে আপনি আপনার পুরো কোরআনের ডেটা যোগ করবেন (উদাহরণ হিসেবে ৩টি আয়াত দেওয়া হলো)
+    const surahFatiha = [
+        {
+            verse: 1,
+            arabic: [
+                {w: "بِسْمِ", c: "৩৯", r: ["১:১", "১১:৪১"]},
+                {w: "ٱللَّهِ", c: "২৬৯৯", r: ["১:১", "২:১"]},
+                {w: "ٱلرَّحْمَٰنِ", c: "৫৭", r: ["১:১", "১:৩"]},
+                {w: "ٱلرَّحِيمِ", c: "৯৫", r: ["১:১", "১:৩"]}
+            ],
+            pronunciation: "বিসমিল্লাহির রাহমানির রাহিম",
+            topics: ["আল্লাহর নামে শুরু", "রহমত ও দয়া"],
+            translation: [
+                {t: "পরম করুণাময়", d: "যিনি সৃষ্টির শুরুতে সবাইকে করুণা করেন।"},
+                {t: "অসীম দয়ালু", d: "যিনি মুমিনদের জন্য পরকালে বিশেষ দয়ালু।"},
+                {t: "আল্লাহর নামে", d: "যেকোনো কাজ শুরুর আগে আল্লাহর স্মরণ।"}
+            ]
+        },
+        {
+            verse: 2,
+            arabic: [
+                {w: "ٱلْحَمْدُ", c: "৩৮", r: ["১:২", "৬:১", "১৮:১"]},
+                {w: "لِلَّهِ", c: "২৬৯৯", r: ["১:২", "২:১৬৩"]},
+                {w: "رَبِّ", c: "৯৭০", r: ["১:২", "১১৪:১"]},
+                {w: "ٱلْعَٰلَمِينَ", c: "৭৩", r: ["১:২", "২৬:২৩"]}
+            ],
+            pronunciation: "আলহামদু লিল্লাহি রব্বিল আলামিন",
+            topics: ["আল্লাহর প্রশংসা", "রব্বুবিয়্যাত"],
+            translation: [
+                {t: "সকল প্রশংসা", d: "যাবতীয় স্তুতি ও গুণগান একমাত্র তাঁরই।"},
+                {t: "আল্লাহর জন্য", d: "যিনি ইবাদতের মালিক।"},
+                {t: "বিশ্বজগতের", d: "সারা জাহানের অধিপতি।"}
+            ]
+        }
+    ];
+
+    // ২. অটোমেটিক কার্ড তৈরি করার ইঞ্জিন
+    function renderQuran() {
+        const container = document.getElementById('quran-container');
+        surahFatiha.forEach(item => {
+            let arabicHtml = item.arabic.map(word => 
+                `<span onclick="showWordResearch('${word.w}', '${word.c}', ${JSON.stringify(word.r)})">${word.w}</span>`
+            ).join(' ');
+
+            let translationHtml = item.translation.map(trans => 
+                `<span onclick="showInfo('${trans.t}', '${trans.d}')">${trans.t}</span>`
+            ).join(' ');
+
+            container.innerHTML += `
+                <div class="card">
+                    <div class="verse-no">${item.verse}</div>
+                    <div class="arabic">${arabicHtml}</div>
+                    <div class="pronunciation" onclick="showTopicResearch('বিষয়ভিত্তিক গবেষণা', 'এই আয়াতে আছে:', ${JSON.stringify(item.topics)})">
+                        ${item.pronunciation} (💡 গবেষণা)
+                    </div>
+                    <div class="translation-box">
+                        <div class="translation">${translationHtml}</div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // ৩. ফাংশনসমূহ (গবেষণা পপ-আপের জন্য)
+    function showInfo(title, desc) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = title;
+        document.getElementById('box-content').innerHTML = `<p style="font-size:19px; color:#444; font-weight:bold;">${desc}</p>`;
+    }
+
+    function showWordResearch(word, count, verseList) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = "শব্দ: " + word;
+        let listHtml = verseList.map(v => `<a href="#" class="list-item">📍 আয়াত: ${v}</a>`).join('');
+        document.getElementById('box-content').innerHTML = `
+            <p style="font-size:18px;">কোরআনে এসেছে: <b>${count} বার</b></p>
+            <div class="action-btn" onclick="toggleList()">এই ${count} বারের ফুল লিস্ট ↓</div>
+            <div id="data-list" class="list-container">${listHtml}</div>
+        `;
+    }
+
+    function showTopicResearch(title, desc, topicList) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = title;
+        let listHtml = topicList.map(t => `<a href="#" class="list-item">📖 বিষয়: ${t}</a>`).join('');
+        document.getElementById('box-content').innerHTML = `
+            <p style="font-size:17px;">${desc}</p>
+            <div class="action-btn" onclick="toggleList()">বিষয়ের আয়াত লিস্ট ↓</div>
+            <div id="data-list" class="list-container">${listHtml}</div>
+        `;
+    }
+
+    function toggleList() {
+        let list = document.getElementById('data-list');
+        list.style.display = (list.style.display === "block") ? "none" : "block";
+    }
+
+    function closeBox() {
+        document.getElementById('info-box').style.display = 'none';
+    }
+
+    // ইঞ্জিন চালু করা
+    window.onload = renderQuran;
+</script>
+
+</body>
+</html>
