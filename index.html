@@ -3,159 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল কোরআন ডিজিটাল প্রজেক্ট: হোম</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    <title>আল কোরআন ডিজিটাল ড্যাশবোর্ড</title>
     <style>
-        body { 
-            font-family: 'Noto Sans Bengali', Arial, sans-serif; 
-            margin: 0; 
-            background: #f0f2f5; /* Light grey background */
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Full viewport height */
-        }
-        .header {
-            background: #1a5e3a; /* Deep green for header */
-            color: white;
-            padding: 20px 15px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .subheader {
-            text-align: center;
-            padding: 15px;
-            font-size: 18px;
-            color: #555;
-            background: #e0e6ec; /* Slightly darker grey for subheader */
-        }
-        .main-options {
-            flex-grow: 1; /* Take up available space */
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Space between options */
-            max-width: 600px; /* Max width for options */
-            margin: 20px auto; /* Center align options */
-        }
-        .option-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-decoration: none; /* Remove underline for links */
-            color: inherit; /* Inherit text color */
-        }
-        .option-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
-        }
-        .option-icon {
-            font-size: 30px;
-            color: #1a5e3a; /* Green icon color */
-            min-width: 40px; /* Fixed width for icon */
-            text-align: center;
-        }
-        .option-text h3 {
-            margin: 0;
-            font-size: 20px;
-            color: #1a5e3a;
-        }
-        .option-text p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            color: #777;
-        }
-        .search-bar {
-            background: #fff;
-            padding: 15px 20px;
-            border-top: 1px solid #ddd;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-            position: sticky; /* Make it stick to the bottom */
-            bottom: 0;
-            width: 100%;
-            box-sizing: border-box; /* Include padding in width */
-        }
-        .search-bar input {
-            flex-grow: 1;
-            padding: 12px 15px;
-            border: 1px solid #ccc;
-            border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .search-bar input:focus {
-            border-color: #1a5e3a;
-        }
-        .search-bar button {
-            background: #1a5e3a;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.2s;
-        }
-        .search-bar button:hover {
-            background: #27ae60;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; background: #f0f2f5; display: flex; flex-direction: column; min-height: 100vh; }
+        .header { background: #1a5e3a; color: white; padding: 25px; text-align: center; font-size: 24px; font-weight: bold; }
+        .menu-container { padding: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: auto; width: 90%; }
+        .menu-item { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.3s; border-left: 6px solid #1a5e3a; }
+        .menu-item:hover { transform: translateY(-3px); background: #e8f6ef; }
+        .icon { font-size: 30px; }
+        .text h3 { margin: 0; color: #1a5e3a; }
+        .text p { margin: 5px 0 0; font-size: 14px; color: #666; }
     </style>
 </head>
 <body>
 
-    <div class="header">আল কোরআন ডিজিটাল গবেষণা প্রজেক্ট</div>
-    <div class="subheader">আপনার পছন্দের অপশনটি বেছে নিন</div>
+<div class="header">কোরআন গবেষণা প্রজেক্ট</div>
 
-    <div class="main-options">
-        <a href="#" class="option-card" onclick="alert('আল কোরআন পাতা লোড হবে!'); return false;">
-            <div class="option-icon">📖</div>
-            <div class="option-text">
-                <h3>আল কোরআন</h3>
-                <p>সূরা ফাতিহা থেকে নাস পর্যন্ত পাঠ করুন</p>
-            </div>
-        </a>
+<div class="menu-container">
+    <a href="surah-fatiha.html" class="menu-item">
+        <div class="icon">📖</div>
+        <div class="text">
+            <h3>আল কোরআন (সূরা ফাতিহা)</h3>
+            <p>সহজ তিলাওয়াত ও শব্দ বিশ্লেষণ</p>
+        </div>
+    </a>
 
-        <a href="#" class="option-card" onclick="alert('বিষয় ভিত্তিক গবেষণা লোড হবে!'); return false;">
-            <div class="option-icon">💡</div>
-            <div class="option-text">
-                <h3>আল কোরআন বিষয় ভিত্তিক</h3>
-                <p>কোরআনের বিভিন্ন বিষয় নিয়ে বিস্তারিত জানুন</p>
-            </div>
-        </a>
-
-        <a href="#" class="option-card" onclick="alert('শব্দ ভিত্তিক গবেষণা লোড হবে!'); return false;">
-            <div class="option-icon">🔍</div>
-            <div class="option-text">
-                <h3>আল কোরআন শব্দ ভিত্তিক</h3>
-                <p>প্রতিটি শব্দের মূল ধাতু, অর্থ ও পুনরাবৃত্তি বিশ্লেষণ</p>
-            </div>
-        </a>
-
-        <a href="#" class="option-card" onclick="alert('অন্যান্য বিষয় লোড হবে!'); return false;">
-            <div class="option-icon">📚</div>
-            <div class="option-text">
-                <h3>অন্যান্য বিষয়</h3>
-                <p>গবেষণার অতিরিক্ত তথ্য ও নোটস</p>
-            </div>
-        </a>
-    </div>
-
-    <div class="search-bar">
-        <input type="text" placeholder="শব্দ বা বিষয় দিয়ে অনুসন্ধান করুন (ডিকশনারি)">
-        <button>অনুসন্ধান</button>
-    </div>
+    <a href="#" class="menu-item">
+        <div class="icon">💡</div>
+        <div class="text">
+            <h3>বিষয় ভিত্তিক গবেষণা</h3>
+            <p>কুরআনের মূল নির্দেশিকা</p>
+        </div>
+    </a>
+</div>
 
 </body>
 </html>
