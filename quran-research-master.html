@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল-কোরআন স্মার্ট ডিরেক্টরি</title>
+    <style>
+        /* আপনার পছন্দের আগের সব কালার ও ডিজাইন এখানে */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 150px; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        #quran-container { max-width: 650px; margin: auto; padding: 10px; }
+
+        .card { background: white; border-radius: 20px; padding: 30px; margin: 20px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 20px; }
+        
+        /* আরবি লেখা (ছোট ও মার্জিত) */
+        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 0 6px; border-radius: 8px; transition: 0.3s; }
+        .arabic span:active { background: #ffeb3b; }
+
+        /* উচ্চারণ টাচ এরিয়া */
+        .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 20px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; cursor: pointer; border-radius: 12px; text-align: center; }
+
+        /* বাংলা অনুবাদ শিল্পশৈলী ও মোটা হরফ */
+        .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; margin-top: 15px; }
+        .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
+        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
+
+        /* পপ-আপ তথ্য বক্স */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        
+        .action-btn { display: block; background: #f0f2f5; color: #1a5e3a; padding: 15px; margin-top: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; border-left: 5px solid #1a5e3a; cursor: pointer; }
+        .list-container { display: none; margin-top: 10px; background: #fafafa; border-radius: 8px; padding: 5px; }
+        .list-item { display: block; padding: 12px; color: #1a5e3a; text-decoration: none; border-bottom: 1px solid #eee; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="nav">সূরা আল-ফাতিহা (স্মার্ট অটোমেটেড)</div>
+
+<div id="quran-container">
+    </div>
+
+<div id="info-box">
+    <button class="close-btn" onclick="closeBox()">× বন্ধ করুন</button>
+    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0; font-size: 24px;"></h3>
+    <div id="box-content"></div>
+</div>
+
+<script>
+    // ১. আপনার আয়াত ও শব্দের ডেটাবেস
+    const quranData = [
+        {
+            v: 1,
+            ar: [{w:"بِسْمِ", c:"৩৯"}, {w:"ٱللَّهِ", c:"২৬৯৯"}, {w:"ٱلرَّحْمَٰنِ", c:"৫৭"}, {w:"ٱلرَّحِيمِ", c:"৯৫"}],
+            pr: "বিসমিল্লাহির রাহমানির রাহিম",
+            tr: [{s:"আল্লাহর নামে", d:"সব কাজের শুরু"}, {s:"পরম করুণাময়", d:"সবার প্রতি দয়ালু"}, {s:"অসীম দয়ালু", d:"বিশেষ দয়া"}]
+        },
+        {
+            v: 2,
+            ar: [{w:"ٱلْحَمْدُ", c:"৩৮"}, {w:"لِلَّهِ", c:"২৬৯৯"}, {w:"رَبِّ", c:"৯৭০"}, {w:"ٱلْعَٰلَمِينَ", c:"৭৩"}],
+            pr: "আলহামদু লিল্লাহি রব্বিল আলামিন",
+            tr: [{s:"সকল প্রশংসা", d:"শোকর ও স্তুতি"}, {s:"আল্লাহর জন্য", d:"যিনি মাবুদ"}, {s:"বিশ্বজগতের", d:"সারা জাহানের"}]
+        },
+        {
+            v: 3,
+            ar: [{w:"ٱلرَّحْمَٰنِ", c:"৫৭"}, {w:"ٱلرَّحِيمِ", c:"৯৫"}],
+            pr: "আর-রাহমানির রাহিম",
+            tr: [{s:"যিনি পরম করুণাময়", d:"সবচেয়ে বেশি দয়ালু"}, {s:"অসীম দয়ালু", d:"যার দয়া শেষ হয় না"}]
+        },
+        {
+            v: 4,
+            ar: [{w:"مَٰلِكِ", c:"১২"}, {w:"يَوْمِ", c:"৪০৫"}, {w:"ٱلدِّينِ", c:"৯২"}],
+            pr: "মালিকি ইয়াউমিদ্দীন",
+            tr: [{s:"যিনি বিচার", d:"হিসাব-কিতাবের দিন"}, {s:"দিবসের", d:"কেয়ামতের দিন"}, {s:"মালিক", d:"একচ্ছত্র অধিপতি"}]
+        }
+    ];
+
+    // ২. রেন্ডার করার মাস্টার ইঞ্জিন
+    function loadQuran() {
+        const container = document.getElementById('quran-container');
+        quranData.forEach(item => {
+            let arHtml = item.ar.map(x => `<span onclick="showWord('${x.w}', '${x.c}')">${x.w}</span>`).join(' ');
+            let trHtml = item.tr.map(y => `<span onclick="showInfo('${y.s}', '${y.d}')">${y.s}</span>`).join(' ');
+
+            container.innerHTML += `
+                <div class="card">
+                    <div class="verse-no">${item.v}</div>
+                    <div class="arabic">${arHtml}</div>
+                    <div class="pronunciation" onclick="showTopic('${item.pr}')">${item.pr} (💡 গবেষণা)</div>
+                    <div class="translation-box"><div class="translation">${trHtml}</div></div>
+                </div>
+            `;
+        });
+    }
+
+    // ৩. প্রয়োজনীয় ফাংশনগুলো
+    function showInfo(title, desc) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = title;
+        document.getElementById('box-content').innerHTML = `<p style="font-size:19px; color:#444; font-weight:bold;">${desc}</p>`;
+    }
+
+    function showWord(word, count) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = "শব্দ: " + word;
+        document.getElementById('box-content').innerHTML = `
+            <p style="font-size:18px;">কোরআনে এসেছে: <b>${count} বার</b></p>
+            <div class="action-btn" onclick="toggleList()">এই ${count} বারের ফুল লিস্ট ↓</div>
+            <div id="data-list" class="list-container">
+                <a class="list-item">📍 তথ্য লোড হচ্ছে...</a>
+            </div>
+        `;
+    }
+
+    function toggleList() {
+        let list = document.getElementById('data-list');
+        list.style.display = (list.style.display === "block") ? "none" : "block";
+    }
+
+    function closeBox() { document.getElementById('info-box').style.display = 'none'; }
+
+    window.onload = loadQuran;
+</script>
+
+</body>
+</html>
