@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন রিসার্চ ডিরেক্টরি - গাণিতিক বিশ্লেষণসহ</title>
+    <title>আল-কোরআন ডিজিটাল গবেষণা ও আধ্যাত্মিক বিশ্লেষণ</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 120px; }
         .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 18px; }
@@ -19,9 +19,10 @@
         
         /* বাটন কালারসমূহ */
         .btn-tafsir { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
+        .btn-sufi { background: #fffde7; color: #f57f17; border-color: #fff9c4; } /* সুফি বাটন */
         .btn-math { background: #f3e5f5; color: #7b1fa2; border-color: #e1bee7; }
         .btn-topic { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
-        .btn-other { background: #fff3e0; color: #e65100; border-color: #ffe0b2; }
+        .btn-other { background: #fbe9e7; color: #bf360c; border-color: #ffccbc; }
 
         .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; border-radius: 12px; text-align: center; }
 
@@ -34,24 +35,26 @@
         
         .research-item { background: #fdfdfd; padding: 12px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
         .label-tag { color: #1a5e3a; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
+        .sufi-tag { color: #f57f17; font-weight: bold; font-size: 14px; background: #fffde7; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
     </style>
 </head>
 <body>
 
-<div class="nav">আল-কোরআন ডিজিটাল গবেষণা সিস্টেম</div>
+<div class="nav">আল-কোরআন ডিজিটাল আধ্যাত্মিক ডিরেক্টরি</div>
 
 <div class="card">
     <div class="verse-no">২</div>
     
     <div class="arabic">
-        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'প্রশংসা ও কৃতজ্ঞতা')">ٱلْحَمْدُ</span> 
-        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'মাবুদ')">لِلَّهِ</span> 
-        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'পালনকর্তা')">رَبِّ</span> 
-        <span onclick="showArDict('ٱلْعَٰلَمِينَ', 'আ-ল-ম', 'সৃষ্টিজগত')">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'আল্লাহর প্রশংসা যা হৃদয়ের অন্তঃস্থল থেকে উৎসারিত।')">ٱلْحَمْدُ</span> 
+        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'পরম সত্তা যাঁর কোনো তুলনা নেই।')">لِلَّهِ</span> 
+        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'যিনি সত্তার অভ্যন্তরে লালন করেন।')">رَبِّ</span> 
+        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'দৃশ্য ও অদৃশ্য সকল জগত।')">ٱلْعَٰলَمِينَ</span>
     </div>
 
     <div class="action-group">
         <button class="btn-res btn-tafsir" onclick="showTafsir()">তাফসীর</button>
+        <button class="btn-res btn-sufi" onclick="showSufiTafsir()">সুফি আধ্যাত্মিক ব্যাখ্যা</button>
         <button class="btn-res btn-math" onclick="showMath()">গাণিতিক সূত্র</button>
         <button class="btn-res btn-topic" onclick="showTopics()">বিষয়ভিত্তিক</button>
         <button class="btn-res btn-other" onclick="showOtherFaiths()">ধর্মগ্রন্থ সমার্থক</button>
@@ -63,7 +66,7 @@
         <div class="translation">
             <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, মহিমা বর্ণনা।')">সকল প্রশংসা</span> 
             <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তার জন্য।')">আল্লাহর জন্য</span>, 
-            <span onclick="showBnDict('যিনি', 'सर्वনাম', 'যে পরম সত্তা।')">যিনি</span> 
+            <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা।')">যিনি</span> 
             <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।')">বিশ্বজগতের</span> 
             <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা।')">প্রতিপালক</span>।
         </div>
@@ -83,55 +86,53 @@
         document.getElementById('box-content').innerHTML = content;
     }
 
-    // ১. গাণিতিক সূত্র (নতুন যুক্ত)
-    function showMath() {
+    // ১. সুফি আধ্যাত্মিক ব্যাখ্যা (নতুন যুক্ত)
+    function showSufiTafsir() {
         let content = `
-            <div class="research-item"><span class="label-tag">শব্দ সংখ্যা:</span><p>এই আয়াতে মোট ৪টি শব্দ রয়েছে।</p></div>
-            <div class="research-item"><span class="label-tag">অক্ষর সংখ্যা:</span><p>আয়াতটিতে মোট ১৮টি আরবি বর্ণ (Letters) রয়েছে।</p></div>
-            <div class="research-item"><span class="label-tag">সংখ্যাগত অলৌকিকতা:</span><p>'আলহামদুলিল্লাহ' শব্দটির গাণিতিক মান (Abjad Value) অত্যন্ত সুসংগত যা কোরআনের অন্যান্য ৫টি সূরার শুরুর সাথে সামঞ্জস্যপূর্ণ।</p></div>
-            <div class="research-item"><span class="label-tag">১৯-এর বিন্যাস:</span><p>কোরআনের গাণিতিক গবেষণায় এই আয়াতের শব্দ ও বর্ণের বিন্যাস একটি নির্দিষ্ট গাণিতিক ছন্দ অনুসরণ করে।</p></div>
+            <div class="research-item">
+                <span class="sufi-tag">আল-ফুতুহাত আল-মাক্কিয়্যাহ (ইবনুল আরাবী):</span>
+                <p>প্রশংসা কেবল আল্লাহর জন্যই, কারণ সৃষ্টির প্রতিটি অস্তিত্ব তাঁরই এক একটি দর্পণ। যখন আমরা প্রশংসা করি, তখন আমরা আসলে তাঁরই নূরের প্রতিফলনকে দেখি।</p>
+            </div>
+            <div class="research-item">
+                <span class="sufi-tag">ফুসুসুল হিকাম (ইবনুল আরাবী):</span>
+                <p>'রব' অর্থ সেই শক্তি যা প্রতিটি অণু-পরমাণুকে তার আপন গন্তব্যের দিকে নিয়ে যাচ্ছে। প্রতিটি সৃষ্টির মাঝে রবের হিকমত বিদ্যমান।</p>
+            </div>
+            <div class="research-item">
+                <span class="sufi-tag">তাফসীরে ইকবাল (চিশতি/নকশবন্দি):</span>
+                <p>আল্লাহর প্রশংসা করা মানে নিজের ইগো বা অহংকারের বিনাশ করা। হৃদয়ের পূর্ণ সমর্পণই প্রকৃত 'আলহামদু'।</p>
+            </div>
+            <div class="research-item">
+                <span class="sufi-tag">তাফসীরে ইলাহী নূর:</span>
+                <p>বিশ্বজগত রবের একটি বাহ্যিক রূপ মাত্র। প্রকৃত আধ্যাত্মিকতা হলো হৃদয়ের আলোতে (নূর) সৃষ্টিকর্তার রব্বুবিয়্যাতকে অনুভব করা।</p>
+            </div>
         `;
-        openBox("গাণিতিক বিশ্লেষণ ও সূত্র", content);
+        openBox("সুফি ও আধ্যাত্মিক ব্যাখ্যা (ইশারী)", content);
     }
 
-    // ২. আলেমদের তাফসীর
+    // ২. গাণিতিক সূত্র
+    function showMath() {
+        let content = `
+            <div class="research-item"><span class="label-tag">শব্দ ৪টি | অক্ষর ১৮টি</span><p>এই আয়াতের বিন্যাস কোরআনের গাণিতিক সমীকরণ ও ছন্দের মূল ভিত্তি।</p></div>
+        `;
+        openBox("গাণিতিক বিশ্লেষণ", content);
+    }
+
+    // ৩. আলেমদের তাফসীর
     function showTafsir() {
         let content = `
-            <div class="research-item"><span class="label-tag">ইবনে কাসীর:</span><p>সমস্ত প্রশংসা আল্লাহর জন্য। 'রব' অর্থ মালিক ও পরিচালক।</p></div>
-            <div class="research-item"><span class="label-tag">মাজেদী:</span><p>এখানে আল্লাহর রব্বুবিয়্যাত বা লালন-পালন ক্ষমতার ওপর জোর দেওয়া হয়েছে।</p></div>
+            <div class="research-item"><span class="label-tag">ইবনে কাসীর:</span><p>প্রশংসা কেবল আল্লাহর প্রাপ্য, কারণ তিনিই সকল নেয়ামতের মূল উৎস।</p></div>
         `;
         openBox("আলেমদের সংক্ষিপ্ত তাফসীর", content);
     }
 
-    // ৩. বিষয়ভিত্তিক গবেষণা
-    function showTopics() {
-        let content = `
-            <div class="research-item"><b>১. শুকরিয়া (Gratitude):</b> নিয়ামতের জন্য কৃতজ্ঞতা।</div>
-            <div class="research-item"><b>২. তৌহিদ:</b> আল্লাহই একমাত্র পালনকর্তা।</div>
-        `;
-        openBox("বিষয়ভিত্তিক গবেষণা", content);
-    }
+    // ৪. বিষয়ভিত্তিক ও অন্যান্য
+    function showTopics() { openBox("বিষয়ভিত্তিক", "১. কৃতজ্ঞতা ২. রবের কর্তৃত্ব ৩. বিশ্বজগত।"); }
+    function showOtherFaiths() { openBox("ধর্মগ্রন্থ সমার্থক", "বাইবেল ও বেদের সমার্থক শ্লোক সমূহ এখানে দৃশ্যমান হবে।"); }
 
-    // ৪. অন্যান্য ধর্মগ্রন্থ
-    function showOtherFaiths() {
-        let content = `
-            <div class="research-item"><b>বাইবেল (সামসঙ্গীত ১৪৫:৩):</b> "প্রভু মহান এবং তাঁর প্রশংসা প্রশংসনীয়।"</div>
-            <div class="research-item"><b>ঋগ্বেদ (১০:১২১:১):</b> "তিনিই বিশ্বের প্রভু, সকল প্রাণীর শাসক।"</div>
-        `;
-        openBox("অন্যান্য ধর্মগ্রন্থের সমার্থক রূপ", content);
-    }
-
-    // ডিকশনারি ফাংশনগুলো
-    function showArDict(word, root, meaning) {
-        openBox("আরবি বিশ্লেষণ: " + word, `<div class="research-item"><b>মূল ধাতু:</b> ${root}<br><b>অর্থ:</b> ${meaning}</div>`);
-    }
-
-    function showBnDict(word, type, meaning) {
-        openBox(word, `<div class="research-item"><b>ধরণ:</b> ${type}<br><b>ডিকশনারি অর্থ:</b> ${meaning}</div>`);
-    }
-
+    function showArDict(word, root, meaning) { openBox("আরবি বিশ্লেষণ", "<b>শব্দ:</b> "+word+"<br><b>মূল ধাতু:</b> "+root+"<br><b>ব্যাখ্যা:</b> "+meaning); }
+    function showBnDict(word, type, meaning) { openBox(word, "<b>ধরণ:</b> "+type+"<br><b>অর্থ:</b> "+meaning); }
     function closeBox() { document.getElementById('info-box').style.display = 'none'; }
 </script>
 
 </body>
-                </html>
+    </html>
