@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন ডিজিটাল গবেষণা ও তুলনামূলক ধর্মতত্ত্ব</title>
+    <title>আল-কোরআন রিসার্চ ডিরেক্টরি - গাণিতিক বিশ্লেষণসহ</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 120px; }
         .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 18px; }
@@ -11,31 +11,29 @@
         .card { background: white; border-radius: 20px; padding: 25px; margin: 20px auto; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
         .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 15px; }
         
-        /* আরবি ও বাটন ডিজাইন */
         .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
         .arabic span { cursor: pointer; padding: 0 5px; color: #1a5e3a; }
 
         .action-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-        .btn-res { padding: 8px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
+        .btn-res { padding: 8px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
         
-        /* নতুন বাটন কালার */
+        /* বাটন কালারসমূহ */
         .btn-tafsir { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
+        .btn-math { background: #f3e5f5; color: #7b1fa2; border-color: #e1bee7; }
         .btn-topic { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
         .btn-other { background: #fff3e0; color: #e65100; border-color: #ffe0b2; }
 
         .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; border-radius: 12px; text-align: center; }
 
-        /* অনুবাদ ও শিল্পশৈলী */
         .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; }
         .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
         .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; }
 
-        /* পপ-আপ ডিজাইন */
         #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 80vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         
         .research-item { background: #fdfdfd; padding: 12px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
-        .author-tag { color: #1a5e3a; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
+        .label-tag { color: #1a5e3a; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -49,13 +47,14 @@
         <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'প্রশংসা ও কৃতজ্ঞতা')">ٱلْحَمْدُ</span> 
         <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'মাবুদ')">لِلَّهِ</span> 
         <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'পালনকর্তা')">رَبِّ</span> 
-        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'সৃষ্টিজগত')">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showArDict('ٱلْعَٰلَمِينَ', 'আ-ল-ম', 'সৃষ্টিজগত')">ٱلْعَٰলَمِينَ</span>
     </div>
 
     <div class="action-group">
-        <button class="btn-res btn-tafsir" onclick="showTafsir()">আলেমদের তাফসীর</button>
-        <button class="btn-res btn-topic" onclick="showTopics()">বিষয়ভিত্তিক গবেষণা</button>
-        <button class="btn-res btn-other" onclick="showOtherFaiths()">অন্যান্য ধর্মগ্রন্থ</button>
+        <button class="btn-res btn-tafsir" onclick="showTafsir()">তাফসীর</button>
+        <button class="btn-res btn-math" onclick="showMath()">গাণিতিক সূত্র</button>
+        <button class="btn-res btn-topic" onclick="showTopics()">বিষয়ভিত্তিক</button>
+        <button class="btn-res btn-other" onclick="showOtherFaiths()">ধর্মগ্রন্থ সমার্থক</button>
     </div>
 
     <div class="pronunciation">আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
@@ -64,7 +63,7 @@
         <div class="translation">
             <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, মহিমা বর্ণনা।')">সকল প্রশংসা</span> 
             <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তার জন্য।')">আল্লাহর জন্য</span>, 
-            <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা।')">যিনি</span> 
+            <span onclick="showBnDict('যিনি', 'सर्वনাম', 'যে পরম সত্তা।')">যিনি</span> 
             <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।')">বিশ্বজগতের</span> 
             <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা।')">প্রতিপালক</span>।
         </div>
@@ -84,36 +83,45 @@
         document.getElementById('box-content').innerHTML = content;
     }
 
-    // ১. আলেমদের তাফসীর
-    function showTafsir() {
+    // ১. গাণিতিক সূত্র (নতুন যুক্ত)
+    function showMath() {
         let content = `
-            <div class="research-item"><span class="author-tag">তাফসীর ইবনে কাসীর:</span><p>সমস্ত প্রশংসা আল্লাহর জন্য। 'রব' অর্থ মালিক ও পরিচালক।</p></div>
-            <div class="research-item"><span class="author-tag">তাফসীর জালালাইন:</span><p>আল্লাহই একমাত্র প্রশংসার দাবিদার, যিনি নিখিল বিশ্বের স্রষ্টা।</p></div>
-            <div class="research-item"><span class="author-tag">তাফসীর মাজেদী:</span><p>এখানে আল্লাহর রব্বুবিয়্যাত বা লালন-পালন ক্ষমতার ওপর জোর দেওয়া হয়েছে।</p></div>
+            <div class="research-item"><span class="label-tag">শব্দ সংখ্যা:</span><p>এই আয়াতে মোট ৪টি শব্দ রয়েছে।</p></div>
+            <div class="research-item"><span class="label-tag">অক্ষর সংখ্যা:</span><p>আয়াতটিতে মোট ১৮টি আরবি বর্ণ (Letters) রয়েছে।</p></div>
+            <div class="research-item"><span class="label-tag">সংখ্যাগত অলৌকিকতা:</span><p>'আলহামদুলিল্লাহ' শব্দটির গাণিতিক মান (Abjad Value) অত্যন্ত সুসংগত যা কোরআনের অন্যান্য ৫টি সূরার শুরুর সাথে সামঞ্জস্যপূর্ণ।</p></div>
+            <div class="research-item"><span class="label-tag">১৯-এর বিন্যাস:</span><p>কোরআনের গাণিতিক গবেষণায় এই আয়াতের শব্দ ও বর্ণের বিন্যাস একটি নির্দিষ্ট গাণিতিক ছন্দ অনুসরণ করে।</p></div>
         `;
-        openBox("আলেমদের তাফসীর", content);
+        openBox("গাণিতিক বিশ্লেষণ ও সূত্র", content);
     }
 
-    // ২. বিষয়ভিত্তিক গবেষণা
+    // ২. আলেমদের তাফসীর
+    function showTafsir() {
+        let content = `
+            <div class="research-item"><span class="label-tag">ইবনে কাসীর:</span><p>সমস্ত প্রশংসা আল্লাহর জন্য। 'রব' অর্থ মালিক ও পরিচালক।</p></div>
+            <div class="research-item"><span class="label-tag">মাজেদী:</span><p>এখানে আল্লাহর রব্বুবিয়্যাত বা লালন-পালন ক্ষমতার ওপর জোর দেওয়া হয়েছে।</p></div>
+        `;
+        openBox("আলেমদের সংক্ষিপ্ত তাফসীর", content);
+    }
+
+    // ৩. বিষয়ভিত্তিক গবেষণা
     function showTopics() {
         let content = `
-            <div class="research-item"><b>১. শুকরিয়া (Gratitude):</b> নিয়ামতের জন্য কৃতজ্ঞতা প্রকাশ।</div>
-            <div class="research-item"><b>২. তৌহিদ (Monotheism):</b> আল্লাহই একমাত্র রব বা প্রতিপালক।</div>
-            <div class="research-item"><b>৩. সৃষ্টিতত্ত্ব:</b> জগতসমূহের উৎপত্তি ও নিয়ন্ত্রণ।</div>
+            <div class="research-item"><b>১. শুকরিয়া (Gratitude):</b> নিয়ামতের জন্য কৃতজ্ঞতা।</div>
+            <div class="research-item"><b>২. তৌহিদ:</b> আল্লাহই একমাত্র পালনকর্তা।</div>
         `;
         openBox("বিষয়ভিত্তিক গবেষণা", content);
     }
 
-    // ৩. অন্যান্য ধর্মগ্রন্থ
+    // ৪. অন্যান্য ধর্মগ্রন্থ
     function showOtherFaiths() {
         let content = `
-            <div class="research-item"><b>বাইবেল (The Bible):</b> "প্রভু মহান এবং তাঁর প্রশংসা প্রশংসনীয়।" (সামসঙ্গীত ১৪৫:৩)</div>
-            <div class="research-item"><b>ঋগ্বেদ (Rigveda):</b> "তিনিই বিশ্বের প্রভু, যিনি সকল প্রাণীর শাসক।" (১০:১২১:১)</div>
+            <div class="research-item"><b>বাইবেল (সামসঙ্গীত ১৪৫:৩):</b> "প্রভু মহান এবং তাঁর প্রশংসা প্রশংসনীয়।"</div>
+            <div class="research-item"><b>ঋগ্বেদ (১০:১২১:১):</b> "তিনিই বিশ্বের প্রভু, সকল প্রাণীর শাসক।"</div>
         `;
         openBox("অন্যান্য ধর্মগ্রন্থের সমার্থক রূপ", content);
     }
 
-    // ডিকশনারি ফাংশন
+    // ডিকশনারি ফাংশনগুলো
     function showArDict(word, root, meaning) {
         openBox("আরবি বিশ্লেষণ: " + word, `<div class="research-item"><b>মূল ধাতু:</b> ${root}<br><b>অর্থ:</b> ${meaning}</div>`);
     }
@@ -126,4 +134,4 @@
 </script>
 
 </body>
-    </html>
+                </html>
