@@ -3,54 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন স্মার্ট রিসার্চ ডিরেক্টরি</title>
+    <title>কোরআন স্মার্ট রিসার্চ আর্কাইভ - QEPA Method</title>
     <style>
-        :root { --primary: #1a5e3a; --bg: #f0f4f2; }
+        :root { --primary: #1a5e3a; --sufi: #f57f17; --qepa: #2e7d32; --bg: #f0f4f2; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); line-height: 1.6; }
         
-        /* মেইন সার্চ বার (উপরে) */
         .top-search-container { max-width: 550px; margin: 20px auto; padding: 0 15px; }
-        .main-search { width: 100%; padding: 12px 20px; border: 2px solid var(--primary); border-radius: 30px; outline: none; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .main-search { width: 100%; padding: 12px 20px; border: 2px solid var(--primary); border-radius: 30px; outline: none; font-size: 16px; text-align: center; }
 
         .card { background: white; border-radius: 20px; padding: 25px; margin: 10px auto; max-width: 550px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
         
-        .verse-btn { background: var(--primary); color: white; border-radius: 30px; padding: 8px 20px; font-size: 14px; font-weight: bold; margin-bottom: 20px; cursor: pointer; border: none; display: block; margin: 0 auto 20px; }
-
-        .arabic-text { font-size: 38px; text-align: center; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 10px; word-spacing: 12px; }
-        .arabic-text span { cursor: pointer; padding: 0 8px; border-radius: 8px; }
+        .arabic-text { font-size: 38px; text-align: center; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 10px; }
 
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
         .btn { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 12px; color: white; }
         .btn-alem { background: #2e7d32; } .btn-sufi { background: #f57f17; }
         .btn-faith { background: #bf360c; } .btn-math { background: #7b1fa2; }
-        .btn-full { background: #00897b; grid-column: span 2; }
+        
+        /* QEPA বাটন ডিজাইন */
+        .btn-qepa { background: #004d40; grid-column: span 2; border: 2px solid #ffeb3b; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
         .analysis-box { background: #f9fbf9; border-top: 4px solid var(--primary); padding: 20px; border-radius: 15px; text-align: center; }
-        .proun-text { font-size: 20px; color: #d32f2f; font-weight: bold; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 10px; }
+        .proun-text { font-size: 20px; color: #d32f2f; font-weight: bold; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; }
         .translation-text { font-size: 20px; font-weight: 800; color: #1a1a1a; }
-        .translation-text span { cursor: pointer; border-bottom: 2px solid #b2dfdb; }
 
-        /* পপ-আপ এবং এর ভেতরের সার্চ বার */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid var(--primary); padding: 20px; display: none; z-index: 2000; border-radius: 25px 25px 0 0; max-height: 80vh; overflow-y: auto; }
-        .pop-search { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        /* পপ-আপ ডিজাইন */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid var(--primary); padding: 25px; display: none; z-index: 2000; border-radius: 25px 25px 0 0; max-height: 85vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
+        /* QEPA সার্চ প্যানেল */
+        .qepa-search-box { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 15px; }
+        .qepa-input { flex: 1; min-width: 150px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .qepa-select { padding: 10px; border-radius: 8px; border: 1px solid #ddd; background: #eee; font-weight: bold; }
         .list-card { background: #fdfdfd; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div class="top-search-container">
-    <input type="text" class="main-search" placeholder="সূরার নাম বা আয়াত সার্চ করুন (১০:১১)...">
+    <input type="text" class="main-search" placeholder="সরাসরি আয়াত বা সূরা সার্চ করুন...">
 </div>
 
 <div class="card">
-    <button class="verse-btn" onclick="openNav()">সূরা: ১, আয়াত: ২ (নেভিগেটর)</button>
-    
     <div class="arabic-text">
-        <span onclick="showAr('ٱلْحَمْدُ', 'আল-হামদু', 'হ-ম-দ', 'যাবতীয় প্রশংসা।')">ٱلْحَمْدُ</span> 
-        <span onclick="showAr('لِلَّهِ', 'লিল্লাহি', 'আল্লাহ', 'আল্লাহর জন্য।')">لِلَّهِ</span> 
-        <span onclick="showAr('রব্বি', 'রব্বি', 'র-ব-ব', 'যিনি প্রতিপালক।')">রব্বি</span> 
-        <span onclick="showAr('ٱلْعَٰলَمِينَ', 'আল-আলামীন', 'আ-ল-ম', 'বিশ্বজগতের।')">ٱلْعَٰলَمِينَ</span>
+        <span>ٱلْحَمْدُ</span> <span>لِلَّهِ</span> <span>رَبِّ</span> <span>ٱلْعَٰলَمِينَ</span>
     </div>
 
     <div class="btn-grid">
@@ -58,89 +54,82 @@
         <button class="btn btn-sufi" onclick="showSufi()">সুফি ও আধ্যাত্মিক</button>
         <button class="btn btn-faith" onclick="showFaith()">অন্যান্য ধর্মগ্রন্থ</button>
         <button class="btn btn-math" onclick="showMath()">গাণিতিক সূত্র</button>
-        <button class="btn btn-full" onclick="showOpinion()">গবেষণামূলক মতামত ও তাফসীর</button>
+        <button class="btn btn-qepa" onclick="openQEPA()">QEPA গবেষণা নির্দেশিকা ও ক্যালকুলেটর</button>
     </div>
 
     <div class="analysis-box">
         <div class="proun-text">আল-হামদু — লিল্লাহি — রব্বি — আল-আলামীন</div>
-        <div class="translation-text">
-            <span onclick="showBn('সকল প্রশংসা')">সকল প্রশংসা</span> 
-            <span onclick="showBn('আল্লাহর জন্য')">আল্লাহর জন্য</span>, 
-            <span onclick="showBn('যিনি প্রতিপালক')">যিনি প্রতিপালক</span> 
-            <span onclick="showBn('বিশ্বজগতের')">বিশ্বজগতের</span>।
-        </div>
+        <div class="translation-text">সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।</div>
     </div>
 </div>
 
 <div id="info-box">
     <button class="close-btn" onclick="closeBox()">বন্ধ</button>
-    <h3 id="box-title" style="color: var(--primary); margin-top: 0;"></h3>
-    <input type="text" id="popSearchInput" class="pop-search" placeholder="এখানে গ্রন্থ বা লেখক খুঁজুন..." onkeyup="filterList()">
+    <h3 id="box-title"></h3>
+    <div id="qepa-panel" style="display:none;">
+        <p style="font-size: 13px; color: #555;">ইভেন্ট-প্যাটার্ন মডেল অনুযায়ী ডেটা সার্চ করুন:</p>
+        <div class="qepa-search-box">
+            <select id="searchType" class="qepa-select">
+                <option value="বর্ণ">বর্ণ (Letter)</option>
+                <option value="শব্দ">শব্দ (Word)</option>
+                <option value="আয়াত">আয়াত (Ayat)</option>
+                <option value="সূরা">সূরা (Surah)</option>
+            </select>
+            <input type="text" id="qepaInput" class="qepa-input" placeholder="সার্চ ভ্যালু লিখুন...">
+            <button onclick="runQEPASearch()" style="background: var(--qepa); color:white; border:none; padding:10px 15px; border-radius:8px; cursor:pointer;">বিশ্লেষণ</button>
+        </div>
+    </div>
     <div id="box-content"></div>
 </div>
 
 <script>
+    function openQEPA() {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = "QEPA ইভেন্ট-প্যাটার্ন টুলস";
+        document.getElementById('qepa-panel').style.display = 'block';
+        document.getElementById('box-content').innerHTML = `
+            <div class="list-card" style="border-left: 4px solid #004d40;">
+                <b>বর্তমান মেথড:</b> ২.৩ ডেটা টুলস (QEPA Method)<br>
+                এই টুলের মাধ্যমে আধুনিক ঘটনার সংখ্যা (তারিখ/তলা/বছর) কোরআনের শব্দ ও বর্ণ সংখ্যার সাথে মিলানো হয়।
+            </div>
+        `;
+    }
+
+    function runQEPASearch() {
+        let type = document.getElementById('searchType').value;
+        let val = document.getElementById('qepaInput').value;
+        if(!val) return alert("কিছু লিখুন!");
+        
+        let result = `
+            <div class="list-card">
+                <b>ফলাফল (থিওরিটিক্যাল):</b><br>
+                ইনপুট: ${val} (${type}) <br>
+                <b>প্যাটার্ন ম্যাচিং:</b> ৩.১ স্তরে গবেষণা চলছে... <br>
+                <small style="color:red;">*এটি একটি সম্ভাব্য মিল, চূড়ান্ত সিদ্ধান্ত নয়।</small>
+            </div>
+        `;
+        document.getElementById('box-content').innerHTML += result;
+    }
+
+    function showAlem() {
+        hideQEPA();
+        showPopup("আলেমদের তাফসীর", `<div class="list-card">ড. আব্দুল্লাহ জাহাঙ্গীরসহ আলেমদের ডেটাবেজ।</div>`);
+    }
+
+    function showSufi() {
+        hideQEPA();
+        showPopup("সুফি ও আধ্যাত্মিক", `<div class="list-card">সুরেশ্বরী ও চিশতী ধারার গবেষণা।</div>`);
+    }
+
     function showPopup(title, content) {
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('box-title').innerText = title;
         document.getElementById('box-content').innerHTML = content;
-        document.getElementById('popSearchInput').style.display = 'block'; // সার্চ বার দেখাবে
     }
 
-    // বাটনের পপ-আপ ডেটা (সার্চ করার সুবিধার্থে আলাদা করা)
-    function showAlem() {
-        let list = `
-            <div class="list-card"><b>ডক্টর আব্দুল্লাহ জাহাঙ্গীর:</b> তাফসীর ও গবেষণা।</div>
-            <div class="list-card"><b>তাফসীরে ইবনে কাসীর:</b> প্রাচীনতম নির্ভরযোগ্য ব্যাখ্যা।</div>
-            <div class="list-card"><b>তাফসীরে জালালাইন:</b> সংক্ষিপ্ত তাফসীর।</div>
-        `;
-        showPopup("আলেমদের তাফসীর", list);
-    }
-
-    function showSufi() {
-        let list = `
-            <div class="list-card"><b>আল সুরেশ্বরী:</b> কোরআনুল মাজীদ (আধ্যাত্মিক)।</div>
-            <div class="list-card"><b>সদর উদ্দিন চিশতী:</b> কোরআন দর্শন।</div>
-            <div class="list-card"><b>ইবনুল আরাবী:</b> ফুতুহাত ও ফুসুস।</div>
-            <div class="list-card"><b>দেওয়ানবাগী:</b> মারেফতি ব্যাখ্যা।</div>
-        `;
-        showPopup("সুফি ও আধ্যাত্মিক গ্রন্থসমূহ", list);
-    }
-
-    function showFaith() {
-        let list = `
-            <div class="list-card"><b>শ্রীমদ্ভগবদ্গীতা:</b> সমার্থক শ্লোক।</div>
-            <div class="list-card"><b>ত্রিপিটক:</b> জ্ঞান ও দর্শনের মিল।</div>
-            <div class="list-card"><b>গুরু গ্রন্থ সাহেব:</b> একত্ববাদের বাণী।</div>
-        `;
-        showPopup("অন্যান্য ধর্মগ্রন্থ", list);
-    }
-
-    // পপ-আপের ভেতরে ফিল্টার করার ফাংশন
-    function filterList() {
-        let input = document.getElementById('popSearchInput').value.toLowerCase();
-        let cards = document.getElementsByClassName('list-card');
-        for (let i = 0; i < cards.length; i++) {
-            let text = cards[i].innerText.toLowerCase();
-            cards[i].style.display = text.includes(input) ? "block" : "none";
-        }
-    }
-
-    function showAr(word, proun, root, mean) {
-        document.getElementById('popSearchInput').style.display = 'none'; // ডিকশনারিতে সার্চ লাগবে না
-        showPopup("আরবি বিশ্লেষণ", `<div class="list-card"><b>শব্দ:</b> ${word}<br><b>উচ্চারণ:</b> ${proun}<br><b>অর্থ:</b> ${mean}</div>`);
-    }
-
-    function showBn(word) {
-        document.getElementById('popSearchInput').style.display = 'none';
-        showPopup(word, `<div class="list-card">বিস্তারিত ডিকশনারি তথ্য এখানে।</div>`);
-    }
-
-    function showMath() { showPopup("গাণিতিক সূত্র", `<div class="list-card">গাণিতিক বিন্যাস বিশ্লেষণ।</div>`); }
-    function showOpinion() { showPopup("মতামত", `<textarea class="pop-search" placeholder="লিখুন..."></textarea>`); }
+    function hideQEPA() { document.getElementById('qepa-panel').style.display = 'none'; }
     function closeBox() { document.getElementById('info-box').style.display = 'none'; }
-    function openNav() { showPopup("আয়াত নেভিগেটর", "১-৬২৩৬ সার্চ করুন।"); }
 </script>
 
 </body>
-</html>
+    </html>
