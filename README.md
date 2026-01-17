@@ -1,2 +1,0 @@
-# quran-project
-quran-database
