@@ -5,71 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>আল-কোরআন ডিজিটাল গবেষণা</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        .card { background: white; border-radius: 15px; padding: 25px; margin: 20px auto; max-width: 650px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
-        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; font-weight: bold; margin-bottom: 15px; }
+        .card { background: white; border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 650px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
+        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 20px; }
         
-        /* আরবি শব্দের কালার ও ডিজাইন */
-        .arabic { font-size: 38px; text-align: right; direction: rtl; line-height: 2.5; color: #2c3e50; font-weight: bold; }
-        .arabic span { cursor: pointer; display: inline-block; padding: 2px 8px; border-radius: 8px; transition: 0.3s; }
+        /* আরবি লেখা একটু ছোট ও মার্জিত করা হয়েছে */
+        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 0 6px; border-radius: 8px; transition: 0.3s; }
         .arabic span:active { background: #ffeb3b; }
 
         /* উচ্চারণ টাচ এরিয়া */
         .pronunciation { 
-            font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; 
-            border: 1px solid #1a5e3a; padding: 12px; 
-            background: #e8f6ef; cursor: pointer; border-radius: 10px;
-            text-align: center;
+            font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 20px 0; 
+            border: 1px solid #c8e6c9; padding: 12px; 
+            background: #f1f8f1; cursor: pointer; border-radius: 12px;
+            text-align: center; transition: 0.3s;
         }
 
-        /* বাংলা অনুবাদ ও প্রতিশব্দ ডিজাইন */
-        .translation { font-size: 19px; color: #2d3436; border-top: 1px solid #f0f0f0; padding-top: 12px; font-weight: 500; }
-        .translation span { cursor: pointer; border-bottom: 2px dotted #1a5e3a; padding: 0 2px; }
-        .translation span:active { background: #fff9c4; }
+        /* বাংলা অনুবাদ শিল্পশৈলী ও মোটা হরফ */
+        .translation-box { 
+            background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; 
+            border-radius: 0 12px 12px 0; margin-top: 15px;
+        }
+        .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; /* অধিক মোটা হরফ */ line-height: 1.8; }
+        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
+        .translation span:hover { background: #e0f2f1; }
 
         /* পপ-আপ তথ্য বক্স */
         #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
         
-        .action-btn {
-            display: block; background: #f0f2f5; color: #1a5e3a; 
-            padding: 15px; margin-top: 12px; border-radius: 10px; 
-            text-decoration: none; font-weight: bold; border-left: 5px solid #1a5e3a;
-            cursor: pointer;
-        }
+        .action-btn { display: block; background: #f0f2f5; color: #1a5e3a; padding: 15px; margin-top: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; border-left: 5px solid #1a5e3a; cursor: pointer; }
         .list-container { display: none; margin-top: 10px; background: #fafafa; border-radius: 8px; padding: 5px; }
         .list-item { display: block; padding: 12px; color: #1a5e3a; text-decoration: none; border-bottom: 1px solid #eee; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="nav">সূরা আল-ফাতিহা স্মার্ট গবেষণা</div>
+<div class="nav">সূরা আল-ফাতিহা স্মার্ট ডিরেক্টরি</div>
 
 <div class="card" id="verse-2">
     <div class="verse-no">২</div>
     
     <div class="arabic">
-        <span onclick="showWordResearch('ٱلْحَمْدُ', '৩৮', ['১:২ (আল-ফাতিহা)', '৬:১ (আল-আনআম)', '১৮:১ (আল-কাহাফ)', '৩৪:১ (সাবা)'])">ٱلْحَمْدُ</span> 
+        <span onclick="showWordResearch('ٱلْحَمْدُ', '৩৮', ['১:২ (আল-ফাতিহা)', '৬:১ (আল-আনআম)', '১৮:১ (আল-কাহাফ)'])">ٱلْحَمْدُ</span> 
         <span onclick="showWordResearch('لِلَّهِ', '২৬৯৯', ['১:২ (আল-ফাতিহা)', '২:১৬৩ (আল-বাকারাহ)'])">لِلَّهِ</span> 
         <span onclick="showWordResearch('رَبِّ', '৯৭০', ['১:২ (আল-ফাতিহা)', '১১৪:১ (আন-নাস)'])">رَبِّ</span> 
-        <span onclick="showWordResearch('ٱلْعَٰلَمِينَ', '৭৩', ['১:২ (আল-ফাতিহা)', '২৬:২৩ (আশ-শুয়ারা)'])">ٱلْعَٰلَمِينَ</span>
+        <span onclick="showWordResearch('ٱلْعَٰলَمِينَ', '৭৩', ['১:২ (আল-ফাতিহা)', '২৬:২৩ (আশ-শুয়ারা)'])">ٱلْعَٰلَمِينَ</span>
     </div>
 
-    <div class="pronunciation" onclick="showTopicResearch('বিষয়ভিত্তিক আয়াতসমূহ', 'এই আয়াতে আল্লাহর প্রশংসা ও রব্বুবিয়্যাত বর্ণিত হয়েছে।', ['আল্লাহর প্রশংসা (১:২, ৬:১)', 'বিশ্বজগতের সৃষ্টি (২:২৯, ৭:৫৪)'])">
+    <div class="pronunciation" onclick="showTopicResearch('বিষয়ভিত্তিক আয়াতসমূহ', 'এই আয়াতে আল্লাহর প্রশংসা বর্ণিত হয়েছে।', ['আল্লাহর প্রশংসা (১:২, ৬:১)', 'বিশ্বজগতের সৃষ্টি (২:২৯)'])">
         আলহামদু লিল্লাহি রব্বিল আলামিন। (বিষয় দেখতে টাচ করুন 💡)
     </div>
 
-    <div class="translation">
-        <span onclick="showInfo('সকল প্রশংসা', 'প্রতিশব্দ: স্তুতি, গুণগান, মহিমা কীর্তন, শোকর গোজারি।')">সকল প্রশংসা</span> 
-        <span onclick="showInfo('আল্লাহর জন্য', 'প্রতিশব্দ: মাবুদ, ইলাহ, খালিক, পরম সত্তা।')">আল্লাহর জন্য</span>, যিনি 
-        <span onclick="showInfo('বিশ্বজগতের', 'প্রতিশব্দ: সারা জাহান, সৃষ্টিজগত, কুল মাখলুকাত।')">বিশ্বজগতের</span> প্রতিপালক।
+    <div class="translation-box">
+        <div class="translation">
+            <span onclick="showInfo('সকল প্রশংসা', 'প্রতিশব্দ: স্তুতি, গুণগান, মহিমা কীর্তন।')">সকল প্রশংসা</span> 
+            <span onclick="showInfo('আল্লাহর জন্য', 'প্রতিশব্দ: মাবুদ, খালিক, পরম সত্তা।')">আল্লাহর জন্য</span>, যিনি 
+            <span onclick="showInfo('বিশ্বজগতের', 'প্রতিশব্দ: সারা জাহান, সৃষ্টিজগত।')">বিশ্বজগতের</span> প্রতিপালক।
+        </div>
     </div>
 </div>
 
 <div id="info-box">
-    <button class="close-btn" onclick="closeBox()">বন্ধ করুন</button>
+    <button class="close-btn" onclick="closeBox()">× বন্ধ করুন</button>
     <h3 id="box-title" style="color: #1a5e3a; margin-top: 0; font-size: 24px;"></h3>
     <div id="box-content"></div>
 </div>
@@ -78,18 +79,16 @@
     function showInfo(title, desc) {
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('box-title').innerText = title;
-        document.getElementById('box-content').innerHTML = `<p style="font-size:19px; color:#444;">${desc}</p>`;
+        document.getElementById('box-content').innerHTML = `<p style="font-size:19px; color:#444; font-weight:bold;">${desc}</p>`;
     }
 
     function showWordResearch(word, count, verseList) {
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('box-title').innerText = "শব্দ: " + word;
-        
-        let listHtml = verseList.map(v => `<a href="#" class="list-item" onclick="closeBox()">📍 আয়াত: ${v}</a>`).join('');
-        
+        let listHtml = verseList.map(v => `<a href="#" class="list-item">📍 আয়াত: ${v}</a>`).join('');
         document.getElementById('box-content').innerHTML = `
             <p style="font-size:18px;">কোরআনে এসেছে: <b>${count} বার</b></p>
-            <div class="action-btn" onclick="toggleList()">এই ${count} বারের লিস্ট বের করুন ↓</div>
+            <div class="action-btn" onclick="toggleList()">এই ${count} বারের ফুল লিস্ট ↓</div>
             <div id="data-list" class="list-container">${listHtml}</div>
         `;
     }
@@ -97,9 +96,7 @@
     function showTopicResearch(title, desc, topicList) {
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('box-title').innerText = title;
-        
-        let listHtml = topicList.map(t => `<a href="#" class="list-item" onclick="closeBox()">📖 বিষয়: ${t}</a>`).join('');
-        
+        let listHtml = topicList.map(t => `<a href="#" class="list-item">📖 বিষয়: ${t}</a>`).join('');
         document.getElementById('box-content').innerHTML = `
             <p style="font-size:17px;">${desc}</p>
             <div class="action-btn" onclick="toggleList()">সংশ্লিষ্ট বিষয়ের আয়াত লিস্ট ↓</div>
