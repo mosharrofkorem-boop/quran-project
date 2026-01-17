@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন ডিজিটাল গবেষণা ও আধ্যাত্মিক বিশ্লেষণ</title>
+    <title>আল-কোরআন স্মার্ট রিসার্চ ডিরেক্টরি</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 120px; }
         .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 18px; }
@@ -12,14 +12,15 @@
         .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 15px; }
         
         .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; padding: 0 5px; color: #1a5e3a; }
+        .arabic span { cursor: pointer; padding: 0 5px; color: #1a5e3a; transition: 0.2s; }
+        .arabic span:hover { background: #e8f5e9; border-radius: 5px; }
 
-        .action-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .action-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; justify-content: center; }
         .btn-res { padding: 8px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
         
         /* বাটন কালারসমূহ */
         .btn-tafsir { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
-        .btn-sufi { background: #fffde7; color: #f57f17; border-color: #fff9c4; } /* সুফি বাটন */
+        .btn-sufi { background: #fffde7; color: #f57f17; border-color: #fff9c4; }
         .btn-math { background: #f3e5f5; color: #7b1fa2; border-color: #e1bee7; }
         .btn-topic { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
         .btn-other { background: #fbe9e7; color: #bf360c; border-color: #ffccbc; }
@@ -28,36 +29,39 @@
 
         .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; }
         .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
-        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; }
+        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
 
+        /* পপ-আপ ডিজাইন */
         #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 80vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         
         .research-item { background: #fdfdfd; padding: 12px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
-        .label-tag { color: #1a5e3a; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
-        .sufi-tag { color: #f57f17; font-weight: bold; font-size: 14px; background: #fffde7; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
+        .tag { font-weight: bold; font-size: 14px; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
+        .tag-sufi { color: #f57f17; background: #fffde7; }
+        .tag-tafsir { color: #2e7d32; background: #e8f5e9; }
+        .tag-math { color: #7b1fa2; background: #f3e5f5; }
     </style>
 </head>
 <body>
 
-<div class="nav">আল-কোরআন ডিজিটাল আধ্যাত্মিক ডিরেক্টরি</div>
+<div class="nav">আল-কোরআন ডিজিটাল স্মার্ট লাইব্রেরি</div>
 
 <div class="card">
     <div class="verse-no">২</div>
     
     <div class="arabic">
-        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'আল্লাহর প্রশংসা যা হৃদয়ের অন্তঃস্থল থেকে উৎসারিত।')">ٱلْحَمْدُ</span> 
-        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'পরম সত্তা যাঁর কোনো তুলনা নেই।')">لِلَّهِ</span> 
-        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'যিনি সত্তার অভ্যন্তরে লালন করেন।')">رَبِّ</span> 
-        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'দৃশ্য ও অদৃশ্য সকল জগত।')">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'যাবতীয় প্রশংসা ও কৃতজ্ঞতা যা কেবল আল্লাহর জন্য নির্দিষ্ট।')">ٱلْحَمْدُ</span> 
+        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'সৃষ্টিকর্তার মহিমান্বিত নাম।')">لِلَّهِ</span> 
+        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'যিনি লালন-পালন ও পূর্ণতা দান করেন।')">رَبِّ</span> 
+        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'দৃশ্য-অদৃশ্য জগতসমূহ।')">ٱلْعَٰলَمِينَ</span>
     </div>
 
     <div class="action-group">
-        <button class="btn-res btn-tafsir" onclick="showTafsir()">তাফসীর</button>
-        <button class="btn-res btn-sufi" onclick="showSufiTafsir()">সুফি আধ্যাত্মিক ব্যাখ্যা</button>
-        <button class="btn-res btn-math" onclick="showMath()">গাণিতিক সূত্র</button>
+        <button class="btn-res btn-tafsir" onclick="showGeneralTafsir()">আলেমদের তাফসীর</button>
+        <button class="btn-res btn-sufi" onclick="showSufiTafsir()">সুফি ব্যাখ্যা</button>
+        <button class="btn-res btn-math" onclick="showMathAnalysis()">গাণিতিক সূত্র</button>
         <button class="btn-res btn-topic" onclick="showTopics()">বিষয়ভিত্তিক</button>
-        <button class="btn-res btn-other" onclick="showOtherFaiths()">ধর্মগ্রন্থ সমার্থক</button>
+        <button class="btn-res btn-other" onclick="showComparison()">ধর্মগ্রন্থ সমার্থক</button>
     </div>
 
     <div class="pronunciation">আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
@@ -65,7 +69,7 @@
     <div class="translation-box">
         <div class="translation">
             <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, মহিমা বর্ণনা।')">সকল প্রশংসা</span> 
-            <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তার জন্য।')">আল্লাহর জন্য</span>, 
+            <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তার প্রতি নিবেদিত।')">আল্লাহর জন্য</span>, 
             <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা।')">যিনি</span> 
             <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।')">বিশ্বজগতের</span> 
             <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা।')">প্রতিপালক</span>।
@@ -86,51 +90,72 @@
         document.getElementById('box-content').innerHTML = content;
     }
 
-    // ১. সুফি আধ্যাত্মিক ব্যাখ্যা (নতুন যুক্ত)
+    // ১. আলেমদের তাফসীর (ডঃ জাহাঙ্গীরসহ)
+    function showGeneralTafsir() {
+        let content = `
+            <div class="research-item">
+                <span class="tag tag-tafsir">ডক্টর আব্দুল্লাহ জাহাঙ্গীর:</span>
+                <p>তিনি ব্যাখা করেছেন যে, 'আলহামদু' এর অর্থ হলো আল্লাহর অসীম গুণ ও নেয়ামতের কারণে খুশি হয়ে মুখে তাঁর মহিমা ঘোষণা করা। এটি ঈমানের মূল ভিত্তি।</p>
+            </div>
+            <div class="research-item">
+                <span class="tag tag-tafsir">তাফসীর ইবনে কাসীর:</span>
+                <p>আল্লাহই একমাত্র প্রশংসার মালিক কারণ সমস্ত নেয়ামত তাঁরই সৃষ্টি।</p>
+            </div>
+        `;
+        openBox("আলেমদের তাফসীর", content);
+    }
+
+    // ২. সুফি আধ্যাত্মিক ব্যাখ্যা
     function showSufiTafsir() {
         let content = `
             <div class="research-item">
-                <span class="sufi-tag">আল-ফুতুহাত আল-মাক্কিয়্যাহ (ইবনুল আরাবী):</span>
-                <p>প্রশংসা কেবল আল্লাহর জন্যই, কারণ সৃষ্টির প্রতিটি অস্তিত্ব তাঁরই এক একটি দর্পণ। যখন আমরা প্রশংসা করি, তখন আমরা আসলে তাঁরই নূরের প্রতিফলনকে দেখি।</p>
+                <span class="tag tag-sufi">Al-Futuhat al-Makkiyya (ইবনুল আরাবী):</span>
+                <p>সৃষ্টির প্রতিটি কণা আল্লাহর মহিমা গাইছে; প্রশংসা করা মানে সেই ঐশ্বরিক নূরকে উপলব্ধি করা।</p>
             </div>
             <div class="research-item">
-                <span class="sufi-tag">ফুসুসুল হিকাম (ইবনুল আরাবী):</span>
-                <p>'রব' অর্থ সেই শক্তি যা প্রতিটি অণু-পরমাণুকে তার আপন গন্তব্যের দিকে নিয়ে যাচ্ছে। প্রতিটি সৃষ্টির মাঝে রবের হিকমত বিদ্যমান।</p>
+                <span class="tag tag-sufi">Fusus al-Hikam (ইবনুল আরাবী):</span>
+                <p>'রব' হলো সেই সত্তা যিনি প্রতিটি রুহকে তার নিজস্ব হাকীকত বা সত্যের দিকে পরিচালিত করেন।</p>
             </div>
             <div class="research-item">
-                <span class="sufi-tag">তাফসীরে ইকবাল (চিশতি/নকশবন্দি):</span>
-                <p>আল্লাহর প্রশংসা করা মানে নিজের ইগো বা অহংকারের বিনাশ করা। হৃদয়ের পূর্ণ সমর্পণই প্রকৃত 'আলহামদু'।</p>
-            </div>
-            <div class="research-item">
-                <span class="sufi-tag">তাফসীরে ইলাহী নূর:</span>
-                <p>বিশ্বজগত রবের একটি বাহ্যিক রূপ মাত্র। প্রকৃত আধ্যাত্মিকতা হলো হৃদয়ের আলোতে (নূর) সৃষ্টিকর্তার রব্বুবিয়্যাতকে অনুভব করা।</p>
+                <span class="tag tag-sufi">Tafsir al-Iqbal / Ilahi Noor:</span>
+                <p>হৃদয়ের চোখ দিয়ে বিশ্বজগতকে আল্লাহর দর্পণ হিসেবে দেখাই হলো প্রকৃত তাফসীর।</p>
             </div>
         `;
-        openBox("সুফি ও আধ্যাত্মিক ব্যাখ্যা (ইশারী)", content);
+        openBox("সুফি আধ্যাত্মিক ব্যাখ্যা", content);
     }
 
-    // ২. গাণিতিক সূত্র
-    function showMath() {
+    // ৩. গাণিতিক সূত্র ও বিশ্লেষণ
+    function showMathAnalysis() {
         let content = `
-            <div class="research-item"><span class="label-tag">শব্দ ৪টি | অক্ষর ১৮টি</span><p>এই আয়াতের বিন্যাস কোরআনের গাণিতিক সমীকরণ ও ছন্দের মূল ভিত্তি।</p></div>
+            <div class="research-item">
+                <span class="tag tag-math">গাণিতিক সূত্র:</span>
+                <p>শব্দ সংখ্যা: ৪টি<br>বর্ণ (Letter) সংখ্যা: ১৮টি<br>১৯-এর বিন্যাস ও আবজাদ মান অনুসারে আয়াতের ছন্দ গাণিতিকভাবে নিখুঁত।</p>
+            </div>
         `;
-        openBox("গাণিতিক বিশ্লেষণ", content);
+        openBox("গাণিতিক মিরাকল ও সূত্র", content);
     }
 
-    // ৩. আলেমদের তাফসীর
-    function showTafsir() {
-        let content = `
-            <div class="research-item"><span class="label-tag">ইবনে কাসীর:</span><p>প্রশংসা কেবল আল্লাহর প্রাপ্য, কারণ তিনিই সকল নেয়ামতের মূল উৎস।</p></div>
-        `;
-        openBox("আলেমদের সংক্ষিপ্ত তাফসীর", content);
+    // ৪. বিষয়ভিত্তিক গবেষণা
+    function showTopics() {
+        let content = `<div class="research-item"><b>১. প্রশংসা (Hamd):</b> কৃতজ্ঞতার বিজ্ঞান।<br><b>২. রব্বুবিয়্যাত:</b> লালন-পালনের কর্তৃত্ব।</div>`;
+        openBox("বিষয়ভিত্তিক গবেষণা", content);
     }
 
-    // ৪. বিষয়ভিত্তিক ও অন্যান্য
-    function showTopics() { openBox("বিষয়ভিত্তিক", "১. কৃতজ্ঞতা ২. রবের কর্তৃত্ব ৩. বিশ্বজগত।"); }
-    function showOtherFaiths() { openBox("ধর্মগ্রন্থ সমার্থক", "বাইবেল ও বেদের সমার্থক শ্লোক সমূহ এখানে দৃশ্যমান হবে।"); }
+    // ৫. অন্যান্য ধর্মগ্রন্থের সমার্থক
+    function showComparison() {
+        let content = `<div class="research-item"><b>বাইবেল (সামসঙ্গীত):</b> "প্রভু মহান এবং তাঁর প্রশংসা প্রশংসনীয়।"<br><b>ঋগ্বেদ:</b> "তিনিই বিশ্বের একমাত্র মালিক।"</div>`;
+        openBox("ধর্মগ্রন্থ সমার্থক রূপ", content);
+    }
 
-    function showArDict(word, root, meaning) { openBox("আরবি বিশ্লেষণ", "<b>শব্দ:</b> "+word+"<br><b>মূল ধাতু:</b> "+root+"<br><b>ব্যাখ্যা:</b> "+meaning); }
-    function showBnDict(word, type, meaning) { openBox(word, "<b>ধরণ:</b> "+type+"<br><b>অর্থ:</b> "+meaning); }
+    // ডিকশনারি ফাংশন
+    function showArDict(word, root, meaning) {
+        openBox("আরবি বিশ্লেষণ: " + word, `<div class="research-item"><b>মূল ধাতু:</b> ${root}<br><b>ব্যাখ্যা:</b> ${meaning}</div>`);
+    }
+
+    function showBnDict(word, type, meaning) {
+        openBox(word, `<div class="research-item"><b>ধরণ:</b> ${type}<br><b>অর্থ:</b> ${meaning}</div>`);
+    }
+
     function closeBox() { document.getElementById('info-box').style.display = 'none'; }
 </script>
 
