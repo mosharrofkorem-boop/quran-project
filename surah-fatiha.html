@@ -5,50 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>আল-কোরআন ডিজিটাল গবেষণা</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 100px; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 20px; }
         
-        .card { background: white; border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 650px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
-        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 20px; }
+        .card { background: white; border-radius: 20px; padding: 25px; margin: 20px auto; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
+        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 15px; }
         
+        /* আরবি স্টাইল (পরিমার্জিত) */
         .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; display: inline-block; padding: 0 6px; border-radius: 8px; transition: 0.3s; color: #1a5e3a; }
+        .arabic span { cursor: pointer; padding: 0 5px; border-radius: 5px; transition: 0.2s; color: #1a5e3a; }
         .arabic span:hover { background: #e8f5e9; }
 
-        /* নতুন বাটন গ্রুপ - আপনার আগের ডিজাইনের সাথে মানানসই */
+        /* বাটন গ্রুপ */
         .action-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
         .btn-res { padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
         .btn-tadb { background: #fff3e0; color: #e65100; border-color: #ffe0b2; }
         .btn-had { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
         .btn-num { background: #f3e5f5; color: #7b1fa2; border-color: #e1bee7; }
 
-        .pronunciation { 
-            font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 20px 0; 
-            border: 1px solid #c8e6c9; padding: 12px; 
-            background: #f1f8f1; cursor: pointer; border-radius: 12px;
-            text-align: center;
-        }
-        .topic-link { font-size: 13px; color: #1a5e3a; display: block; margin-top: 5px; font-weight: normal; opacity: 0.8; }
+        /* উচ্চারণ */
+        .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; cursor: pointer; border-radius: 12px; text-align: center; }
+        .topic-link { font-size: 12px; font-weight: normal; color: #666; display: block; margin-top: 3px; }
 
-        .translation-box { 
-            background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; 
-            border-radius: 0 12px 12px 0; margin-top: 5px;
-        }
+        /* বাংলা অনুবাদ শিল্পশৈলী ও মোটা হরফ */
+        .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; }
         .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
         .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
 
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 75vh; overflow-y: auto; }
-        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        /* পপ-আপ তথ্য বক্স */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 70vh; overflow-y: auto; }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         
-        .dict-card { background: #fdfdfd; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
-        .dict-label { color: #1a5e3a; font-weight: bold; font-size: 14px; display: block; border-bottom: 1px dashed #ddd; margin-bottom: 5px; }
+        .dict-card { background: #fdfdfd; padding: 12px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
+        .dict-label { color: #1a5e3a; font-weight: bold; font-size: 13px; display: block; border-bottom: 1px dashed #ddd; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
-<div class="nav">সূরা আল-ফাতিহা স্মার্ট ডিরেক্টরি</div>
+<div class="nav">আল-কোরআন ডিজিটাল গবেষণা</div>
 
-<div class="card" id="verse-2">
+<div class="card">
     <div class="verse-no">২</div>
     
     <div class="arabic">
@@ -59,4 +55,69 @@
     </div>
 
     <div class="action-group">
-        <button class="btn-res btn-tadb" onclick="show
+        <button class="btn-res btn-tadb" onclick="showPopup('আয়াতের চিন্তাভাবনা 💭', 'এই আয়াত আমাদের শেখায় যে জীবনের প্রতিটি প্রাপ্তিতে শুকরিয়া জানানো মুমিনের প্রধান কাজ।')">চিন্তাভাবনা</button>
+        <button class="btn-res btn-had" onclick="showPopup('হাদিস রেফারেন্স 📖', 'রাসূল (সা.) বলেছেন: আলহামদুলিল্লাহ মিজানের পাল্লাকে নেকি দিয়ে পূর্ণ করে দেয়। (মুসলিম)')">হাদিস</button>
+        <button class="btn-res btn-num" onclick="showPopup('গাণিতিক তথ্য 🔢', 'এই আয়াতের শব্দ সংখ্যা ৪টি এবং অক্ষর সংখ্যা ১৮টি।')">গাণিতিক তথ্য</button>
+    </div>
+
+    <div class="pronunciation" onclick="showPopup('বিষয়ভিত্তিক গবেষণা 💡', '১. আল্লাহর প্রশংসা (১:২, ৬:১)<br>২. বিশ্বজগতের পালনকর্তা।')">
+        আলহামদু লিল্লাহি রব্বিল আলামিন।
+        <span class="topic-link">গবেষণা ও তাফসীর দেখতে টাচ করুন 💡</span>
+    </div>
+
+    <div class="translation-box">
+        <div class="translation">
+            <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, গুণগান।', 'বাংলা একাডেমি')">সকল প্রশংসা</span> 
+            <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'মাবুদ, সৃষ্টিকর্তা।', 'আরবি মূল')">আল্লাহর জন্য</span>, 
+            <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে সত্তা।', 'বাংলা')">যিনি</span> 
+            <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।', 'সংস্কৃত')">বিশ্বজগতের</span> 
+            <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা, রক্ষক।', 'বাংলা একাডেমি')">প্রতিপালক</span>।
+        </div>
+    </div>
+</div>
+
+<div id="info-box">
+    <button class="close-btn" onclick="closeBox()">× বন্ধ</button>
+    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0; font-size: 22px;"></h3>
+    <div id="box-content"></div>
+</div>
+
+<script>
+    // তথ্য দেখানোর মূল ফাংশন
+    function showPopup(title, content) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerHTML = title;
+        document.getElementById('box-content').innerHTML = `<div class="dict-card"><p style="font-size:17px;">${content}</p></div>`;
+    }
+
+    // আরবি ডিকশনারি
+    function showArDict(word, root, grammar, meaning, count) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = "আরবি বিশ্লেষণ: " + word;
+        document.getElementById('box-content').innerHTML = `
+            <div class="dict-card">
+                <span class="dict-label">মূল ধাতু (Root):</span> <b>${root}</b><br>
+                <span class="dict-label">ব্যাকরণ:</span> ${grammar}<br>
+                <span class="dict-label">অর্থ:</span> ${meaning}<br>
+                <span class="dict-label">কোরআনে এসেছে:</span> ${count}
+            </div>
+        `;
+    }
+
+    // বাংলা ডিকশনারি
+    function showBnDict(word, type, meaning, source) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = word;
+        document.getElementById('box-content').innerHTML = `
+            <div class="dict-card">
+                <span class="dict-label">শব্দার্থ (Dictionary):</span> <b style="font-size:18px;">${meaning}</b><br>
+                <span class="dict-label">ধরণ:</span> ${type} | <span class="dict-label" style="display:inline;">উৎস:</span> ${source}
+            </div>
+        `;
+    }
+
+    function closeBox() { document.getElementById('info-box').style.display = 'none'; }
+</script>
+
+</body>
+        </html>
