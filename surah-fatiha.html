@@ -3,80 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সূরা আল-ফাতিহা - উচ্চারণ ও গবেষণা</title>
+    <title>আল-কোরআন নিখুঁত গবেষণা</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .nav a { color: white; text-decoration: none; margin-right: 15px; font-weight: bold; }
-        .card { background: white; border-radius: 12px; padding: 20px; margin: 20px auto; max-width: 600px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; }
-        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; margin-bottom: 10px; font-weight: bold; }
+        body { font-family: 'Arial', sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; padding-bottom: 100px; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; }
+        .nav a { color: white; text-decoration: none; margin-right: 15px; font-weight: bold; padding: 5px; }
         
-        /* আরবি শব্দ */
-        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; padding: 0 4px; border-radius: 4px; transition: 0.3s; }
-        .arabic span:hover { background: #ffeb3b; color: black; }
+        .card { background: white; border-radius: 15px; padding: 20px; margin: 15px auto; max-width: 650px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 28px; height: 28px; text-align: center; font-size: 14px; line-height: 28px; font-weight: bold; margin-bottom: 15px; }
         
-        /* উচ্চারণ ও অনুবাদ */
-        .pronunciation { font-size: 16px; color: #d35400; font-style: italic; margin-bottom: 8px; border-left: 3px solid #d35400; padding-left: 10px; }
-        .translation { font-size: 18px; color: #2d3436; border-top: 1px solid #eee; padding-top: 10px; }
-        .translation span { cursor: pointer; border-bottom: 1px dotted #1a5e3a; }
-        .translation span:hover { background: #fff9c4; }
+        /* আরবি শব্দের টাচ এরিয়া নিখুঁত করা */
+        .arabic { font-size: 34px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 2px 8px; border-radius: 6px; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+        .arabic span:active { background: #ffeb3b; transform: scale(1.1); }
+        .arabic span:hover { background: #e8f6ef; }
 
-        /* তথ্য দেখানোর নিচের বক্স */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 5px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); z-index: 1000; border-radius: 20px 20px 0 0; }
-        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer; }
+        /* উচ্চারণ ও অনুবাদ */
+        .pronunciation { font-size: 16px; color: #d35400; font-style: italic; margin-bottom: 8px; border-left: 4px solid #d35400; padding-left: 12px; }
+        .translation { font-size: 18px; color: #2d3436; border-top: 1px solid #f0f0f0; padding-top: 12px; }
+        .translation span { cursor: pointer; border-bottom: 2px dotted #1a5e3a; padding: 2px 4px; border-radius: 4px; transition: 0.2s; }
+        .translation span:active { background: #fff9c4; }
+
+        /* পপ-আপ ডিজাইন */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.15); z-index: 2000; border-radius: 25px 25px 0 0; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="nav"><a href="index.html">⬅ হোম</a> সূরা আল-ফাতিহা (উচ্চারণসহ)</div>
+<div class="nav"><a href="index.html">⬅ হোম</a> সূরা আল-ফাতিহা (নিখুঁত গবেষণা)</div>
 
 <div class="card">
     <div class="verse-no">১</div>
     <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> বিসমিল্লাহির রাহমানির রাহিম।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি।</div>
+    <div class="pronunciation">বিসমিল্লাহির রাহমানির রাহিম।</div>
+    <div class="translation">পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি।</div>
 </div>
 
 <div class="card">
     <div class="verse-no">২</div>
     <div class="arabic">
-        <span onclick="showInfo('ٱلْحَمْدُ', 'কোরআনে এসেছে: ৩৮ বার। অর্থ: সকল প্রশংসা।')">ٱلْحَمْدُ </span>
-        <span onclick="showInfo('لِلَّهِ', 'কোরআনে এসেছে: ২৬৯৯ বার। অর্থ: আল্লাহর জন্য।')">لِلَّهِ </span>
-        <span onclick="showInfo('رَبِّ', 'কোরআনে এসেছে: ৯৭০ বার। অর্থ: পালনকর্তা।')">رَبِّ </span>
-        <span onclick="showInfo('ٱلْعَٰলَمِينَ', 'কোরআনে এসেছে: ৭৩ বার। অর্থ: বিশ্বজগতের।')">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showInfo('ٱلْحَمْدُ', 'কোরআনে এসেছে: ৩৮ বার।<br>রুট (মূল ধাতু): হ-ম-দ<br>অর্থ: সকল প্রশংসা।')">ٱلْحَمْدُ </span>
+        <span onclick="showInfo('لِلَّهِ', 'কোরআনে এসেছে: ২৬৯৯ বার।<br>রুট (মূল ধাতু): আল্লাহ<br>অর্থ: আল্লাহর জন্য।')">لِلَّهِ </span>
+        <span onclick="showInfo('رَبِّ', 'কোরআনে এসেছে: ৯৭০ বার।<br>রুট (মূল ধাতু): র-ব-ব<br>অর্থ: পালনকর্তা।')">رَبِّ </span>
+        <span onclick="showInfo('ٱلْعَٰلَمِينَ', 'কোরআনে এসেছে: ৭৩ বার।<br>রুট (মূল ধাতু): আ-ল-ম<br>অর্থ: বিশ্বজগতের।')">ٱلْعَٰلَمِينَ</span>
     </div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
+    <div class="pronunciation">আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
     <div class="translation">
-        <strong>অনুবাদ:</strong> 
-        <span onclick="showInfo('সকল প্রশংসা', 'প্রতিশব্দ: স্তুতি, গুণগান, মহিমা কীর্তন')">সকল প্রশংসা</span> 
-        <span onclick="showInfo('আল্লাহর জন্য', 'প্রতিশব্দ: মাবুদ, ইলাহ, সৃষ্টিকর্তা')">আল্লাহর জন্য</span>, যিনি বিশ্বজগতের প্রতিপালক।
+        <span onclick="showInfo('সকল প্রশংসা', 'প্রতিশব্দ: স্তুতি, গুণগান, মহিমা কীর্তন, শোকর গোজারি।')">সকল প্রশংসা</span> 
+        <span onclick="showInfo('আল্লাহর জন্য', 'প্রতিশব্দ: মাবুদ, ইলাহ, খালিক, পরম সত্তা।')">আল্লাহর জন্য</span>, যিনি বিশ্বজগতের প্রতিপালক।
     </div>
-</div>
-
-<div class="card">
-    <div class="verse-no">৩</div>
-    <div class="arabic">الرَّحْمَٰنِ الرَّحِيمِ</div>
-    <div class="pronunciation"><strong>উচ্চারণ:</strong> আর-রাহমানির রাহিম।</div>
-    <div class="translation"><strong>অনুবাদ:</strong> যিনি পরম করুণাময় ও অসীম দয়ালু।</div>
 </div>
 
 <div id="info-box">
     <button class="close-btn" onclick="closeBox()">বন্ধ করুন</button>
-    <h3 id="word-title" style="color: #1a5e3a; margin-top: 0;"></h3>
-    <p id="word-desc" style="font-size: 18px;"></p>
+    <h3 id="word-title" style="color: #1a5e3a; margin-top: 0; font-size: 24px;"></h3>
+    <div id="word-desc" style="font-size: 18px; color: #444; line-height: 1.6;"></div>
 </div>
 
 <script>
     function showInfo(title, desc) {
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('word-title').innerText = title;
-        document.getElementById('word-desc').innerText = desc;
+        document.getElementById('word-desc').innerHTML = desc;
+        // টাচ ফিডব্যাক এর জন্য ভাইব্রেশন (যদি মোবাইল সাপোর্ট করে)
+        if (navigator.vibrate) { navigator.vibrate(30); }
     }
     function closeBox() {
         document.getElementById('info-box').style.display = 'none';
     }
+    // বক্সের বাইরে ক্লিক করলে বন্ধ হবে
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('info-box')) { closeBox(); }
+    }
 </script>
 
 </body>
-        </html>
+</html>
