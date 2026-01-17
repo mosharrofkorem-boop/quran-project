@@ -3,89 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন ডিরেক্ট নেভিগেশন</title>
+    <title>আল-কোরআন স্মার্ট রিসার্চ টুল</title>
     <style>
         body { font-family: 'Arial', sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; }
         
         .card { background: white; border-radius: 15px; padding: 25px; margin: 20px auto; max-width: 650px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
         .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; font-weight: bold; margin-bottom: 15px; }
         
+        /* আরবির সুন্দর ডিজাইন */
         .arabic { font-size: 38px; text-align: right; direction: rtl; line-height: 2.5; color: #2c3e50; font-weight: bold; }
-        .arabic span { cursor: pointer; display: inline-block; padding: 2px 8px; border-radius: 8px; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 2px 10px; border-radius: 8px; transition: 0.2s; }
+        .arabic span:active { background: #ffeb3b; }
 
-        /* উচ্চারণ টাচ এরিয়া */
-        .pronunciation { 
-            font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; 
-            border: 1px solid #1a5e3a; padding: 12px; 
-            background: #e8f6ef; cursor: pointer; border-radius: 10px;
-            text-align: center;
+        .pronunciation { font-size: 17px; color: #d35400; font-style: italic; margin: 10px 0; border-left: 4px solid #d35400; padding-left: 12px; }
+        .translation { font-size: 19px; color: #2d3436; border-top: 1px solid #f0f0f0; padding-top: 12px; }
+
+        /* পপ-আপ ডিজাইন */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; animation: slideUp 0.3s; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
+        
+        /* লিস্ট দেখার বাটন */
+        .list-btn { 
+            display: block; background: #1a5e3a; color: white; text-align: center; 
+            padding: 15px; margin-top: 20px; border-radius: 12px; 
+            text-decoration: none; font-weight: bold; cursor: pointer;
         }
-
-        .translation { font-size: 18px; color: #444; }
-
-        /* পপ-আপে সরাসরি যাওয়ার বাটন */
-        .direct-link {
-            display: block; background: #1a5e3a; color: white; 
-            padding: 15px; margin-top: 10px; border-radius: 10px; 
-            text-decoration: none; font-weight: bold; text-align: center;
-            font-size: 16px;
-        }
-        .direct-link:active { background: #14462b; transform: scale(0.98); }
-
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; }
-        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+        
+        /* আয়াতের তালিকা */
+        .verse-list { display: none; margin-top: 15px; max-height: 200px; overflow-y: auto; border-top: 1px solid #eee; padding-top: 10px; }
+        .verse-item { display: block; padding: 10px; background: #f9f9f9; margin-bottom: 5px; border-radius: 5px; color: #1a5e3a; text-decoration: none; font-size: 15px; border-left: 3px solid #1a5e3a; }
     </style>
 </head>
 <body>
 
-<div class="nav">সূরা আল-ফাতিহা স্মার্ট ডিরেক্টরি</div>
-
-<div class="card" id="verse-1">
-    <div class="verse-no">১</div>
-    <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-    <div class="pronunciation" onclick="goToVerse('১ নম্বর আয়াতে আপনি এখন আছেন।', 'verse-2', '২ নম্বর আয়াতে যান')">
-        বিসমিল্লাহির রাহমানির রাহিম। (টাচ করুন)
-    </div>
-    <div class="translation">পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি।</div>
-</div>
+<div class="nav">আল-কোরআন ডিজিটাল গবেষণা</div>
 
 <div class="card" id="verse-2">
     <div class="verse-no">২</div>
     <div class="arabic">
-        <span>ٱلْحَمْدُ</span> <span>لِلَّهِ</span> <span>رَبِّ</span> <span>ٱلْعَٰلَمِينَ</span>
+        <span onclick="showResearch('ٱلْحَمْدُ', '৩৮ বার', ['সূরা আন-আম (১)', 'সূরা সাবা (১)', 'সূরা ফাতির (১)'])">ٱلْحَمْدُ</span> 
+        <span onclick="showResearch('لِلَّهِ', '২৬৯৯ বার', ['সূরা বাকারাহ (১৬৩)', 'সূরা নিসা (১)'])">لِلَّهِ</span> 
+        <span onclick="showResearch('رَبِّ', '৯৭০ বার', ['সূরা নাস (১)', 'সূরা ফালাক (১)'])">رَبِّ</span> 
+        <span onclick="showResearch('ٱلْعَٰلَمِينَ', '৭৩ বার', ['সূরা শুয়ারা (২৩)', 'সূরা নমল (৮)'])">ٱلْعَٰলَمِينَ</span>
     </div>
-    <div class="pronunciation" onclick="goToVerse('২ নম্বর আয়াতে আছেন। সরাসরি অন্য আয়াতে যেতে চান?', 'verse-4', 'সরাসরি ৪ নম্বর আয়াতে যান')">
-        আলহামদু লিল্লাহি রব্বিল আলামিন। (টাচ করুন)
-    </div>
+    <div class="pronunciation">আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
     <div class="translation">সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।</div>
-</div>
-
-<div style="height: 500px;"></div> <div class="card" id="verse-4">
-    <div class="verse-no">৪</div>
-    <div class="arabic">مَالِكِ يَوْمِ الدِّينِ</div>
-    <div class="pronunciation" onclick="goToVerse('৪ নম্বর আয়াতে আছেন। ফিরে যেতে চান?', 'verse-1', 'সরাসরি ১ নম্বর আয়াতে ফিরে যান')">
-        মালিকি ইয়াউমিদ্দিন। (টাচ করুন)
-    </div>
-    <div class="translation">যিনি বিচার দিবসের মালিক।</div>
 </div>
 
 <div id="info-box">
     <button class="close-btn" onclick="closeBox()">বন্ধ করুন</button>
-    <h3 style="color: #1a5e3a; margin-top: 0;">আয়াত ডিরেক্টরি</h3>
-    <p id="box-text"></p>
-    <div id="box-link-container"></div>
+    <h3 id="word-title" style="color: #1a5e3a; margin-top: 0;"></h3>
+    <p id="word-count" style="font-size: 18px; font-weight: bold;"></p>
+    
+    <div class="list-btn" id="main-list-btn" onclick="toggleVerseList()">আয়াতগুলোর লিস্ট দেখুন ↓</div>
+    
+    <div id="verse-list-container" class="verse-list">
+        </div>
 </div>
 
 <script>
-    function goToVerse(text, targetId, btnLabel) {
+    function showResearch(word, count, verses) {
         document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-text').innerText = text;
+        document.getElementById('word-title').innerText = "শব্দ: " + word;
+        document.getElementById('word-count').innerText = "এই শব্দটি কোরআনে এসেছে: " + count;
         
-        // ডাইরেক্ট লিঙ্ক বাটন তৈরি
-        document.getElementById('box-link-container').innerHTML = `
-            <a href="#${targetId}" class="direct-link" onclick="closeBox()">🚀 ${btnLabel}</a>
-        `;
+        // লিস্ট বাটন এবং কন্টেইনার রিসেট
+        document.getElementById('verse-list-container').style.display = 'none';
+        document.getElementById('main-list-btn').innerText = "আয়াতগুলোর লিস্ট দেখুন ↓";
+        
+        let listHtml = "";
+        verses.forEach(v => {
+            listHtml += `<a href="#" class="verse-item" onclick="alert('সরাসরি ওই আয়াতে নিয়ে যাওয়ার ফিচার যুক্ত হচ্ছে...')">📍 ${v}</a>`;
+        });
+        document.getElementById('verse-list-container').innerHTML = listHtml;
+        
+        if (navigator.vibrate) { navigator.vibrate(40); }
+    }
+
+    function toggleVerseList() {
+        let list = document.getElementById('verse-list-container');
+        let btn = document.getElementById('main-list-btn');
+        if (list.style.display === "none" || list.style.display === "") {
+            list.style.display = "block";
+            btn.innerText = "লিস্ট বন্ধ করুন ↑";
+        } else {
+            list.style.display = "none";
+            btn.innerText = "আয়াতগুলোর লিস্ট দেখুন ↓";
+        }
     }
 
     function closeBox() {
@@ -94,4 +101,4 @@
 </script>
 
 </body>
-    </html>
+</html>
