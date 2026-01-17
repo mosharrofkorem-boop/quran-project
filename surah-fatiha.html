@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন স্মার্ট নেভিগেশন - আপডেট</title>
+    <title>আল-কোরআন স্মার্ট রিসার্চ ডিরেক্টরি</title>
     <style>
         body { font-family: 'Arial', sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
         .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; }
         
-        .card { background: white; border-radius: 15px; padding: 25px; margin: 15px auto; max-width: 650px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .card { background: white; border-radius: 15px; padding: 25px; margin: 20px auto; max-width: 650px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
         .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; font-weight: bold; margin-bottom: 15px; }
         
         .arabic { font-size: 38px; text-align: right; direction: rtl; line-height: 2.5; color: #2c3e50; font-weight: bold; }
@@ -19,46 +19,42 @@
             font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; 
             border: 1px solid #1a5e3a; padding: 12px; 
             background: #e8f6ef; cursor: pointer; border-radius: 10px;
-            text-align: center; transition: 0.3s;
+            text-align: center;
         }
-        .pronunciation:active { background: #c8e6c9; }
 
-        .translation { font-size: 19px; color: #2d3436; border-top: 1px solid #f0f0f0; padding-top: 12px; }
+        .translation { font-size: 19px; color: #2d3436; border-top: 1px solid #f0f0f0; padding-top: 12px; font-weight: 500; }
 
-        /* পপ-আপ এবং বাটন স্টাইল */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        
+        /* পপ-আপ তথ্য বক্স */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
         
-        .go-btn, .list-trigger-btn {
+        /* বাটন ও লিস্ট */
+        .action-btn {
             display: block; background: #f0f2f5; color: #1a5e3a; 
-            padding: 12px; margin-top: 10px; border-radius: 8px; 
+            padding: 15px; margin-top: 12px; border-radius: 10px; 
             text-decoration: none; font-weight: bold; border-left: 5px solid #1a5e3a;
-            cursor: pointer; text-align: left;
+            cursor: pointer;
         }
-        
-        /* রেফারেন্স লিস্ট */
-        .reference-list { display: none; margin-top: 10px; max-height: 150px; overflow-y: auto; background: #fafafa; padding: 10px; border-radius: 8px; }
-        .ref-item { display: block; padding: 8px; color: #1a5e3a; text-decoration: none; border-bottom: 1px solid #eee; }
+        .list-container { display: none; margin-top: 10px; background: #fafafa; border-radius: 8px; padding: 5px; }
+        .list-item { display: block; padding: 12px; color: #1a5e3a; text-decoration: none; border-bottom: 1px solid #eee; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="nav">সূরা আল-ফাতিহা স্মার্ট গবেষণা</div>
+<div class="nav">সূরা আল-ফাতিহা গবেষণা</div>
 
 <div class="card" id="verse-2">
     <div class="verse-no">২</div>
     
     <div class="arabic">
-        <span onclick="showWordInfo('আল-হামদু (ٱلْحَمْدُ)', '৩৮ বার', 'হ-ম-দ', ['সূরা আন-আম (১)', 'সূরা সাবা (১)', 'সূরা ফাতির (১)'])">ٱلْحَمْدُ</span> 
-        <span onclick="showWordInfo('লিল্লাহি (لِلَّهِ)', '২৬৯৯ বার', 'আল্লাহ', ['সূরা বাকারাহ (১৬৩)', 'সূরা নিসা (১)'])">لِلَّهِ</span> 
-        <span onclick="showWordInfo('রব্বি (رَبِّ)', '৯৭০ বার', 'র-ব-ব', ['সূরা নাস (১)', 'সূরা ফালাক (১)'])">رَبِّ</span> 
-        <span onclick="showWordInfo('আল-আলামীন (ٱلْعَٰلَمِينَ)', '৭৩ বার', 'আ-ল-ম', ['সূরা শুয়ারা (২৩)', 'সূরা নমল (৮)'])">ٱلْعَٰلَمِينَ</span>
+        <span onclick="showWordResearch('ٱلْحَمْدُ', '৩৮', ['১:২ (আল-ফাতিহা)', '৬:১ (আল-আনআম)', '১৮:১ (আল-কাহাফ)', '৩৪:১ (সাবা)'])">ٱلْحَمْدُ</span> 
+        <span onclick="showWordResearch('لِلَّهِ', '২৬৯৯', ['১:২ (আল-ফাতিহা)', '২:১৬৩ (আল-বাকারাহ)'])">لِلَّهِ</span> 
+        <span onclick="showWordResearch('رَبِّ', '৯৭০', ['১:২ (আল-ফাতিহা)', '১১৪:১ (আন-নাস)'])">رَبِّ</span> 
+        <span onclick="showWordResearch('ٱلْعَٰلَمِينَ', '৭৩', ['১:২ (আল-ফাতিহা)', '২৬:২৩ (আশ-শুয়ারা)'])">ٱلْعَٰلَمِينَ</span>
     </div>
 
-    <div class="pronunciation" onclick="showNavigation('আয়াত নেভিগেশন', 'এই আয়াতে সরাসরি পৌঁছান:')">
-        আলহামদু লিল্লাহি রব্বিল আলামিন। (সরাসরি পৌঁছাতে টাচ করুন 🚀)
+    <div class="pronunciation" onclick="showTopicResearch('বিষয়ভিত্তিক আয়াতসমূহ', 'এই আয়াতে আল্লাহর প্রশংসা ও রব্বুবিয়্যাত বর্ণিত হয়েছে।', ['আল্লাহর প্রশংসা (১:২, ৬:১, ১৪:৩৯)', 'বিশ্বজগতের সৃষ্টি (২:২৯, ৭:৫৪)'])">
+        আলহামদু লিল্লাহি রব্বিল আলামিন। (বিষয় দেখতে টাচ করুন 💡)
     </div>
 
     <div class="translation">সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।</div>
@@ -71,33 +67,35 @@
 </div>
 
 <script>
-    function showWordInfo(word, count, root, refs) {
+    function showWordResearch(word, count, verseList) {
         document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-title').innerText = word;
+        document.getElementById('box-title').innerText = "শব্দ: " + word;
         
-        let listItems = refs.map(r => `<a href="#" class="ref-item">📍 ${r}</a>`).join('');
+        let listHtml = verseList.map(v => `<a href="#" class="list-item" onclick="closeBox()">📍 আয়াত: ${v}</a>`).join('');
         
         document.getElementById('box-content').innerHTML = `
-            <p style="font-size:18px; margin-bottom:5px;">কোরআনে এসেছে: <b>${count}</b></p>
-            <p style="font-size:18px;">মূল ধাতু (Root): <b>${root}</b></p>
-            <div class="list-trigger-btn" onclick="toggleRefList()">আয়াতগুলোর লিস্ট দেখুন ↓</div>
-            <div id="ref-list" class="reference-list">${listItems}</div>
+            <p style="font-size:18px;">কোরআনে এসেছে: <b>${count} বার</b></p>
+            <div class="action-btn" onclick="toggleList()">এই ${count} বারের লিস্ট বের করুন ↓</div>
+            <div id="data-list" class="list-container">${listHtml}</div>
         `;
     }
 
-    function toggleRefList() {
-        let list = document.getElementById('ref-list');
-        list.style.display = (list.style.display === "block") ? "none" : "block";
-    }
-
-    function showNavigation(title, desc) {
+    function showTopicResearch(title, desc, topicList) {
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('box-title').innerText = title;
+        
+        let listHtml = topicList.map(t => `<a href="#" class="list-item" onclick="closeBox()">📖 বিষয়: ${t}</a>`).join('');
+        
         document.getElementById('box-content').innerHTML = `
-            <p>${desc}</p>
-            <a href="#verse-1" class="go-btn" onclick="closeBox()">📍 সরাসরি আয়াত ১-এ যান</a>
-            <a href="#" class="go-btn" onclick="closeBox()">📍 সরাসরি আয়াত ৩-এ যান</a>
+            <p style="font-size:17px;">${desc}</p>
+            <div class="action-btn" onclick="toggleList()">সংশ্লিষ্ট বিষয়ের আয়াত লিস্ট ↓</div>
+            <div id="data-list" class="list-container">${listHtml}</div>
         `;
+    }
+
+    function toggleList() {
+        let list = document.getElementById('data-list');
+        list.style.display = (list.style.display === "block") ? "none" : "block";
     }
 
     function closeBox() {
