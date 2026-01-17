@@ -3,77 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল কোরআন ডিজিটাল অ্যাপ</title>
+    <title>আল কোরআন ডিজিটাল প্রজেক্ট: হোম</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: #f0f2f5; }
-        header { background: #1a5e3a; color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; }
-        .container { display: flex; flex: 1; overflow: hidden; }
-        
-        /* বাম পাশের মেনু */
-        .sidebar { width: 200px; background: #fff; border-right: 1px solid #ddd; overflow-y: auto; padding: 10px; }
-        .sidebar ul { list-style: none; padding: 0; }
-        .sidebar li { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; color: #1a5e3a; font-weight: bold; }
-        .sidebar li:hover { background: #e8f6ef; }
-
-        /* মাঝখানের কন্টেন্ট */
-        .content { flex: 1; padding: 20px; overflow-y: auto; background: white; }
-        .verse-card { border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .arabic { font-size: 30px; text-align: right; direction: rtl; line-height: 1.8; color: #2c3e50; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; padding: 2px 5px; transition: 0.3s; }
-        .arabic span:hover { background: #ffeb3b; border-radius: 5px; }
-        .translation { font-size: 18px; color: #555; border-top: 1px solid #eee; pt: 10px; }
-
-        /* পপ-আপ তথ্য বক্স */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 3px solid #1a5e3a; padding: 20px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); display: none; z-index: 100; }
-        .close-btn { float: right; background: #ff4444; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 5px; }
+        body { 
+            font-family: 'Noto Sans Bengali', Arial, sans-serif; 
+            margin: 0; 
+            background: #f0f2f5; /* Light grey background */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Full viewport height */
+        }
+        .header {
+            background: #1a5e3a; /* Deep green for header */
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .subheader {
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            color: #555;
+            background: #e0e6ec; /* Slightly darker grey for subheader */
+        }
+        .main-options {
+            flex-grow: 1; /* Take up available space */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between options */
+            max-width: 600px; /* Max width for options */
+            margin: 20px auto; /* Center align options */
+        }
+        .option-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none; /* Remove underline for links */
+            color: inherit; /* Inherit text color */
+        }
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+        }
+        .option-icon {
+            font-size: 30px;
+            color: #1a5e3a; /* Green icon color */
+            min-width: 40px; /* Fixed width for icon */
+            text-align: center;
+        }
+        .option-text h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #1a5e3a;
+        }
+        .option-text p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #777;
+        }
+        .search-bar {
+            background: #fff;
+            padding: 15px 20px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            position: sticky; /* Make it stick to the bottom */
+            bottom: 0;
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .search-bar input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-bar input:focus {
+            border-color: #1a5e3a;
+        }
+        .search-bar button {
+            background: #1a5e3a;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        .search-bar button:hover {
+            background: #27ae60;
+        }
     </style>
 </head>
 <body>
 
-<header>আল কোরআন: বিষয়ভিত্তিক ও শব্দভিত্তিক গবেষণা</header>
+    <div class="header">আল কোরআন ডিজিটাল গবেষণা প্রজেক্ট</div>
+    <div class="subheader">আপনার পছন্দের অপশনটি বেছে নিন</div>
 
-<div class="container">
-    <div class="sidebar">
-        <ul>
-            <li>১. সূরা আল-ফাতিহা</li>
-            <li>২. সূরা আল-বাকারাহ</li>
-            </ul>
-    </div>
-    <div class="content">
-        <div class="verse-card">
-            <div class="arabic">
-                <span onclick="showDetails('ٱلْحَمْدُ', 'সকল প্রশংসা', '৫৭০ বার', 'হ-ম-দ')">ٱلْحَمْدُ </span>
-                <span onclick="showDetails('لِلَّهِ', 'আল্লাহর জন্য', '২৬৯৯ বার', 'আল্লাহ')">لِلَّهِ </span>
-                <span onclick="showDetails('رَبِّ', 'পালনকর্তা', '৯৭০ বার', 'র-ব-ব')">رَبِّ </span>
-                <span onclick="showDetails('ٱلْعَٰلَمِينَ', 'বিশ্বজগতের', '৭৩ বার', 'আ-ল-ম')">ٱلْعَٰلَمِينَ</span>
+    <div class="main-options">
+        <a href="#" class="option-card" onclick="alert('আল কোরআন পাতা লোড হবে!'); return false;">
+            <div class="option-icon">📖</div>
+            <div class="option-text">
+                <h3>আল কোরআন</h3>
+                <p>সূরা ফাতিহা থেকে নাস পর্যন্ত পাঠ করুন</p>
             </div>
-            <div class="translation">
-                <strong>অনুবাদ:</strong> সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।
+        </a>
+
+        <a href="#" class="option-card" onclick="alert('বিষয় ভিত্তিক গবেষণা লোড হবে!'); return false;">
+            <div class="option-icon">💡</div>
+            <div class="option-text">
+                <h3>আল কোরআন বিষয় ভিত্তিক</h3>
+                <p>কোরআনের বিভিন্ন বিষয় নিয়ে বিস্তারিত জানুন</p>
             </div>
-        </div>
+        </a>
+
+        <a href="#" class="option-card" onclick="alert('শব্দ ভিত্তিক গবেষণা লোড হবে!'); return false;">
+            <div class="option-icon">🔍</div>
+            <div class="option-text">
+                <h3>আল কোরআন শব্দ ভিত্তিক</h3>
+                <p>প্রতিটি শব্দের মূল ধাতু, অর্থ ও পুনরাবৃত্তি বিশ্লেষণ</p>
+            </div>
+        </a>
+
+        <a href="#" class="option-card" onclick="alert('অন্যান্য বিষয় লোড হবে!'); return false;">
+            <div class="option-icon">📚</div>
+            <div class="option-text">
+                <h3>অন্যান্য বিষয়</h3>
+                <p>গবেষণার অতিরিক্ত তথ্য ও নোটস</p>
+            </div>
+        </a>
     </div>
-</div>
 
-<div id="info-box">
-    <button class="close-btn" onclick="hideDetails()">বন্ধ করুন</button>
-    <h3 id="word-ar" style="color:#1a5e3a; margin-top:0;"></h3>
-    <p><strong>অর্থ:</strong> <span id="word-bn"></span></p>
-    <p><strong>কোরআনে এসেছে:</strong> <span id="word-count"></span></p>
-    <p><strong>মূল ধাতু (Root):</strong> <span id="word-root"></span></p>
-</div>
-
-<script>
-    function showDetails(ar, bn, count, root) {
-        document.getElementById('info-box').style.display = 'block';
-        document.getElementById('word-ar').innerText = ar;
-        document.getElementById('word-bn').innerText = bn;
-        document.getElementById('word-count').innerText = count;
-        document.getElementById('word-root').innerText = root;
-    }
-    function hideDetails() {
-        document.getElementById('info-box').style.display = 'none';
-    }
-</script>
+    <div class="search-bar">
+        <input type="text" placeholder="শব্দ বা বিষয় দিয়ে অনুসন্ধান করুন (ডিকশনারি)">
+        <button>অনুসন্ধান</button>
+    </div>
 
 </body>
-            </html>
+</html>
