@@ -2,10 +2,78 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>Quran Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল কোরআন ডিজিটাল অ্যাপ</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background: #f0f2f5; }
+        header { background: #1a5e3a; color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; }
+        .container { display: flex; flex: 1; overflow: hidden; }
+        
+        /* বাম পাশের মেনু */
+        .sidebar { width: 200px; background: #fff; border-right: 1px solid #ddd; overflow-y: auto; padding: 10px; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; color: #1a5e3a; font-weight: bold; }
+        .sidebar li:hover { background: #e8f6ef; }
+
+        /* মাঝখানের কন্টেন্ট */
+        .content { flex: 1; padding: 20px; overflow-y: auto; background: white; }
+        .verse-card { border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .arabic { font-size: 30px; text-align: right; direction: rtl; line-height: 1.8; color: #2c3e50; margin-bottom: 15px; }
+        .arabic span { cursor: pointer; padding: 2px 5px; transition: 0.3s; }
+        .arabic span:hover { background: #ffeb3b; border-radius: 5px; }
+        .translation { font-size: 18px; color: #555; border-top: 1px solid #eee; pt: 10px; }
+
+        /* পপ-আপ তথ্য বক্স */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 3px solid #1a5e3a; padding: 20px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); display: none; z-index: 100; }
+        .close-btn { float: right; background: #ff4444; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Quran Project</h1>
-    <p>এখান থেকে আমরা কোরআন শব্দভিত্তিক বিশ্লেষণ শুরু করব।</p>
+
+<header>আল কোরআন: বিষয়ভিত্তিক ও শব্দভিত্তিক গবেষণা</header>
+
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <li>১. সূরা আল-ফাতিহা</li>
+            <li>২. সূরা আল-বাকারাহ</li>
+            </ul>
+    </div>
+    <div class="content">
+        <div class="verse-card">
+            <div class="arabic">
+                <span onclick="showDetails('ٱلْحَمْدُ', 'সকল প্রশংসা', '৫৭০ বার', 'হ-ম-দ')">ٱلْحَمْدُ </span>
+                <span onclick="showDetails('لِلَّهِ', 'আল্লাহর জন্য', '২৬৯৯ বার', 'আল্লাহ')">لِلَّهِ </span>
+                <span onclick="showDetails('رَبِّ', 'পালনকর্তা', '৯৭০ বার', 'র-ব-ব')">رَبِّ </span>
+                <span onclick="showDetails('ٱلْعَٰلَمِينَ', 'বিশ্বজগতের', '৭৩ বার', 'আ-ল-ম')">ٱلْعَٰلَمِينَ</span>
+            </div>
+            <div class="translation">
+                <strong>অনুবাদ:</strong> সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="info-box">
+    <button class="close-btn" onclick="hideDetails()">বন্ধ করুন</button>
+    <h3 id="word-ar" style="color:#1a5e3a; margin-top:0;"></h3>
+    <p><strong>অর্থ:</strong> <span id="word-bn"></span></p>
+    <p><strong>কোরআনে এসেছে:</strong> <span id="word-count"></span></p>
+    <p><strong>মূল ধাতু (Root):</strong> <span id="word-root"></span></p>
+</div>
+
+<script>
+    function showDetails(ar, bn, count, root) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('word-ar').innerText = ar;
+        document.getElementById('word-bn').innerText = bn;
+        document.getElementById('word-count').innerText = count;
+        document.getElementById('word-root').innerText = root;
+    }
+    function hideDetails() {
+        document.getElementById('info-box').style.display = 'none';
+    }
+</script>
+
 </body>
-</html>
+            </html>
