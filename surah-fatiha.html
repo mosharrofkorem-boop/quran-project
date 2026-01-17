@@ -3,121 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন ডিজিটাল গবেষণা</title>
+    <title>আল-কোরআন ডিজিটাল গবেষণা ও তুলনামূলক ধর্মতত্ত্ব</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 100px; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 120px; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 18px; }
         
         .card { background: white; border-radius: 20px; padding: 25px; margin: 20px auto; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
         .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 15px; }
         
-        /* আরবি স্টাইল (পরিমার্জিত) */
+        /* আরবি ও বাটন ডিজাইন */
         .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; padding: 0 5px; border-radius: 5px; transition: 0.2s; color: #1a5e3a; }
-        .arabic span:hover { background: #e8f5e9; }
+        .arabic span { cursor: pointer; padding: 0 5px; color: #1a5e3a; }
 
-        /* বাটন গ্রুপ */
         .action-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-        .btn-res { padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
-        .btn-tadb { background: #fff3e0; color: #e65100; border-color: #ffe0b2; }
-        .btn-had { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
-        .btn-num { background: #f3e5f5; color: #7b1fa2; border-color: #e1bee7; }
+        .btn-res { padding: 8px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
+        
+        /* নতুন বাটন কালার */
+        .btn-tafsir { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
+        .btn-topic { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
+        .btn-other { background: #fff3e0; color: #e65100; border-color: #ffe0b2; }
 
-        /* উচ্চারণ */
-        .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; cursor: pointer; border-radius: 12px; text-align: center; }
-        .topic-link { font-size: 12px; font-weight: normal; color: #666; display: block; margin-top: 3px; }
+        .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; border-radius: 12px; text-align: center; }
 
-        /* বাংলা অনুবাদ শিল্পশৈলী ও মোটা হরফ */
+        /* অনুবাদ ও শিল্পশৈলী */
         .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; }
         .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
-        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
+        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; }
 
-        /* পপ-আপ তথ্য বক্স */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 70vh; overflow-y: auto; }
+        /* পপ-আপ ডিজাইন */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 80vh; overflow-y: auto; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         
-        .dict-card { background: #fdfdfd; padding: 12px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
-        .dict-label { color: #1a5e3a; font-weight: bold; font-size: 13px; display: block; border-bottom: 1px dashed #ddd; margin-bottom: 5px; }
+        .research-item { background: #fdfdfd; padding: 12px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
+        .author-tag { color: #1a5e3a; font-weight: bold; font-size: 14px; background: #e8f5e9; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
     </style>
 </head>
 <body>
 
-<div class="nav">আল-কোরআন ডিজিটাল গবেষণা</div>
+<div class="nav">আল-কোরআন ডিজিটাল গবেষণা সিস্টেম</div>
 
 <div class="card">
     <div class="verse-no">২</div>
     
     <div class="arabic">
-        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'বিশেষ্য', 'যাবতীয় প্রশংসা ও কৃতজ্ঞতা।', '৩৮ বার')">ٱلْحَمْدُ</span> 
-        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'নাম', 'সৃষ্টিকর্তার মহিমান্বিত নাম।', '২৬৯৯ বার')">لِلَّهِ</span> 
-        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'কর্তা', 'যিনি লালন-পালন করেন।', '৯৭০ বার')">رَبِّ</span> 
-        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'বহুবচন', 'সারা জাহান ও সৃষ্টিজগত।', '৭৩ বার')">ٱلْعَٰলَمِينَ</span>
+        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'প্রশংসা ও কৃতজ্ঞতা')">ٱلْحَمْدُ</span> 
+        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'মাবুদ')">لِلَّهِ</span> 
+        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'পালনকর্তা')">رَبِّ</span> 
+        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'সৃষ্টিজগত')">ٱلْعَٰলَمِينَ</span>
     </div>
 
     <div class="action-group">
-        <button class="btn-res btn-tadb" onclick="showPopup('আয়াতের চিন্তাভাবনা 💭', 'এই আয়াত আমাদের শেখায় যে জীবনের প্রতিটি প্রাপ্তিতে শুকরিয়া জানানো মুমিনের প্রধান কাজ।')">চিন্তাভাবনা</button>
-        <button class="btn-res btn-had" onclick="showPopup('হাদিস রেফারেন্স 📖', 'রাসূল (সা.) বলেছেন: আলহামদুলিল্লাহ মিজানের পাল্লাকে নেকি দিয়ে পূর্ণ করে দেয়। (মুসলিম)')">হাদিস</button>
-        <button class="btn-res btn-num" onclick="showPopup('গাণিতিক তথ্য 🔢', 'এই আয়াতের শব্দ সংখ্যা ৪টি এবং অক্ষর সংখ্যা ১৮টি।')">গাণিতিক তথ্য</button>
+        <button class="btn-res btn-tafsir" onclick="showTafsir()">আলেমদের তাফসীর</button>
+        <button class="btn-res btn-topic" onclick="showTopics()">বিষয়ভিত্তিক গবেষণা</button>
+        <button class="btn-res btn-other" onclick="showOtherFaiths()">অন্যান্য ধর্মগ্রন্থ</button>
     </div>
 
-    <div class="pronunciation" onclick="showPopup('বিষয়ভিত্তিক গবেষণা 💡', '১. আল্লাহর প্রশংসা (১:২, ৬:১)<br>২. বিশ্বজগতের পালনকর্তা।')">
-        আলহামদু লিল্লাহি রব্বিল আলামিন।
-        <span class="topic-link">গবেষণা ও তাফসীর দেখতে টাচ করুন 💡</span>
-    </div>
+    <div class="pronunciation">আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
 
     <div class="translation-box">
         <div class="translation">
-            <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, গুণগান।', 'বাংলা একাডেমি')">সকল প্রশংসা</span> 
-            <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'মাবুদ, সৃষ্টিকর্তা।', 'আরবি মূল')">আল্লাহর জন্য</span>, 
-            <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে সত্তা।', 'বাংলা')">যিনি</span> 
-            <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।', 'সংস্কৃত')">বিশ্বজগতের</span> 
-            <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা, রক্ষক।', 'বাংলা একাডেমি')">প্রতিপালক</span>।
+            <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, মহিমা বর্ণনা।')">সকল প্রশংসা</span> 
+            <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তার জন্য।')">আল্লাহর জন্য</span>, 
+            <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা।')">যিনি</span> 
+            <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।')">বিশ্বজগতের</span> 
+            <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা।')">প্রতিপালক</span>।
         </div>
     </div>
 </div>
 
 <div id="info-box">
     <button class="close-btn" onclick="closeBox()">× বন্ধ</button>
-    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0; font-size: 22px;"></h3>
+    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0;"></h3>
     <div id="box-content"></div>
 </div>
 
 <script>
-    // তথ্য দেখানোর মূল ফাংশন
-    function showPopup(title, content) {
+    function openBox(title, content) {
         document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-title').innerHTML = title;
-        document.getElementById('box-content').innerHTML = `<div class="dict-card"><p style="font-size:17px;">${content}</p></div>`;
+        document.getElementById('box-title').innerText = title;
+        document.getElementById('box-content').innerHTML = content;
     }
 
-    // আরবি ডিকশনারি
-    function showArDict(word, root, grammar, meaning, count) {
-        document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-title').innerText = "আরবি বিশ্লেষণ: " + word;
-        document.getElementById('box-content').innerHTML = `
-            <div class="dict-card">
-                <span class="dict-label">মূল ধাতু (Root):</span> <b>${root}</b><br>
-                <span class="dict-label">ব্যাকরণ:</span> ${grammar}<br>
-                <span class="dict-label">অর্থ:</span> ${meaning}<br>
-                <span class="dict-label">কোরআনে এসেছে:</span> ${count}
-            </div>
+    // ১. আলেমদের তাফসীর
+    function showTafsir() {
+        let content = `
+            <div class="research-item"><span class="author-tag">তাফসীর ইবনে কাসীর:</span><p>সমস্ত প্রশংসা আল্লাহর জন্য। 'রব' অর্থ মালিক ও পরিচালক।</p></div>
+            <div class="research-item"><span class="author-tag">তাফসীর জালালাইন:</span><p>আল্লাহই একমাত্র প্রশংসার দাবিদার, যিনি নিখিল বিশ্বের স্রষ্টা।</p></div>
+            <div class="research-item"><span class="author-tag">তাফসীর মাজেদী:</span><p>এখানে আল্লাহর রব্বুবিয়্যাত বা লালন-পালন ক্ষমতার ওপর জোর দেওয়া হয়েছে।</p></div>
         `;
+        openBox("আলেমদের তাফসীর", content);
     }
 
-    // বাংলা ডিকশনারি
-    function showBnDict(word, type, meaning, source) {
-        document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-title').innerText = word;
-        document.getElementById('box-content').innerHTML = `
-            <div class="dict-card">
-                <span class="dict-label">শব্দার্থ (Dictionary):</span> <b style="font-size:18px;">${meaning}</b><br>
-                <span class="dict-label">ধরণ:</span> ${type} | <span class="dict-label" style="display:inline;">উৎস:</span> ${source}
-            </div>
+    // ২. বিষয়ভিত্তিক গবেষণা
+    function showTopics() {
+        let content = `
+            <div class="research-item"><b>১. শুকরিয়া (Gratitude):</b> নিয়ামতের জন্য কৃতজ্ঞতা প্রকাশ।</div>
+            <div class="research-item"><b>২. তৌহিদ (Monotheism):</b> আল্লাহই একমাত্র রব বা প্রতিপালক।</div>
+            <div class="research-item"><b>৩. সৃষ্টিতত্ত্ব:</b> জগতসমূহের উৎপত্তি ও নিয়ন্ত্রণ।</div>
         `;
+        openBox("বিষয়ভিত্তিক গবেষণা", content);
+    }
+
+    // ৩. অন্যান্য ধর্মগ্রন্থ
+    function showOtherFaiths() {
+        let content = `
+            <div class="research-item"><b>বাইবেল (The Bible):</b> "প্রভু মহান এবং তাঁর প্রশংসা প্রশংসনীয়।" (সামসঙ্গীত ১৪৫:৩)</div>
+            <div class="research-item"><b>ঋগ্বেদ (Rigveda):</b> "তিনিই বিশ্বের প্রভু, যিনি সকল প্রাণীর শাসক।" (১০:১২১:১)</div>
+        `;
+        openBox("অন্যান্য ধর্মগ্রন্থের সমার্থক রূপ", content);
+    }
+
+    // ডিকশনারি ফাংশন
+    function showArDict(word, root, meaning) {
+        openBox("আরবি বিশ্লেষণ: " + word, `<div class="research-item"><b>মূল ধাতু:</b> ${root}<br><b>অর্থ:</b> ${meaning}</div>`);
+    }
+
+    function showBnDict(word, type, meaning) {
+        openBox(word, `<div class="research-item"><b>ধরণ:</b> ${type}<br><b>ডিকশনারি অর্থ:</b> ${meaning}</div>`);
     }
 
     function closeBox() { document.getElementById('info-box').style.display = 'none'; }
 </script>
 
 </body>
-        </html>
+    </html>
