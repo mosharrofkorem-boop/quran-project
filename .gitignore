@@ -1,34 +1,30 @@
-# Gradle files
-.gradle/
-build/
-
-# Local configuration file (sdk path, etc)
-local.properties
-
-# Log/OS Files
-*.log
-
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.aab
-*.apk
-output-metadata.json
-
-# IntelliJ
-*.iml
-.idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
-
-# Keystore files
-*.jks
-*.keystore
-
-# Google Services (e.g. APIs or Firebase)
-google-services.json
-
-# Android Profiling
-*.hprof
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল কোরআন ডিজিটাল ড্যাশবোর্ড</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f0f2f5; display: flex; flex-direction: column; min-height: 100vh; }
+        .header { background: #1a5e3a; color: white; padding: 25px; text-align: center; font-size: 24px; font-weight: bold; }
+        .menu-container { padding: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: auto; width: 90%; }
+        .menu-item { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.3s; border-left: 6px solid #1a5e3a; }
+        .menu-item:hover { transform: translateY(-3px); background: #e8f6ef; }
+        .icon { font-size: 30px; }
+        .text h3 { margin: 0; color: #1a5e3a; }
+        .text p { margin: 5px 0 0; font-size: 14px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">কোরআন গবেষণা প্রজেক্ট</div>
+    <div class="menu-container">
+        <a href="surah-fatiha.html" class="menu-item">
+            <div class="icon">📖</div>
+            <div class="text">
+                <h3>আল কোরআন (সূরা ফাতিহা)</h3>
+                <p>সহজ তিলাওয়াত ও শব্দ বিশ্লেষণ</p>
+            </div>
+        </a>
+    </div>
+</body>
+</html>
