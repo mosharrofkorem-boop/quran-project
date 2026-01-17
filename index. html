@@ -3,52 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল কোরআন ডিজিটাল গবেষণা প্রজেক্ট: হোম</title>
+    <title>আল কোরআন ডিজিটাল ড্যাশবোর্ড</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; background: #f0f2f5; display: flex; flex-direction: column; min-height: 100vh; }
-        .header { background: #1a5e3a; color: white; padding: 20px; text-align: center; font-size: 24px; font-weight: bold; }
-        .main-options { padding: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: auto; }
-        .option-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; text-decoration: none; color: inherit; transition: 0.3s; }
-        .option-card:hover { transform: scale(1.02); background: #e8f6ef; }
-        .option-icon { font-size: 30px; color: #1a5e3a; }
-        .option-text h3 { margin: 0; color: #1a5e3a; }
-        .search-bar { background: #fff; padding: 15px; border-top: 1px solid #ddd; position: sticky; bottom: 0; display: flex; gap: 10px; }
-        .search-bar input { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
+        .header { background: #1a5e3a; color: white; padding: 25px; text-align: center; font-size: 24px; font-weight: bold; }
+        .menu-container { padding: 20px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: auto; width: 90%; }
+        .menu-item { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 15px; text-decoration: none; color: #333; transition: 0.3s; border-left: 6px solid #1a5e3a; }
+        .menu-item:hover { transform: translateY(-3px); background: #e8f6ef; }
+        .icon { font-size: 30px; }
+        .text h3 { margin: 0; color: #1a5e3a; }
+        .text p { margin: 5px 0 0; font-size: 14px; color: #666; }
     </style>
 </head>
 <body>
 
-    <div class="header">আল কোরআন ডিজিটাল গবেষণা প্রজেক্ট</div>
+<div class="header">কোরআন গবেষণা প্রজেক্ট</div>
 
-    <div class="main-options">
-        <a href="quran.html" class="option-card">
-            <div class="option-icon">📖</div>
-            <div class="option-text">
-                <h3>আল কোরআন</h3>
-                <p>সূরা ফাতিহা থেকে নাস</p>
-            </div>
-        </a>
+<div class="menu-container">
+    <a href="surah-fatiha.html" class="menu-item">
+        <div class="icon">📖</div>
+        <div class="text">
+            <h3>আল কোরআন (সূরা ফাতিহা)</h3>
+            <p>সহজ তিলাওয়াত ও শব্দ বিশ্লেষণ</p>
+        </div>
+    </a>
 
-        <a href="#" class="option-card">
-            <div class="option-icon">💡</div>
-            <div class="option-text">
-                <h3>আল কোরআন বিষয় ভিত্তিক</h3>
-                <p>গবেষণামূলক বিষয়সমূহ</p>
-            </div>
-        </a>
-
-        <a href="#" class="option-card">
-            <div class="option-icon">🔍</div>
-            <div class="option-text">
-                <h3>আল কোরআন শব্দ ভিত্তিক</h3>
-                <p>শব্দ বিশ্লেষণ ও রুট ওয়ার্ড</p>
-            </div>
-        </a>
-    </div>
-
-    <div class="search-bar">
-        <input type="text" placeholder="সার্চ বা ডিকশনারি...">
-    </div>
+    <a href="#" class="menu-item">
+        <div class="icon">💡</div>
+        <div class="text">
+            <h3>বিষয় ভিত্তিক গবেষণা</h3>
+            <p>কুরআনের মূল নির্দেশিকা</p>
+        </div>
+    </a>
+</div>
 
 </body>
 </html>
