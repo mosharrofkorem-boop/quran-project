@@ -5,54 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>আল-কোরআন স্মার্ট রিসার্চ ডিরেক্টরি</title>
     <style>
-        :root { --primary: #1a5e3a; --bg: #fdfdfd; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f0f4f2; line-height: 1.6; }
+        :root { --primary: #1a5e3a; --bg: #f0f4f2; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); line-height: 1.6; }
         
-        .card { background: white; border-radius: 20px; padding: 25px; margin: 20px auto; max-width: 550px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        
-        /* আয়াত নম্বর বাটন */
-        .verse-btn { background: var(--primary); color: white; border-radius: 30px; padding: 8px 20px; font-size: 14px; font-weight: bold; margin-bottom: 20px; cursor: pointer; border: none; display: block; margin-left: auto; margin-right: auto; }
+        /* মেইন সার্চ বার (উপরে) */
+        .top-search-container { max-width: 550px; margin: 20px auto; padding: 0 15px; }
+        .main-search { width: 100%; padding: 12px 20px; border: 2px solid var(--primary); border-radius: 30px; outline: none; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* আরবি: ফন্ট বড় এবং স্পষ্ট */
+        .card { background: white; border-radius: 20px; padding: 25px; margin: 10px auto; max-width: 550px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        
+        .verse-btn { background: var(--primary); color: white; border-radius: 30px; padding: 8px 20px; font-size: 14px; font-weight: bold; margin-bottom: 20px; cursor: pointer; border: none; display: block; margin: 0 auto 20px; }
+
         .arabic-text { font-size: 38px; text-align: center; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 10px; word-spacing: 12px; }
-        .arabic-text span { cursor: pointer; transition: 0.3s; padding: 0 8px; border-radius: 8px; }
-        .arabic-text span:hover { background: #e8f5e9; color: var(--primary); }
+        .arabic-text span { cursor: pointer; padding: 0 8px; border-radius: 8px; }
 
-        /* উচ্চারণ ও অনুবাদ সেকশন */
-        .analysis-box { background: #f9fbf9; border-top: 4px solid var(--primary); padding: 20px; border-radius: 15px; margin-top: 20px; text-align: center; }
-        
-        /* উচ্চারণ: বাংলার সমান সাইজ */
-        .proun-text { font-size: 20px; color: #d32f2f; font-weight: bold; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 10px; }
-        
-        /* বাংলা অনুবাদ */
-        .translation-text { font-size: 20px; font-weight: 800; color: #1a1a1a; line-height: 1.8; }
-        .translation-text span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
-        .translation-text span:hover { background: #e0f2f1; }
-
-        /* বাটন গ্রিড */
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
-        .btn { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 12px; color: white; transition: 0.2s; }
-        .btn-alem { background: #2e7d32; } 
-        .btn-sufi { background: #f57f17; }
-        .btn-faith { background: #bf360c; } 
-        .btn-math { background: #7b1fa2; }
+        .btn { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 12px; color: white; }
+        .btn-alem { background: #2e7d32; } .btn-sufi { background: #f57f17; }
+        .btn-faith { background: #bf360c; } .btn-math { background: #7b1fa2; }
         .btn-full { background: #00897b; grid-column: span 2; }
 
-        /* পপ-আপ */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid var(--primary); padding: 25px; display: none; z-index: 2000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); }
+        .analysis-box { background: #f9fbf9; border-top: 4px solid var(--primary); padding: 20px; border-radius: 15px; text-align: center; }
+        .proun-text { font-size: 20px; color: #d32f2f; font-weight: bold; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 10px; }
+        .translation-text { font-size: 20px; font-weight: 800; color: #1a1a1a; }
+        .translation-text span { cursor: pointer; border-bottom: 2px solid #b2dfdb; }
+
+        /* পপ-আপ এবং এর ভেতরের সার্চ বার */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid var(--primary); padding: 20px; display: none; z-index: 2000; border-radius: 25px 25px 0 0; max-height: 80vh; overflow-y: auto; }
+        .pop-search { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
         .list-card { background: #fdfdfd; padding: 15px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
     </style>
 </head>
 <body>
 
+<div class="top-search-container">
+    <input type="text" class="main-search" placeholder="সূরার নাম বা আয়াত সার্চ করুন (১০:১১)...">
+</div>
+
 <div class="card">
-    <button class="verse-btn" onclick="showPopup('আয়াত নেভিগেটর', 'আয়াত ১ থেকে ৬২৩৬ পর্যন্ত সার্চ করার অপশন।')">সূরা: ১, আয়াত: ২</button>
+    <button class="verse-btn" onclick="openNav()">সূরা: ১, আয়াত: ২ (নেভিগেটর)</button>
     
     <div class="arabic-text">
         <span onclick="showAr('ٱلْحَمْدُ', 'আল-হামদু', 'হ-ম-দ', 'যাবতীয় প্রশংসা।')">ٱلْحَمْدُ</span> 
         <span onclick="showAr('لِلَّهِ', 'লিল্লাহি', 'আল্লাহ', 'আল্লাহর জন্য।')">لِلَّهِ</span> 
-        <span onclick="showAr('رَبِّ', 'রব্বি', 'র-ব-ব', 'যিনি প্রতিপালক।')">رَبِّ</span> 
+        <span onclick="showAr('রব্বি', 'রব্বি', 'র-ব-ব', 'যিনি প্রতিপালক।')">রব্বি</span> 
         <span onclick="showAr('ٱلْعَٰলَمِينَ', 'আল-আলামীন', 'আ-ল-ম', 'বিশ্বজগতের।')">ٱلْعَٰলَمِينَ</span>
     </div>
 
@@ -65,9 +62,7 @@
     </div>
 
     <div class="analysis-box">
-        <div class="proun-text">
-            আল-হামদু — লিল্লাহি — রব্বি — আল-আলামীন
-        </div>
+        <div class="proun-text">আল-হামদু — লিল্লাহি — রব্বি — আল-আলামীন</div>
         <div class="translation-text">
             <span onclick="showBn('সকল প্রশংসা')">সকল প্রশংসা</span> 
             <span onclick="showBn('আল্লাহর জন্য')">আল্লাহর জন্য</span>, 
@@ -80,6 +75,7 @@
 <div id="info-box">
     <button class="close-btn" onclick="closeBox()">বন্ধ</button>
     <h3 id="box-title" style="color: var(--primary); margin-top: 0;"></h3>
+    <input type="text" id="popSearchInput" class="pop-search" placeholder="এখানে গ্রন্থ বা লেখক খুঁজুন..." onkeyup="filterList()">
     <div id="box-content"></div>
 </div>
 
@@ -88,23 +84,62 @@
         document.getElementById('info-box').style.display = 'block';
         document.getElementById('box-title').innerText = title;
         document.getElementById('box-content').innerHTML = content;
+        document.getElementById('popSearchInput').style.display = 'block'; // সার্চ বার দেখাবে
+    }
+
+    // বাটনের পপ-আপ ডেটা (সার্চ করার সুবিধার্থে আলাদা করা)
+    function showAlem() {
+        let list = `
+            <div class="list-card"><b>ডক্টর আব্দুল্লাহ জাহাঙ্গীর:</b> তাফসীর ও গবেষণা।</div>
+            <div class="list-card"><b>তাফসীরে ইবনে কাসীর:</b> প্রাচীনতম নির্ভরযোগ্য ব্যাখ্যা।</div>
+            <div class="list-card"><b>তাফসীরে জালালাইন:</b> সংক্ষিপ্ত তাফসীর।</div>
+        `;
+        showPopup("আলেমদের তাফসীর", list);
+    }
+
+    function showSufi() {
+        let list = `
+            <div class="list-card"><b>আল সুরেশ্বরী:</b> কোরআনুল মাজীদ (আধ্যাত্মিক)।</div>
+            <div class="list-card"><b>সদর উদ্দিন চিশতী:</b> কোরআন দর্শন।</div>
+            <div class="list-card"><b>ইবনুল আরাবী:</b> ফুতুহাত ও ফুসুস।</div>
+            <div class="list-card"><b>দেওয়ানবাগী:</b> মারেফতি ব্যাখ্যা।</div>
+        `;
+        showPopup("সুফি ও আধ্যাত্মিক গ্রন্থসমূহ", list);
+    }
+
+    function showFaith() {
+        let list = `
+            <div class="list-card"><b>শ্রীমদ্ভগবদ্গীতা:</b> সমার্থক শ্লোক।</div>
+            <div class="list-card"><b>ত্রিপিটক:</b> জ্ঞান ও দর্শনের মিল।</div>
+            <div class="list-card"><b>গুরু গ্রন্থ সাহেব:</b> একত্ববাদের বাণী।</div>
+        `;
+        showPopup("অন্যান্য ধর্মগ্রন্থ", list);
+    }
+
+    // পপ-আপের ভেতরে ফিল্টার করার ফাংশন
+    function filterList() {
+        let input = document.getElementById('popSearchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('list-card');
+        for (let i = 0; i < cards.length; i++) {
+            let text = cards[i].innerText.toLowerCase();
+            cards[i].style.display = text.includes(input) ? "block" : "none";
+        }
     }
 
     function showAr(word, proun, root, mean) {
-        showPopup("আরবি বিশ্লেষণ: " + word, `<div class="list-card"><b>উচ্চারণ:</b> ${proun}<br><b>মূল ধাতু:</b> ${root}<br><b>অর্থ:</b> ${mean}</div>`);
+        document.getElementById('popSearchInput').style.display = 'none'; // ডিকশনারিতে সার্চ লাগবে না
+        showPopup("আরবি বিশ্লেষণ", `<div class="list-card"><b>শব্দ:</b> ${word}<br><b>উচ্চারণ:</b> ${proun}<br><b>অর্থ:</b> ${mean}</div>`);
     }
 
     function showBn(word) {
-        showPopup(word, `<div class="list-card">এই শব্দের আধ্যাত্মিক ও ভাষাগত গভীরতা এখানে দেখা যাবে।</div>`);
+        document.getElementById('popSearchInput').style.display = 'none';
+        showPopup(word, `<div class="list-card">বিস্তারিত ডিকশনারি তথ্য এখানে।</div>`);
     }
 
-    function showAlem() { showPopup("আলেমদের তাফসীর", `<div class="list-card"><b>ড. খন্দকার আব্দুল্লাহ জাহাঙ্গীর:</b> তাঁর গবেষণালব্ধ ব্যাখ্যা এখানে যুক্ত হবে।</div>`); }
-    function showSufi() { showPopup("সুফি ও আধ্যাত্মিক", `<div class="list-card">ইবনুল আরাবী, সুরেশ্বরী ও চিশতী ধারার আধ্যাত্মিক রহস্য।</div>`); }
-    function showFaith() { showPopup("ধর্মগ্রন্থ তুলনা", `<div class="list-card">গীতা, ত্রিপিটক ও গুরুগ্রন্থ সাহেবের সমার্থক বাণী।</div>`); }
-    function showMath() { showPopup("গাণিতিক সূত্র", `<div class="list-card">শব্দ ও অক্ষরের গাণিতিক বিন্যাস।</div>`); }
-    function showOpinion() { showPopup("মতামত ও তাফসীর", `<div class="list-card"><p>অনলাইন ও অফলাইন মতামত এখানে জমা হবে।</p><textarea style="width:100%; height:100px; padding:10px;" placeholder="আপনার গবেষণা লিখুন..."></textarea></div>`); }
-
+    function showMath() { showPopup("গাণিতিক সূত্র", `<div class="list-card">গাণিতিক বিন্যাস বিশ্লেষণ।</div>`); }
+    function showOpinion() { showPopup("মতামত", `<textarea class="pop-search" placeholder="লিখুন..."></textarea>`); }
     function closeBox() { document.getElementById('info-box').style.display = 'none'; }
+    function openNav() { showPopup("আয়াত নেভিগেটর", "১-৬২৩৬ সার্চ করুন।"); }
 </script>
 
 </body>
