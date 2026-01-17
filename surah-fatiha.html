@@ -1,72 +1,84 @@
-<!DOCTYPE html><html lang="bn">
+<!DOCTYPE html>
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন ডিজিটাল গবেষণা</title>
+    <title>আল-কোরআন আধ্যাত্মিক গবেষণা (সুফি ভার্সন)</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card { background: white; border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 650px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
-        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 20px; }
-        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; white-space: normal; font-family: 'Amiri', 'Scheherazade New', 'Noto Naskh Arabic', serif; }
-        .arabic span { cursor: pointer; display: inline-block; padding: 0 6px; border-radius: 8px; transition: 0.3s; }
-        .arabic span:active { background: #ffeb3b; }
-        .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 20px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; cursor: pointer; border-radius: 12px; text-align: center; transition: 0.3s; }
-        .topic-link { font-size: 13px; color: #1a5e3a; display: block; margin-top: 5px; opacity: 0.8; }
-        .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; margin-top: 15px; }
-        .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
-        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
-        .translation span:hover { background: #e0f2f1; }
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; }
-        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        .action-btn { display: block; background: #f0f2f5; color: #1a5e3a; padding: 15px; margin-top: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; border-left: 5px solid #1a5e3a; cursor: pointer; }
-        .list-container { display: none; margin-top: 10px; background: #fafafa; border-radius: 8px; padding: 5px; }
-        .list-item { display: block; padding: 12px; color: #1a5e3a; text-decoration: none; border-bottom: 1px solid #eee; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f4f6f7; line-height: 1.6; padding-bottom: 150px; scroll-behavior: smooth; }
+        .nav { background: #145a32; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .card { background: white; border-radius: 25px; padding: 30px; margin: 25px auto; max-width: 700px; box-shadow: 0 12px 28px rgba(0,0,0,0.06); border: 1px solid #e2e8e5; }
+        .verse-no { display: inline-block; background: #145a32; color: white; border-radius: 50%; width: 36px; height: 36px; text-align: center; font-size: 16px; line-height: 36px; font-weight: bold; margin-bottom: 20px; }
+        .arabic { font-size: 34px; text-align: right; direction: rtl; line-height: 2.4; color: #1b1b1b; font-weight: bold; margin-bottom: 18px; white-space: normal; font-family: 'Amiri', 'Scheherazade New', 'Noto Naskh Arabic', serif; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 0 8px; border-radius: 10px; transition: 0.3s; }
+        .arabic span:active { background: #ffe082; }
+        .pronunciation { font-size: 18px; color: #145a32; font-weight: bold; margin: 22px 0; border: 1px solid #c8e6c9; padding: 14px; background: #e8f5e9; cursor: pointer; border-radius: 15px; text-align: center; transition: 0.3s; }
+        .topic-link { font-size: 14px; color: #145a32; display: block; margin-top: 6px; opacity: 0.85; }
+        .translation-box { background: #f0f4f3; border-left: 6px solid #145a32; padding: 18px 22px; border-radius: 0 15px 15px 0; margin-top: 18px; }
+        .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.9; }
+        .translation span { cursor: pointer; border-bottom: 2px solid #a7d7c5; transition: 0.2s; }
+        .translation span:hover { background: #d0f0e0; }
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #145a32; padding: 28px; display: none; box-shadow: 0 -12px 32px rgba(0,0,0,0.25); z-index: 2000; border-radius: 25px 25px 0 0; max-height: 75vh; overflow-y: auto; }
+        .close-btn { float: right; background: #c0392b; color: white; border: none; padding: 10px 22px; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        .action-btn { display: block; background: #f0f2f5; color: #145a32; padding: 16px; margin-top: 14px; border-radius: 12px; text-decoration: none; font-weight: bold; border-left: 6px solid #145a32; cursor: pointer; }
+        .list-container { display: none; margin-top: 12px; background: #f9f9f9; border-radius: 10px; padding: 8px; }
+        .list-item { display: block; padding: 14px; color: #145a32; text-decoration: none; border-bottom: 1px solid #eee; font-weight: bold; }
     </style>
 </head>
 <body>
-<div class="nav">সূরা আল-ফাতিহা স্মার্ট ডিরেক্টরি</div>
+<div class="nav">সূরা আল-ফাতিহা আধ্যাত্মিক নির্দেশিকা</div>
+
 <div class="card" id="verse-2">
     <div class="verse-no">২</div>
     <div class="arabic">
-        <span onclick="showWordResearch('ٱلْحَمْدُ','38',['1:2','6:1','18:1'])">ٱلْحَمْدُ</span>
-        <span onclick="showWordResearch('لِلَّهِ','2699',['1:2','2:163'])">لِلَّهِ</span>
-        <span onclick="showWordResearch('رَبِّ','970',['1:2','114:1'])">رَبِّ</span>
-        <span onclick="showWordResearch('ٱلْعَٰلَمِينَ','73',['1:2','26:23'])">ٱلْعَٰلَمِينَ</span>
+        <span onclick="showWordResearch('ٱلْحَمْدُ','38',['1:2','6:1','18:1'], 'সকল প্রশংসা আল্লাহর প্রতি, অন্তরের ভেতর থেকে বের হওয়া ধ্রুব সত্যের আলো।')">ٱلْحَمْدُ</span>
+        <span onclick="showWordResearch('لِلَّهِ','2699',['1:2','2:163'], 'সমস্ত সৃষ্টিকর্তা, পরম জ্ঞানী, সকল পথের নির্দেশক।')">لِلَّهِ</span>
+        <span onclick="showWordResearch('رَبِّ','970',['1:2','114:1'], 'বিশ্বজগতের হকিকত নির্দেশক, আত্মার রক্ষাকারী।')">رَبِّ</span>
+        <span onclick="showWordResearch('ٱلْعَٰلَمِينَ','73',['1:2','26:23'], 'সকল সৃষ্টির অন্তর্দৃষ্টি, যা দেখা যায় এবং যা অদৃশ্য।')">ٱلْعَٰলَمِينَ</span>
     </div>
-    <div class="pronunciation" onclick="showTopicResearch('বিষয়ভিত্তিক আয়াতসমূহ','এই আয়াতে আল্লাহর প্রশংসা বর্ণিত হয়েছে।',['আল্লাহর প্রশংসা (১:২)','বিশ্বজগতের সৃষ্টি (২:২৯)'])">আলহামদু লিল্লাহি রব্বিল আলামিন।<span class="topic-link">গবেষণা দেখতে টাচ করুন 💡</span></div>
+    <div class="pronunciation" onclick="showTopicResearch('আধ্যাত্মিক নির্দেশনা','এই আয়াত আল্লাহর মহিমা, পথপ্রদর্শকতা এবং সৃষ্টির অন্তর্দৃষ্টি প্রকাশ করে।',['আল্লাহর প্রশংসা – অন্তরের ভেতর থেকে ধ্রুব সত্যের আলো','বিশ্বজগতের সৃষ্টি – প্রতিটি কণায় আলোর প্রতিফলন'])">
+        আলহামদু লিল্লাহি রব্বিল আলামিন।<span class="topic-link">গভীর গবেষণা দেখুন 💡</span>
+    </div>
     <div class="translation-box">
         <div class="translation">
-            <span onclick="showInfo('সকল প্রশংসা','স্তুতি, গুণগান, মহিমা কীর্তন।')">সকল প্রশংসা</span>
-            <span onclick="showInfo('আল্লাহর জন্য','মাবুদ, খালিক, পরম সত্তা।')">আল্লাহর জন্য</span>,
-            <span onclick="showInfo('যিনি','যিনিই একমাত্র, পরম সত্তা।')">যিনি</span>
-            <span onclick="showInfo('বিশ্বজগতের','সারা জাহান, সৃষ্টিজগত।')">বিশ্বজগতের</span>
-            <span onclick="showInfo('প্রতিপালক','পালনকর্তা, রক্ষাকর্তা, মাবুদ।')">প্রতিপালক</span>।
+            <span onclick="showInfo('সকল প্রশংসা','আলহামদু: অন্তরের ভেতর থেকে বের হওয়া ধ্রুব সত্যের আলো।')">সকল প্রশংসা</span>
+            <span onclick="showInfo('আল্লাহর জন্য','লিল্লাহি: সকল সৃষ্টিকর্তা, পরম জ্ঞানী।')">আল্লাহর জন্য</span>,
+            <span onclick="showInfo('যিনি','রব্বি: বিশ্বজগতের হকিকত নির্দেশক।')">যিনি</span>
+            <span onclick="showInfo('বিশ্বজগতের','আল-আলামীন: সকল সৃষ্টির অন্তর্দৃষ্টি।')">বিশ্বজগতের</span>
+            <span onclick="showInfo('প্রতিপালক','প্রতিপালক: আত্মার রক্ষাকারী।')">প্রতিপালক</span>।
         </div>
     </div>
 </div>
+
 <div id="info-box">
     <button class="close-btn" onclick="closeBox()">× বন্ধ করুন</button>
-    <h3 id="box-title" style="color:#1a5e3a;margin-top:0;font-size:24px;"></h3>
+    <h3 id="box-title" style="color:#145a32;margin-top:0;font-size:24px;"></h3>
     <div id="box-content"></div>
 </div>
+
 <script>
     function showInfo(title, desc){
         document.getElementById('info-box').style.display='block';
         document.getElementById('box-title').innerText=title;
         document.getElementById('box-content').innerHTML=`<p style="font-size:19px;color:#444;font-weight:bold;">${desc}</p>`;
     }
-    function showWordResearch(word,count,verseList){
+    function showWordResearch(word,count,verseList, sufiexp){
         document.getElementById('info-box').style.display='block';
         document.getElementById('box-title').innerText="শব্দ: "+word;
         let listHtml = verseList.map(v=>`<a href="#" class="list-item">📍 আয়াত: ${v}</a>`).join('');
-        document.getElementById('box-content').innerHTML=`<p style="font-size:18px;">কোরআনে এসেছে: <b>${count} বার</b></p><div class="action-btn" onclick="toggleList()">সম্পূর্ণ লিস্ট দেখুন ↓</div><div id="data-list" class="list-container">${listHtml}</div>`;
+        document.getElementById('box-content').innerHTML=`
+            <p style="font-size:18px;">কোরআনে এসেছে: <b>${count} বার</b></p>
+            <p style="font-size:17px; color:#145a32; font-weight:bold;">সুফি ব্যাখ্যা: ${sufiexp}</p>
+            <div class="action-btn" onclick="toggleList()">সম্পূর্ণ লিস্ট দেখুন ↓</div>
+            <div id="data-list" class="list-container">${listHtml}</div>`;
     }
     function showTopicResearch(title,desc,topicList){
         document.getElementById('info-box').style.display='block';
         document.getElementById('box-title').innerText=title;
-        let listHtml = topicList.map(t=>`<a href="#" class="list-item">📖 বিষয়: ${t}</a>`).join('');
-        document.getElementById('box-content').innerHTML=`<p style="font-size:17px;">${desc}</p><div class="action-btn" onclick="toggleList()">সংশ্লিষ্ট আয়াতসমূহ ↓</div><div id="data-list" class="list-container">${listHtml}</div>`;
+        let listHtml = topicList.map(t=>`<a href="#" class="list-item">📖 ${t}</a>`).join('');
+        document.getElementById('box-content').innerHTML=`<p style="font-size:17px;">${desc}</p>
+            <div class="action-btn" onclick="toggleList()">সংশ্লিষ্ট আয়াতসমূহ ↓</div>
+            <div id="data-list" class="list-container">${listHtml}</div>`;
     }
     function toggleList(){
         let el = document.getElementById('data-list');
@@ -75,4 +87,4 @@
     function closeBox(){ document.getElementById('info-box').style.display='none'; }
 </script>
 </body>
-        </html>
+    </html>
