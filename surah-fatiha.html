@@ -1,163 +1,47 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন স্মার্ট রিসার্চ ডিরেক্টরি</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f8faf9; line-height: 1.6; padding-bottom: 120px; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; font-weight: bold; font-size: 18px; }
-        
-        .card { background: white; border-radius: 20px; padding: 25px; margin: 20px auto; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #eef2f1; }
-        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 32px; height: 32px; text-align: center; font-size: 16px; line-height: 32px; font-weight: bold; margin-bottom: 15px; }
-        
-        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { cursor: pointer; padding: 0 5px; color: #1a5e3a; transition: 0.2s; }
-        .arabic span:hover { background: #e8f5e9; border-radius: 5px; }
-
-        .action-group { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; justify-content: center; }
-        .btn-res { padding: 8px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; cursor: pointer; border: 1px solid transparent; transition: 0.3s; }
-        
-        /* বাটন কালারসমূহ */
-        .btn-tafsir { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
-        .btn-sufi { background: #fffde7; color: #f57f17; border-color: #fff9c4; }
-        .btn-math { background: #f3e5f5; color: #7b1fa2; border-color: #e1bee7; }
-        .btn-topic { background: #e3f2fd; color: #1565c0; border-color: #bbdefb; }
-        .btn-other { background: #fbe9e7; color: #bf360c; border-color: #ffccbc; }
-
-        .pronunciation { font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; border: 1px solid #c8e6c9; padding: 12px; background: #f1f8f1; border-radius: 12px; text-align: center; }
-
-        .translation-box { background: #f9fbf9; border-left: 5px solid #1a5e3a; padding: 15px 20px; border-radius: 0 12px 12px 0; }
-        .translation { font-size: 20px; color: #1a1a1a; font-weight: 800; line-height: 1.8; }
-        .translation span { cursor: pointer; border-bottom: 2px solid #b2dfdb; transition: 0.2s; }
-
-        /* পপ-আপ ডিজাইন */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 80vh; overflow-y: auto; }
-        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        
-        .research-item { background: #fdfdfd; padding: 12px; border-radius: 10px; border: 1px solid #eee; margin-top: 10px; }
-        .tag { font-weight: bold; font-size: 14px; padding: 2px 8px; border-radius: 5px; margin-bottom: 5px; display: inline-block; }
-        .tag-sufi { color: #f57f17; background: #fffde7; }
-        .tag-tafsir { color: #2e7d32; background: #e8f5e9; }
-        .tag-math { color: #7b1fa2; background: #f3e5f5; }
-    </style>
-</head>
-<body>
-
-<div class="nav">আল-কোরআন ডিজিটাল স্মার্ট লাইব্রেরি</div>
-
-<div class="card">
-    <div class="verse-no">২</div>
-    
-    <div class="arabic">
-        <span onclick="showArDict('ٱلْحَمْدُ', 'হ-ম-দ', 'যাবতীয় প্রশংসা ও কৃতজ্ঞতা যা কেবল আল্লাহর জন্য নির্দিষ্ট।')">ٱلْحَمْدُ</span> 
-        <span onclick="showArDict('لِلَّهِ', 'আল্লাহ', 'সৃষ্টিকর্তার মহিমান্বিত নাম।')">لِلَّهِ</span> 
-        <span onclick="showArDict('رَبِّ', 'র-ব-ব', 'যিনি লালন-পালন ও পূর্ণতা দান করেন।')">رَبِّ</span> 
-        <span onclick="showArDict('ٱلْعَٰলَمِينَ', 'আ-ল-ম', 'দৃশ্য-অদৃশ্য জগতসমূহ।')">ٱلْعَٰলَمِينَ</span>
-    </div>
-
-    <div class="action-group">
-        <button class="btn-res btn-tafsir" onclick="showGeneralTafsir()">আলেমদের তাফসীর</button>
-        <button class="btn-res btn-sufi" onclick="showSufiTafsir()">সুফি ব্যাখ্যা</button>
-        <button class="btn-res btn-math" onclick="showMathAnalysis()">গাণিতিক সূত্র</button>
-        <button class="btn-res btn-topic" onclick="showTopics()">বিষয়ভিত্তিক</button>
-        <button class="btn-res btn-other" onclick="showComparison()">ধর্মগ্রন্থ সমার্থক</button>
-    </div>
-
-    <div class="pronunciation">আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
-
-    <div class="translation-box">
-        <div class="translation">
-            <span onclick="showBnDict('সকল প্রশংসা', 'বিশেষ্য', 'স্তুতি, মহিমা বর্ণনা।')">সকল প্রশংসা</span> 
-            <span onclick="showBnDict('আল্লাহর জন্য', 'বিশেষ্য', 'সৃষ্টিকর্তার প্রতি নিবেদিত।')">আল্লাহর জন্য</span>, 
-            <span onclick="showBnDict('যিনি', 'সর্বনাম', 'যে পরম সত্তা।')">যিনি</span> 
-            <span onclick="showBnDict('বিশ্বজগতের', 'বিশেষ্য', 'সারা জাহান।')">বিশ্বজগতের</span> 
-            <span onclick="showBnDict('প্রতিপালক', 'বিশেষ্য', 'পালনকর্তা।')">প্রতিপালক</span>।
-        </div>
-    </div>
-</div>
-
-<div id="info-box">
-    <button class="close-btn" onclick="closeBox()">× বন্ধ</button>
-    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0;"></h3>
-    <div id="box-content"></div>
-</div>
-
 <script>
-    function openBox(title, content) {
-        document.getElementById('info-box').style.display = 'block';
-        document.getElementById('box-title').innerText = title;
-        document.getElementById('box-content').innerHTML = content;
-    }
-
-    // ১. আলেমদের তাফসীর (ডঃ জাহাঙ্গীরসহ)
+    // আলেমদের তাফসীর ক্যাটালগ
     function showGeneralTafsir() {
         let content = `
             <div class="research-item">
-                <span class="tag tag-tafsir">ডক্টর আব্দুল্লাহ জাহাঙ্গীর:</span>
-                <p>তিনি ব্যাখা করেছেন যে, 'আলহামদু' এর অর্থ হলো আল্লাহর অসীম গুণ ও নেয়ামতের কারণে খুশি হয়ে মুখে তাঁর মহিমা ঘোষণা করা। এটি ঈমানের মূল ভিত্তি।</p>
+                <span class="tag tag-tafsir">তাফসীরে ইবনে কাসীর</span>
+                <p>সবচেয়ে নির্ভরযোগ্য হাদিস ভিত্তিক তাফসীর।</p>
             </div>
             <div class="research-item">
-                <span class="tag tag-tafsir">তাফসীর ইবনে কাসীর:</span>
-                <p>আল্লাহই একমাত্র প্রশংসার মালিক কারণ সমস্ত নেয়ামত তাঁরই সৃষ্টি।</p>
+                <span class="tag tag-tafsir">তাফসীরে জালালাইন</span>
+                <p>কুরআনের শব্দের সংক্ষিপ্ত ও সারগর্ভ ব্যাখ্যা।</p>
+            </div>
+            <div class="research-item">
+                <span class="tag tag-tafsir">ড. আব্দুল্লাহ জাহাঙ্গীর</span>
+                <p>আধুনিক প্রেক্ষাপটে বিশুদ্ধ আকিদার আলোকে ব্যাখ্যা।</p>
+            </div>
+            <div class="research-item">
+                <span class="tag tag-tafsir">মাআরিফুল কুরআন</span>
+                <p>পারিবারিক ও সামাজিক মাসআলা ভিত্তিক তাফসীর।</p>
             </div>
         `;
-        openBox("আলেমদের তাফসীর", content);
+        openBox("আলেম ও গবেষকদের তাফসীর সমূহ", content);
     }
 
-    // ২. সুফি আধ্যাত্মিক ব্যাখ্যা
+    // সুফি তাফসীর ক্যাটালগ
     function showSufiTafsir() {
         let content = `
             <div class="research-item">
-                <span class="tag tag-sufi">Al-Futuhat al-Makkiyya (ইবনুল আরাবী):</span>
-                <p>সৃষ্টির প্রতিটি কণা আল্লাহর মহিমা গাইছে; প্রশংসা করা মানে সেই ঐশ্বরিক নূরকে উপলব্ধি করা।</p>
+                <span class="tag tag-sufi">তাফসীরে রুহুল বায়ান (ইসমাইল হাক্কী)</span>
+                <p>সুফিদের কাছে অত্যন্ত জনপ্রিয় এবং আধ্যাত্মিক রহস্যে ঘেরা তাফসীর।</p>
             </div>
             <div class="research-item">
-                <span class="tag tag-sufi">Fusus al-Hikam (ইবনুল আরাবী):</span>
-                <p>'রব' হলো সেই সত্তা যিনি প্রতিটি রুহকে তার নিজস্ব হাকীকত বা সত্যের দিকে পরিচালিত করেন।</p>
+                <span class="tag tag-sufi">আল-ফুতুহাত আল-মাক্কিয়্যাহ (ইবনুল আরাবী)</span>
+                <p>মারেফাতের গভীরতম সমুদ্র ও আধ্যাত্মিক উন্মোচন।</p>
             </div>
             <div class="research-item">
-                <span class="tag tag-sufi">Tafsir al-Iqbal / Ilahi Noor:</span>
-                <p>হৃদয়ের চোখ দিয়ে বিশ্বজগতকে আল্লাহর দর্পণ হিসেবে দেখাই হলো প্রকৃত তাফসীর।</p>
+                <span class="tag tag-sufi">লুতাইফুল ইশারাত (ইমাম কুশায়রী)</span>
+                <p>হৃদয়ের সূক্ষ্ম অনুভূতি ও ইশারার মাধ্যমে ব্যাখ্যা।</p>
+            </div>
+            <div class="research-item">
+                <span class="tag tag-sufi">তাফসীরে তিশতুরী</span>
+                <p>সবচেয়ে প্রাচীন আধ্যাত্মিক তাফসীর সমূহের একটি।</p>
             </div>
         `;
-        openBox("সুফি আধ্যাত্মিক ব্যাখ্যা", content);
+        openBox("সুফি ও আধ্যাত্মিক তাফসীর সমূহ", content);
     }
-
-    // ৩. গাণিতিক সূত্র ও বিশ্লেষণ
-    function showMathAnalysis() {
-        let content = `
-            <div class="research-item">
-                <span class="tag tag-math">গাণিতিক সূত্র:</span>
-                <p>শব্দ সংখ্যা: ৪টি<br>বর্ণ (Letter) সংখ্যা: ১৮টি<br>১৯-এর বিন্যাস ও আবজাদ মান অনুসারে আয়াতের ছন্দ গাণিতিকভাবে নিখুঁত।</p>
-            </div>
-        `;
-        openBox("গাণিতিক মিরাকল ও সূত্র", content);
-    }
-
-    // ৪. বিষয়ভিত্তিক গবেষণা
-    function showTopics() {
-        let content = `<div class="research-item"><b>১. প্রশংসা (Hamd):</b> কৃতজ্ঞতার বিজ্ঞান।<br><b>২. রব্বুবিয়্যাত:</b> লালন-পালনের কর্তৃত্ব।</div>`;
-        openBox("বিষয়ভিত্তিক গবেষণা", content);
-    }
-
-    // ৫. অন্যান্য ধর্মগ্রন্থের সমার্থক
-    function showComparison() {
-        let content = `<div class="research-item"><b>বাইবেল (সামসঙ্গীত):</b> "প্রভু মহান এবং তাঁর প্রশংসা প্রশংসনীয়।"<br><b>ঋগ্বেদ:</b> "তিনিই বিশ্বের একমাত্র মালিক।"</div>`;
-        openBox("ধর্মগ্রন্থ সমার্থক রূপ", content);
-    }
-
-    // ডিকশনারি ফাংশন
-    function showArDict(word, root, meaning) {
-        openBox("আরবি বিশ্লেষণ: " + word, `<div class="research-item"><b>মূল ধাতু:</b> ${root}<br><b>ব্যাখ্যা:</b> ${meaning}</div>`);
-    }
-
-    function showBnDict(word, type, meaning) {
-        openBox(word, `<div class="research-item"><b>ধরণ:</b> ${type}<br><b>অর্থ:</b> ${meaning}</div>`);
-    }
-
-    function closeBox() { document.getElementById('info-box').style.display = 'none'; }
 </script>
-
-</body>
-    </html>
