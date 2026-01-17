@@ -3,83 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন স্মার্ট গবেষণা</title>
+    <title>সূরা আল-ফাতিহা - উচ্চারণ ও গবেষণা</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; background: #f4f7f6; color: #333; }
-        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; }
-        .nav a { color: white; text-decoration: none; font-weight: bold; margin-right: 15px; }
-        .card { background: white; border-radius: 15px; padding: 25px; margin: 20px auto; max-width: 700px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .verse-no { background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-block; text-align: center; line-height: 30px; font-weight: bold; margin-bottom: 15px; }
+        body { font-family: Arial, sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; }
+        .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .nav a { color: white; text-decoration: none; margin-right: 15px; font-weight: bold; }
+        .card { background: white; border-radius: 12px; padding: 20px; margin: 20px auto; max-width: 600px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; }
+        .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; margin-bottom: 10px; font-weight: bold; }
         
-        /* আরবি শব্দে ক্লিকের স্টাইল */
-        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.5; margin-bottom: 20px; }
-        .arabic span { cursor: pointer; padding: 2px 5px; border-radius: 5px; transition: 0.3s; color: #2c3e50; }
-        .arabic span:hover { background: #e8f6ef; color: #1a5e3a; text-decoration: underline; }
+        /* আরবি শব্দ */
+        .arabic { font-size: 32px; text-align: right; direction: rtl; line-height: 2.2; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
+        .arabic span { cursor: pointer; padding: 0 4px; border-radius: 4px; transition: 0.3s; }
+        .arabic span:hover { background: #ffeb3b; color: black; }
+        
+        /* উচ্চারণ ও অনুবাদ */
+        .pronunciation { font-size: 16px; color: #d35400; font-style: italic; margin-bottom: 8px; border-left: 3px solid #d35400; padding-left: 10px; }
+        .translation { font-size: 18px; color: #2d3436; border-top: 1px solid #eee; padding-top: 10px; }
+        .translation span { cursor: pointer; border-bottom: 1px dotted #1a5e3a; }
+        .translation span:hover { background: #fff9c4; }
 
-        /* বাংলা শব্দে ক্লিকের স্টাইল */
-        .translation { font-size: 19px; line-height: 1.8; border-top: 1px solid #eee; padding-top: 15px; }
-        .translation span { cursor: pointer; border-bottom: 1px dotted #1a5e3a; transition: 0.2s; }
-        .translation span:hover { background: #fff9c4; color: #000; }
-
-        /* তথ্য দেখানোর পপ-আপ বক্স */
-        #research-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 5px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 20px 20px 0 0; max-height: 50vh; overflow-y: auto; }
-        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
-        .ref-link { display: block; background: #f0f2f5; padding: 10px; margin: 10px 0; border-radius: 8px; text-decoration: none; color: #1a5e3a; font-weight: bold; }
-        .ref-link:hover { background: #e8f6ef; }
+        /* তথ্য দেখানোর নিচের বক্স */
+        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 5px solid #1a5e3a; padding: 20px; display: none; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); z-index: 1000; border-radius: 20px 20px 0 0; }
+        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="nav"><a href="index.html">⬅ হোম</a> সূরা আল-ফাতিহা গবেষণা</div>
+<div class="nav"><a href="index.html">⬅ হোম</a> সূরা আল-ফাতিহা (উচ্চারণসহ)</div>
+
+<div class="card">
+    <div class="verse-no">১</div>
+    <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div class="pronunciation"><strong>উচ্চারণ:</strong> বিসমিল্লাহির রাহমানির রাহিম।</div>
+    <div class="translation"><strong>অনুবাদ:</strong> পরম করুণাময় অসীম দয়ালু আল্লাহর নামে শুরু করছি।</div>
+</div>
 
 <div class="card">
     <div class="verse-no">২</div>
     <div class="arabic">
-        <span onclick="showArabicRef('ٱلْحَمْدُ', 'এই শব্দটি কোরআনে ৩৮ বার এসেছে।', ['সূরা আল-আনআম (১)', 'সূরা সাবা (১)', 'সূরা ফাতির (১)'])">ٱلْحَمْدُ </span>
-        <span onclick="showArabicRef('لِلَّهِ', 'এই শব্দটি কোরআনে ২৬৯৯ বার এসেছে।', ['সূরা আল-বাকারাহ (১৬৩)', 'সূরা আলে-ইমরান (১৮)'])">لِلَّهِ </span>
-        <span onclick="showArabicRef('رَبِّ', 'এই শব্দটি কোরআনে ৯৭০ বার এসেছে।', ['সূরা আন-নাস (১)'])">رَبِّ </span>
-        <span onclick="showArabicRef('ٱلْعَٰلَمِينَ', 'এই শব্দটি কোরআনে ৭৩ বার এসেছে।', ['সূরা আশ-শুয়ারা (২৩)'])">ٱلْعَٰلَمِينَ</span>
+        <span onclick="showInfo('ٱلْحَمْدُ', 'কোরআনে এসেছে: ৩৮ বার। অর্থ: সকল প্রশংসা।')">ٱلْحَمْدُ </span>
+        <span onclick="showInfo('لِلَّهِ', 'কোরআনে এসেছে: ২৬৯৯ বার। অর্থ: আল্লাহর জন্য।')">لِلَّهِ </span>
+        <span onclick="showInfo('رَبِّ', 'কোরআনে এসেছে: ৯৭০ বার। অর্থ: পালনকর্তা।')">رَبِّ </span>
+        <span onclick="showInfo('ٱلْعَٰলَمِينَ', 'কোরআনে এসেছে: ৭৩ বার। অর্থ: বিশ্বজগতের।')">ٱلْعَٰলَمِينَ</span>
     </div>
-
+    <div class="pronunciation"><strong>উচ্চারণ:</strong> আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
     <div class="translation">
         <strong>অনুবাদ:</strong> 
-        <span onclick="showSynonyms('সকল প্রশংসা', 'স্তুতি, গুণগান, মহিমা কীর্তন')">সকল প্রশংসা</span> 
-        <span onclick="showSynonyms('আল্লাহর জন্য', 'মাবুদ, ইলাহ, সৃষ্টিকর্তা')">আল্লাহর জন্য</span>, যিনি 
-        <span onclick="showSynonyms('বিশ্বজগতের', 'সারা জাহান, সৃষ্টিজগত, কুল মাখলুকাত')">বিশ্বজগতের</span> প্রতিপালক।
+        <span onclick="showInfo('সকল প্রশংসা', 'প্রতিশব্দ: স্তুতি, গুণগান, মহিমা কীর্তন')">সকল প্রশংসা</span> 
+        <span onclick="showInfo('আল্লাহর জন্য', 'প্রতিশব্দ: মাবুদ, ইলাহ, সৃষ্টিকর্তা')">আল্লাহর জন্য</span>, যিনি বিশ্বজগতের প্রতিপালক।
     </div>
 </div>
 
-<div id="research-box">
+<div class="card">
+    <div class="verse-no">৩</div>
+    <div class="arabic">الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div class="pronunciation"><strong>উচ্চারণ:</strong> আর-রাহমানির রাহিম।</div>
+    <div class="translation"><strong>অনুবাদ:</strong> যিনি পরম করুণাময় ও অসীম দয়ালু।</div>
+</div>
+
+<div id="info-box">
     <button class="close-btn" onclick="closeBox()">বন্ধ করুন</button>
-    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0;"></h3>
-    <p id="box-desc"></p>
-    <div id="box-links"></div>
+    <h3 id="word-title" style="color: #1a5e3a; margin-top: 0;"></h3>
+    <p id="word-desc" style="font-size: 18px;"></p>
 </div>
 
 <script>
-    function showArabicRef(word, info, refs) {
-        document.getElementById('research-box').style.display = 'block';
-        document.getElementById('box-title').innerText = "আরবি শব্দ: " + word;
-        document.getElementById('box-desc').innerText = info + " নিচে রেফারেন্স দেওয়া হলো (ক্লিক করলে সেই আয়াতে যাবে):";
-        
-        let linkHTML = "";
-        refs.forEach(ref => {
-            linkHTML += `<a href="#" class="ref-link" onclick="alert('ভবিষ্যতে এটি আপনাকে সরাসরি সেই আয়াতে নিয়ে যাবে!')">📍 ${ref}</a>`;
-        });
-        document.getElementById('box-links').innerHTML = linkHTML;
+    function showInfo(title, desc) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('word-title').innerText = title;
+        document.getElementById('word-desc').innerText = desc;
     }
-
-    function showSynonyms(word, synonyms) {
-        document.getElementById('research-box').style.display = 'block';
-        document.getElementById('box-title').innerText = "বাংলা প্রতিশব্দ: " + word;
-        document.getElementById('box-desc').innerText = "এই শব্দের অন্যান্য অর্থ বা প্রতিশব্দ হতে পারে: " + synonyms;
-        document.getElementById('box-links').innerHTML = "";
-    }
-
     function closeBox() {
-        document.getElementById('research-box').style.display = 'none';
+        document.getElementById('info-box').style.display = 'none';
     }
 </script>
 
 </body>
-    </html>
+        </html>
