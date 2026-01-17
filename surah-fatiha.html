@@ -3,77 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন নিখুঁত আরবি টাচ</title>
+    <title>আল-কোরআন স্মার্ট নেভিগেশন</title>
     <style>
-        body { font-family: 'Arial', sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; padding-bottom: 120px; }
+        body { font-family: 'Arial', sans-serif; margin: 0; background: #fdfdfd; line-height: 1.6; padding-bottom: 150px; }
         .nav { background: #1a5e3a; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .nav a { color: white; text-decoration: none; font-weight: bold; float: left; }
         
         .card { background: white; border-radius: 15px; padding: 25px; margin: 15px auto; max-width: 650px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
         .verse-no { display: inline-block; background: #1a5e3a; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; font-size: 16px; line-height: 30px; font-weight: bold; margin-bottom: 15px; }
         
-        /* আরবি শব্দের টাচ এরিয়া উন্নত করা */
-        .arabic { font-size: 38px; text-align: right; direction: rtl; line-height: 2.5; color: #2c3e50; font-weight: bold; margin-bottom: 15px; }
-        .arabic span { 
-            cursor: pointer; 
-            display: inline-block; 
-            padding: 5px 10px; 
-            border-radius: 8px; 
-            transition: 0.2s; 
-            -webkit-user-select: none; /* মোবাইল সিলেকশন বন্ধ */
-            user-select: none;
+        .arabic { font-size: 38px; text-align: right; direction: rtl; line-height: 2.5; color: #2c3e50; font-weight: bold; }
+        .arabic span { cursor: pointer; display: inline-block; padding: 2px 8px; border-radius: 8px; }
+        .arabic span:active { background: #ffeb3b; }
+
+        /* উচ্চারণ টাচ এরিয়া */
+        .pronunciation { 
+            font-size: 17px; color: #1a5e3a; font-weight: bold; margin: 15px 0; 
+            border: 1px solid #1a5e3a; padding: 12px; 
+            background: #e8f6ef; cursor: pointer; border-radius: 10px;
+            text-align: center; transition: 0.3s;
         }
-        .arabic span:hover, .arabic span:active { 
-            background: #ffeb3b !important; 
-            color: #000 !important; 
+        .pronunciation:active { background: #c8e6c9; }
+
+        /* সরাসরি আয়াতে যাওয়ার বাটন স্টাইল */
+        .go-btn {
+            display: block; background: #f0f2f5; color: #1a5e3a; 
+            padding: 12px; margin-top: 10px; border-radius: 8px; 
+            text-decoration: none; font-weight: bold; border-left: 5px solid #1a5e3a;
         }
 
-        .pronunciation { font-size: 16px; color: #d35400; font-style: italic; margin-bottom: 8px; border-left: 4px solid #d35400; padding-left: 12px; }
-        .translation { font-size: 18px; color: #2d3436; border-top: 1px solid #f0f0f0; padding-top: 12px; }
-        .translation span { cursor: pointer; border-bottom: 2px dotted #1a5e3a; }
-
-        /* পপ-আপ তথ্য বক্স */
         #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 6px solid #1a5e3a; padding: 25px; display: none; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); z-index: 2000; border-radius: 25px 25px 0 0; }
         .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="nav"><a href="index.html">⬅ হোম</a> সূরা আল-ফাতিহা (গবেষণা)</div>
+<div class="nav">সূরা আল-ফাতিহা গবেষণা</div>
 
-<div class="card">
+<div class="card" id="verse-2">
     <div class="verse-no">২</div>
+    
     <div class="arabic">
-        <span onclick="showInfo('আল-হামদু (ٱلْحَمْدُ)', 'কোরআনে ৩৮ বার এসেছে।<br>অর্থ: সকল প্রশংসা।<br>রুট: হ-ম-দ')">ٱلْحَمْدُ</span> 
-        <span onclick="showInfo('লিল্লাহি (لِلَّهِ)', 'কোরআনে ২৬৯৯ বার এসেছে।<br>অর্থ: আল্লাহর জন্য।<br>রুট: আল্লাহ')">لِلَّهِ</span> 
-        <span onclick="showInfo('রব্বি (رَبِّ)', 'কোরআনে ৯৭০ বার এসেছে।<br>অর্থ: পালনকর্তা।<br>রুট: র-ব-ব')">رَبِّ</span> 
-        <span onclick="showInfo('আল-আলামীন (ٱلْعَٰلَمِينَ)', 'কোরআনে ৭৩ বার এসেছে।<br>অর্থ: বিশ্বজগতের।<br>রুট: আ-ল-ম')">ٱلْعَٰلَمِينَ</span>
+        <span onclick="showInfo('ٱلْحَمْدُ', 'এই শব্দটি কোরআনে ৩৮ বার এসেছে।')">ٱلْحَمْدُ</span> 
+        <span onclick="showInfo('لِلَّهِ', 'এই শব্দটি কোরআনে ২৬৯৯ বার এসেছে।')">لِلَّهِ</span> 
+        <span onclick="showInfo('رَبِّ', 'এই শব্দটি কোরআনে ৯৭০ বার এসেছে।')">رَبِّ</span> 
+        <span onclick="showInfo('ٱلْعَٰلَمِينَ', 'এই শব্দটি কোরআনে ৭৩ বার এসেছে।')">ٱلْعَٰلَمِينَ</span>
     </div>
-    <div class="pronunciation">আলহামদু লিল্লাহি রব্বিল আলামিন।</div>
-    <div class="translation">
-        <span onclick="showInfo('সকল প্রশংসা', 'প্রতিশব্দ: স্তুতি, মহিমা কীর্তন।')">সকল প্রশংসা</span> 
-        <span onclick="showInfo('আল্লাহর জন্য', 'প্রতিশব্দ: সৃষ্টিকর্তা, ইলাহ।')">আল্লাহর জন্য</span>, যিনি বিশ্বজগতের প্রতিপালক।
+
+    <div class="pronunciation" onclick="showNavigation('আয়াত নেভিগেশন', 'এই আয়াতের শব্দের সাথে মিল আছে এমন অন্য আয়াতগুলো:')">
+        আলহামদু লিল্লাহি রব্বিল আলামিন। (সরাসরি পৌঁছাতে টাচ করুন 🚀)
     </div>
+
+    <div class="translation">সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।</div>
 </div>
 
 <div id="info-box">
     <button class="close-btn" onclick="closeBox()">বন্ধ করুন</button>
-    <h3 id="word-title" style="color: #1a5e3a; margin-top: 0; font-size: 24px;"></h3>
-    <div id="word-desc" style="font-size: 19px; color: #444; line-height: 1.6; margin-top: 15px;"></div>
+    <h3 id="box-title" style="color: #1a5e3a; margin-top: 0; font-size: 24px;"></h3>
+    <div id="box-content"></div>
 </div>
 
 <script>
     function showInfo(title, desc) {
         document.getElementById('info-box').style.display = 'block';
-        document.getElementById('word-title').innerText = title;
-        document.getElementById('word-desc').innerHTML = desc;
-        // মোবাইল ভাইব্রেশন ফিডব্যাক
-        if (navigator.vibrate) { navigator.vibrate(40); }
+        document.getElementById('box-title').innerText = title;
+        document.getElementById('box-content').innerHTML = `<p style="font-size:18px;">${desc}</p>`;
     }
+
+    function showNavigation(title, desc) {
+        document.getElementById('info-box').style.display = 'block';
+        document.getElementById('box-title').innerText = title;
+        
+        // এখানে আপনি আপনার অন্য আয়াতের লিংকগুলো দিতে পারবেন
+        let links = `
+            <p>${desc}</p>
+            <a href="#verse-1" class="go-btn" onclick="closeBox()">📍 সরাসরি আয়াত ১-এ যান</a>
+            <a href="https://quran.com/6/1" target="_blank" class="go-btn">🌐 সূরা আন-আম আয়াত ১ (একই শব্দ)</a>
+            <a href="https://quran.com/34/1" target="_blank" class="go-blank" class="go-btn">🌐 সূরা সাবা আয়াত ১ (একই শব্দ)</a>
+        `;
+        document.getElementById('box-content').innerHTML = links;
+    }
+
     function closeBox() {
         document.getElementById('info-box').style.display = 'none';
     }
 </script>
 
 </body>
-            </html>
+    </html>
