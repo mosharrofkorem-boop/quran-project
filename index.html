@@ -1,137 +1,236 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল-কোরআন স্মার্ট রিসার্চ আর্কাইভ</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --primary: #1a5e3a; --hadith: #01579b; --bg: #f0f4f2; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); padding-bottom: 90px; }
-        
-        /* টপ নেভিগেশন */
-        .top-search-container { max-width: 500px; margin: 20px auto; padding: 0 15px; }
-        .main-search { width: 100%; padding: 12px; border: 2px solid var(--primary); border-radius: 30px; outline: none; text-align: center; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ডিজিটাল ধর্মগ্রন্থ গবেষণা</title>
 
-        .card { background: white; border-radius: 20px; padding: 25px; margin: 10px auto; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #ddd; }
-        
-        /* কন্ট্রোল বাটন */
-        .nav-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .nav-btn { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; }
-        .verse-title { font-weight: bold; color: var(--primary); font-size: 16px; }
+<style>
+/* ====== রঙ ও থিম সেটিং ====== */
+:root{
+ --primary:#1a5e3a;
+ --bg:#fdfdfd;
+ --text:#2d3436;
+ --card:#ffffff;
+}
+[data-theme="dark"]{
+ --bg:#0f1115;
+ --text:#eaeaea;
+ --card:#1c1f26;
+}
 
-        /* আরবি ও লাল উচ্চারণ */
-        .arabic-text { font-size: 30px; text-align: center; direction: rtl; line-height: 2; color: #2c3e50; font-weight: bold; margin-bottom: 5px; }
-        .proun-text { font-size: 20px; color: #d32f2f; font-weight: bold; text-align: center; border-bottom: 2px dashed #ccc; padding-bottom: 15px; margin-bottom: 15px; }
-        
-        .touch { cursor: pointer; transition: 0.2s; }
-        .touch:hover { background: #e8f5e9; border-radius: 5px; }
+/* ====== বডি ====== */
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ line-height:1.7;
+ padding-bottom:160px;
+ transition:.3s;
+}
 
-        /* কালারফুল বাটন গ্রিড */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .btn { padding: 12px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 11px; color: white; }
-        .btn-alem { background: #2e7d32; } .btn-sufi { background: #f57f17; }
-        .btn-faith { background: #bf360c; } .btn-math { background: #7b1fa2; }
-        .btn-hadith { background: #01579b; grid-column: span 2; }
-        .btn-qepa { background: #004d40; grid-column: span 2; border: 1px solid #ffeb3b; }
+/* ====== উপরের নেভিগেশন ====== */
+.nav{
+ background:var(--primary);
+ color:white;
+ padding:14px;
+ position:sticky;
+ top:0;
+ display:flex;
+ gap:10px;
+ align-items:center;
+ z-index:1000;
+}
 
-        .translation-box { font-size: 20px; font-weight: 800; color: #1a1a1a; text-align: center; line-height: 1.6; }
+/* সার্চ বক্স */
+.nav input{
+ flex:1;
+ padding:8px 12px;
+ border:none;
+ border-radius:8px;
+}
 
-        /* পপ-আপ ডিকশনারি */
-        #info-box { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 8px solid var(--primary); padding: 25px; display: none; z-index: 5000; border-radius: 25px 25px 0 0; max-height: 70vh; overflow-y: auto; }
-        .close-btn { float: right; background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+/* ডার্ক মোড বাটন */
+.toggle{
+ background:white;
+ color:var(--primary);
+ padding:6px 10px;
+ border-radius:20px;
+ cursor:pointer;
+}
 
-        /* বটম বার */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 75px; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ddd; z-index: 4000; }
-        .nav-item { text-align: center; color: #757575; flex: 1; font-size: 12px; }
-    </style>
+/* ====== আয়াত কার্ড ====== */
+.card{
+ max-width:650px;
+ margin:20px auto;
+ background:var(--card);
+ border-radius:18px;
+ padding:25px;
+ box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+/* আরবি আয়াত */
+.arabic{
+ font-size:36px;
+ direction:rtl;
+ text-align:right;
+ font-weight:bold;
+}
+.arabic span{
+ cursor:pointer;
+ padding:3px 8px;
+ border-radius:8px;
+}
+
+/* অনুবাদ */
+.translation{
+ font-size:19px;
+ margin-top:15px;
+}
+
+/* সাধারণ বাটন */
+.btn{
+ margin-top:12px;
+ padding:12px;
+ border-radius:10px;
+ background:#eef5f1;
+ color:var(--primary);
+ font-weight:bold;
+ cursor:pointer;
+ text-align:center;
+}
+
+/* ====== নিচের তথ্য বক্স ====== */
+#info-box{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ background:var(--card);
+ border-top:6px solid var(--primary);
+ border-radius:25px 25px 0 0;
+ padding:25px;
+ display:none;
+ max-height:70vh;
+ overflow:auto;
+ z-index:2000;
+}
+
+/* বন্ধ বাটন */
+.close{
+ float:right;
+ background:#e74c3c;
+ color:white;
+ border:none;
+ padding:8px 14px;
+ border-radius:8px;
+ cursor:pointer;
+}
+
+/* লিস্ট স্টাইল */
+.list a{
+ display:block;
+ padding:10px;
+ border-bottom:1px solid #eee;
+ text-decoration:none;
+ color:var(--primary);
+ font-weight:bold;
+}
+</style>
 </head>
-<body>
 
-<div class="top-search-container">
-    <input type="number" id="ayatSearch" class="main-search" placeholder="আয়াত নম্বর (১, ২, ৩...) লিখে এন্টার">
+<body data-theme="light">
+
+<!-- ====== উপরের বার ====== -->
+<div class="nav">
+ 🔍 <input placeholder="শব্দ / বিষয় / আয়াত খুঁজুন...">
+ <div class="toggle" onclick="toggleTheme()">🌙</div>
 </div>
 
+<!-- ====== আয়াত ====== -->
 <div class="card">
-    <div class="nav-controls">
-        <button class="nav-btn" onclick="prevAyat()">পূর্ববর্তী</button>
-        <div class="verse-title" id="verse-title">লোড হচ্ছে...</div>
-        <button class="nav-btn" onclick="nextAyat()">পরবর্তী</button>
-    </div>
-    
-    <div class="arabic-text" id="arabic-display"></div>
-    <div class="proun-text" id="proun-display"></div>
 
-    <div class="btn-grid">
-        <button class="btn btn-alem" onclick="showPopup('তাফসীর', 'আলেমদের ব্যাখ্যা...')">আলেমদের তাফসীর</button>
-        <button class="btn btn-sufi" onclick="showPopup('সুফি', 'আধ্যাত্মিক মর্মার্থ...')">সুফি ও আধ্যাত্মিক</button>
-        <button class="btn btn-faith" onclick="showPopup('তুলনা', 'অন্যান্য ধর্মগ্রন্থ...')">অন্যান্য ধর্মগ্রন্থ</button>
-        <button class="btn btn-math" onclick="showMath()">গাণিতিক গণনা</button>
-        <button class="btn btn-hadith" onclick="showPopup('হাদিস', 'সংশ্লিষ্ট হাদিস...')">হাদিস গ্রন্থসমূহ</button>
-        <button class="btn btn-qepa" onclick="showPopup('QEPA', 'ইভেন্ট প্যাটার্ন বিশ্লেষণ...')">QEPA রিসার্চ টুলস</button>
-    </div>
+ <!-- আরবি আয়াত -->
+ <div class="arabic">
+  <span onclick="wordResearch('ٱلْحَمْدُ',38)">ٱلْحَمْدُ</span>
+  <span onclick="wordResearch('لِلَّهِ',2699)">لِلَّهِ</span>
+  <span onclick="wordResearch('رَبِّ',970)">رَبِّ</span>
+  <span onclick="wordResearch('ٱلْعَٰلَمِينَ',73)">ٱلْعَٰلَمِينَ</span>
+ </div>
 
-    <div class="translation-box" id="trans-display"></div>
+ <!-- আয়াত সংরক্ষণ -->
+ <div class="btn" onclick="bookmarkVerse()">
+ ⭐ আয়াত সংরক্ষণ করুন
+ </div>
+
+ <!-- বাংলা অনুবাদ -->
+ <div class="translation">
+ সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।
+ </div>
+
 </div>
 
-<div class="bottom-nav">
-    <div class="nav-item"><i class="fas fa-home"></i><br>হোম</div>
-    <div class="nav-item"><i class="fas fa-search"></i><br>সার্চ</div>
-    <div class="nav-item"><i class="fas fa-history"></i><br>হিস্ট্রি</div>
-</div>
-
+<!-- ====== তথ্য দেখানোর বক্স ====== -->
 <div id="info-box">
-    <button class="close-btn" onclick="closeBox()">বন্ধ</button>
-    <h3 id="box-title" style="color: var(--primary);">ডিকশনারি</h3>
-    <div id="box-content"></div>
+ <button class="close" onclick="closeBox()">বন্ধ করুন</button>
+ <h3 id="box-title"></h3>
+ <div id="box-content"></div>
 </div>
 
 <script>
-    // এখানে আপনি ৬২৩৬টি আয়াত পর্যন্ত বাড়াতে পারবেন
-    const ayatData = {
-        1: {
-            title: "সূরা ফাতিহা: আয়াত ১",
-            arabic: `<span class="touch" onclick="showDict('বসম', 'নামে')">بِسْمِ</span> <span class="touch" onclick="showDict('আল্লাহ', 'আল্লাহর')">ٱللَّهِ</span> <span class="touch" onclick="showDict('রহমান', 'করুণাময়')">ٱلرَّحْمَٰনِ</span> <span class="touch" onclick="showDict('রহীম', 'দয়ালু')">ٱلرَّحِيمِ</span>`,
-            proun: `<span class="touch" onclick="showDict('বিসমিল্লাহ', 'আল্লাহর নামে শুরু')">বিসমিল্লাহির</span> <span>রহমানির</span> <span>রহীম</span>`,
-            trans: "পরম করুণাময় দয়ালু আল্লাহর নামে শুরু করছি।",
-            words: 4
-        },
-        2: {
-            title: "সূরা ফাতিহা: আয়াত ২",
-            arabic: `<span class="touch" onclick="showDict('হামদ', 'প্রশংসা')">ٱلْحَمْدُ</span> <span class="touch" onclick="showDict('লিল্লাহ', 'আল্লাহর জন্য')">لِلَّهِ</span> <span class="touch" onclick="showDict('রব্ব', 'প্রতিপালক')">رَبِّ</span> <span class="touch" onclick="showDict('আলামীন', 'বিশ্বজগত')">ٱلْعَٰলَمِينَ</span>`,
-            proun: `<span>আলহামদুলিল্লাহি</span> <span>রব্বিল</span> <span>আলামীন</span>`,
-            trans: "সকল প্রশংসা বিশ্বজগতের প্রতিপালক আল্লাহর জন্য।",
-            words: 4
-        }
-    };
+/* =========================
+   থিম (ডার্ক / লাইট) সিস্টেম
+   ========================= */
+function toggleTheme(){
+ let body=document.body;
+ let theme=body.getAttribute("data-theme")==="light"?"dark":"light";
+ body.setAttribute("data-theme",theme);
+ localStorage.setItem("theme",theme);
+}
+document.body.setAttribute("data-theme",localStorage.getItem("theme")||"light");
 
-    let currentAyat = 1;
+/* =========================
+   শব্দ গবেষণা ফিচার
+   ========================= */
+function wordResearch(word,count){
+ openBox(
+  "🔍 শব্দ গবেষণা",
+  `
+   <p><b>${word}</b></p>
+   <p>📊 কোরআনে এসেছে: <b>${count}</b> বার</p>
+   <p>🧠 (পরবর্তী ধাপে ধাতু, ব্যাকরণ, অর্থগত ব্যবহার যুক্ত হবে)</p>
 
-    function updateAyat() {
-        const data = ayatData[currentAyat];
-        if(!data) return;
-        document.getElementById('verse-title').innerText = data.title;
-        document.getElementById('arabic-display').innerHTML = data.arabic;
-        document.getElementById('proun-display').innerHTML = data.proun;
-        document.getElementById('trans-display').innerText = data.trans;
-    }
+   <div class="list">
+    <a href="#">📍 ১:২ সূরা আল-ফাতিহা</a>
+    <a href="#">📍 ৬:১ সূরা আল-আনআম</a>
+   </div>
+  `
+ );
+}
 
-    function showDict(word, mean) {
-        showPopup("বাংলা ডিকশনারি", `<div style="font-size:18px;"><b>শব্দ:</b> ${word}<br><b>অর্থ:</b> ${mean}</div>`);
-    }
+/* =========================
+   আয়াত সংরক্ষণ সিস্টেম
+   ========================= */
+function bookmarkVerse(){
+ let saved=JSON.parse(localStorage.getItem("savedVerses")||"[]");
+ saved.push("সূরা আল-ফাতিহা ১:২");
+ localStorage.setItem("savedVerses",JSON.stringify(saved));
+ alert("আয়াত সফলভাবে সংরক্ষণ করা হয়েছে ⭐");
+}
 
-    function nextAyat() { 
-        if (ayatData[currentAyat + 1]) { currentAyat++; updateAyat(); } 
-        else { alert("পরের আয়াতটি এখনো যোগ করা হয়নি।"); }
-    }
-    
-    function prevAyat() { if (currentAyat > 1) { currentAyat--; updateAyat(); } }
-
-    function showMath() { showPopup("গণনা", "শব্দ সংখ্যা: " + ayatData[currentAyat].words); }
-    function showPopup(t, c) { document.getElementById('info-box').style.display = 'block'; document.getElementById('box-title').innerText = t; document.getElementById('box-content').innerHTML = c; }
-    function closeBox() { document.getElementById('info-box').style.display = 'none'; }
-
-    updateAyat();
+/* =========================
+   তথ্য বক্স কন্ট্রোল
+   ========================= */
+function openBox(title,content){
+ document.getElementById("info-box").style.display="block";
+ document.getElementById("box-title").innerText=title;
+ document.getElementById("box-content").innerHTML=content;
+}
+function closeBox(){
+ document.getElementById("info-box").style.display="none";
+}
 </script>
+
 </body>
-    </html>
+     </html>
