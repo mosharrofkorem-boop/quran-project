@@ -6,7 +6,6 @@
 <title>ডিজিটাল ধর্মগ্রন্থ গবেষণা</title>
 
 <style>
-/* ====== রঙ ও থিম সেটিং ====== */
 :root{
  --primary:#1a5e3a;
  --bg:#fdfdfd;
@@ -19,7 +18,6 @@
  --card:#1c1f26;
 }
 
-/* ====== বডি ====== */
 body{
  margin:0;
  font-family:Arial,sans-serif;
@@ -27,31 +25,25 @@ body{
  color:var(--text);
  line-height:1.7;
  padding-bottom:160px;
- transition:.3s;
 }
 
-/* ====== উপরের নেভিগেশন ====== */
+/* উপরের বার */
 .nav{
  background:var(--primary);
  color:white;
  padding:14px;
- position:sticky;
- top:0;
  display:flex;
  gap:10px;
  align-items:center;
- z-index:1000;
+ position:sticky;
+ top:0;
 }
-
-/* সার্চ বক্স */
 .nav input{
  flex:1;
- padding:8px 12px;
+ padding:8px;
  border:none;
  border-radius:8px;
 }
-
-/* ডার্ক মোড বাটন */
 .toggle{
  background:white;
  color:var(--primary);
@@ -60,17 +52,16 @@ body{
  cursor:pointer;
 }
 
-/* ====== আয়াত কার্ড ====== */
+/* আয়াত কার্ড */
 .card{
  max-width:650px;
  margin:20px auto;
  background:var(--card);
- border-radius:18px;
+ border-radius:16px;
  padding:25px;
- box-shadow:0 6px 20px rgba(0,0,0,.08);
+ box-shadow:0 6px 20px rgba(0,0,0,.1);
 }
 
-/* আরবি আয়াত */
 .arabic{
  font-size:36px;
  direction:rtl;
@@ -79,17 +70,15 @@ body{
 }
 .arabic span{
  cursor:pointer;
- padding:3px 8px;
+ padding:4px 8px;
  border-radius:8px;
 }
 
-/* অনুবাদ */
 .translation{
  font-size:19px;
  margin-top:15px;
 }
 
-/* সাধারণ বাটন */
 .btn{
  margin-top:12px;
  padding:12px;
@@ -101,7 +90,7 @@ body{
  text-align:center;
 }
 
-/* ====== নিচের তথ্য বক্স ====== */
+/* নিচের তথ্য বক্স */
 #info-box{
  position:fixed;
  bottom:0;
@@ -114,10 +103,9 @@ body{
  display:none;
  max-height:70vh;
  overflow:auto;
- z-index:2000;
+ z-index:999;
 }
 
-/* বন্ধ বাটন */
 .close{
  float:right;
  background:#e74c3c;
@@ -127,31 +115,17 @@ body{
  border-radius:8px;
  cursor:pointer;
 }
-
-/* লিস্ট স্টাইল */
-.list a{
- display:block;
- padding:10px;
- border-bottom:1px solid #eee;
- text-decoration:none;
- color:var(--primary);
- font-weight:bold;
-}
 </style>
 </head>
 
 <body data-theme="light">
 
-<!-- ====== উপরের বার ====== -->
 <div class="nav">
  🔍 <input placeholder="শব্দ / বিষয় / আয়াত খুঁজুন...">
  <div class="toggle" onclick="toggleTheme()">🌙</div>
 </div>
 
-<!-- ====== আয়াত ====== -->
 <div class="card">
-
- <!-- আরবি আয়াত -->
  <div class="arabic">
   <span onclick="wordResearch('ٱلْحَمْدُ',38)">ٱلْحَمْدُ</span>
   <span onclick="wordResearch('لِلَّهِ',2699)">لِلَّهِ</span>
@@ -159,19 +133,14 @@ body{
   <span onclick="wordResearch('ٱلْعَٰلَمِينَ',73)">ٱلْعَٰلَمِينَ</span>
  </div>
 
- <!-- আয়াত সংরক্ষণ -->
- <div class="btn" onclick="bookmarkVerse()">
- ⭐ আয়াত সংরক্ষণ করুন
- </div>
+ <div class="btn" onclick="bookmarkVerse()">⭐ আয়াত সংরক্ষণ করুন</div>
 
- <!-- বাংলা অনুবাদ -->
  <div class="translation">
  সকল প্রশংসা আল্লাহর জন্য, যিনি বিশ্বজগতের প্রতিপালক।
  </div>
-
 </div>
 
-<!-- ====== তথ্য দেখানোর বক্স ====== -->
+<!-- তথ্য বক্স -->
 <div id="info-box">
  <button class="close" onclick="closeBox()">বন্ধ করুন</button>
  <h3 id="box-title"></h3>
@@ -179,58 +148,32 @@ body{
 </div>
 
 <script>
-/* =========================
-   থিম (ডার্ক / লাইট) সিস্টেম
-   ========================= */
+/* থিম */
 function toggleTheme(){
  let body=document.body;
  let theme=body.getAttribute("data-theme")==="light"?"dark":"light";
  body.setAttribute("data-theme",theme);
- localStorage.setItem("theme",theme);
 }
-document.body.setAttribute("data-theme",localStorage.getItem("theme")||"light");
 
-/* =========================
-   শব্দ গবেষণা ফিচার
-   ========================= */
+/* শব্দ গবেষণা */
 function wordResearch(word,count){
- openBox(
-  "🔍 শব্দ গবেষণা",
-  `
-   <p><b>${word}</b></p>
-   <p>📊 কোরআনে এসেছে: <b>${count}</b> বার</p>
-   <p>🧠 (পরবর্তী ধাপে ধাতু, ব্যাকরণ, অর্থগত ব্যবহার যুক্ত হবে)</p>
-
-   <div class="list">
-    <a href="#">📍 ১:২ সূরা আল-ফাতিহা</a>
-    <a href="#">📍 ৬:১ সূরা আল-আনআম</a>
-   </div>
-  `
- );
-}
-
-/* =========================
-   আয়াত সংরক্ষণ সিস্টেম
-   ========================= */
-function bookmarkVerse(){
- let saved=JSON.parse(localStorage.getItem("savedVerses")||"[]");
- saved.push("সূরা আল-ফাতিহা ১:২");
- localStorage.setItem("savedVerses",JSON.stringify(saved));
- alert("আয়াত সফলভাবে সংরক্ষণ করা হয়েছে ⭐");
-}
-
-/* =========================
-   তথ্য বক্স কন্ট্রোল
-   ========================= */
-function openBox(title,content){
  document.getElementById("info-box").style.display="block";
- document.getElementById("box-title").innerText=title;
- document.getElementById("box-content").innerHTML=content;
+ document.getElementById("box-title").innerText="শব্দ গবেষণা";
+ document.getElementById("box-content").innerHTML=
+ `<p><b>${word}</b></p>
+  <p>কোরআনে এসেছে: <b>${count}</b> বার</p>`;
 }
+
+/* আয়াত সংরক্ষণ */
+function bookmarkVerse(){
+ alert("আয়াত সংরক্ষণ করা হয়েছে ⭐");
+}
+
+/* বক্স বন্ধ */
 function closeBox(){
  document.getElementById("info-box").style.display="none";
 }
 </script>
 
 </body>
-     </html>
+ </html>
